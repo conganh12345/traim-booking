@@ -29,36 +29,20 @@ public class BookingController {
 	public String index(Model model) {
 		List<Booking> bookings = bookingService.getAllBookings();
 
-		model.addAttribute("page", "booking").addAttribute("bookings", bookings);
+		model.addAttribute("page", "booking")
+			.addAttribute("bookings", bookings);
 
 		return "booking/index";
 	}
 
-	@GetMapping("/create")
-	public String create(Model model) {
-		model.addAttribute("page", "booking");
-
-		return "booking/create";
-	}
-
-	@PostMapping("/create")
-	public String create(@ModelAttribute() Booking booking, BindingResult result, Model model,
-			RedirectAttributes redirectAttributes) {
-		if (bookingService.addBooking(booking)) {
-			redirectAttributes.addFlashAttribute("success", "Thêm mới đặt vé thành công!");
-		} else {
-			redirectAttributes.addFlashAttribute("error", "Thêm mới đặt vé thất bại!");
-		}
-		return "redirect:/booking/index";
-	}
-
-	@GetMapping("/edit/{id}")
-	public String edit(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
+	@GetMapping("/show/{id}")
+	public String show(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
 		Booking booking = bookingService.getBookingById(id);
 
-		model.addAttribute("page", "booking").addAttribute("booking", booking);
+		model.addAttribute("page", "booking")
+			.addAttribute("booking", booking);
 
-		return "booking/edit";
+		return "booking/show";
 	}
 
 	@PostMapping("/update/{id}")
@@ -71,14 +55,5 @@ public class BookingController {
 			redirectAttributes.addFlashAttribute("error", "Cập nhật đặt vé thất bại!");
 		}
 		return "redirect:/booking/index";
-	}
-
-	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> deleteBooking(@PathVariable Integer id) {
-		if (bookingService.deleteBooking(id)) {
-			return ResponseEntity.ok().build();
-		} else {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Không thể vé đặt.");
-		}
 	}
 }

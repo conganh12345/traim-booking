@@ -34,11 +34,11 @@ public class Coach {
 
 	@ManyToOne
 	@JoinColumn(name = "train_id")
-	@JsonBackReference 
+	@JsonBackReference("train-coaches")
 	private Train train;
 
 	@OneToMany(mappedBy = "coach")
-	@JsonManagedReference
+	@JsonManagedReference("coach-seats")
 	private List<SeatType> details = new ArrayList<>();
 
 	public Integer getId() {

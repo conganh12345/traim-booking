@@ -3,11 +3,16 @@ package com.backend.train_booking_backend.models;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.backend.train_booking_backend.models.enums.BookingStatus;
+import com.backend.train_booking_backend.models.enums.PaymentStatus;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -33,8 +38,8 @@ public class Booking {
 	@Column
 	private int paymentMethod;
 
-	@Column
-	private int status;
+	@Enumerated(EnumType.STRING)
+	private BookingStatus status;
 
 	@Column
 	private String depatureStation;
@@ -44,21 +49,21 @@ public class Booking {
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
-	@JsonBackReference 
+	@JsonBackReference(value = "user-booking")
 	private User user;
 
 	@OneToMany(mappedBy = "booking", fetch = FetchType.LAZY)
-	@JsonManagedReference
+	@JsonManagedReference(value = "booking-ticket-detail")
 	private List<TicketBookingDetail> details = new ArrayList<>();
 
 	@ManyToOne
 	@JoinColumn(name = "payment_id")
-	@JsonBackReference 
+	@JsonBackReference(value = "payment-booking")
 	private Payment payment;
 
 	@ManyToOne
 	@JoinColumn(name = "schedule_id")
-	@JsonBackReference 
+	@JsonBackReference(value = "schedule-booking")
 	private Schedule schedule;
 
 	public User getUser() {
@@ -109,11 +114,11 @@ public class Booking {
 		this.paymentMethod = paymentMethod;
 	}
 
-	public int getStatus() {
+	public BookingStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(BookingStatus status) {
 		this.status = status;
 	}
 

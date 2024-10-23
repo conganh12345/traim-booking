@@ -31,7 +31,7 @@ public class Station {
 	private String description;
 
 	@OneToMany(mappedBy = "station")
-	@JsonManagedReference
+	@JsonManagedReference("station-schedules")
 	private List<Schedule> details = new ArrayList<>();
 
 	public Integer getId() {

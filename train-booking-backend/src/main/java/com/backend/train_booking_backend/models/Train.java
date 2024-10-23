@@ -33,11 +33,10 @@ public class Train {
 	private String description;
 
 	@OneToMany(mappedBy = "train")
-	@JsonManagedReference 
+	@JsonManagedReference("train-coaches")
 	private List<Coach> details = new ArrayList<>();
 
 	@ManyToMany(mappedBy = "trains")
-	@JsonManagedReference
 	private List<Schedule> schedules = new ArrayList<>();
 
 	public Integer getId() {

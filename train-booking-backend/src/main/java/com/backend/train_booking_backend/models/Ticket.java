@@ -33,7 +33,7 @@ public class Ticket {
 	private TicketStatus status;
 
 	@OneToMany(mappedBy = "ticket")
-	@JsonManagedReference
+	@JsonManagedReference(value = "ticket-booking-detail") 
 	private List<TicketBookingDetail> details = new ArrayList<>();
 
 	public List<TicketBookingDetail> getDetails() {

@@ -40,11 +40,11 @@ public class Schedule {
 
 	@ManyToOne
 	@JoinColumn(name = "station_id")
-	@JsonBackReference 
+	@JsonBackReference("station-schedules")  
 	private Station station;
 
 	@OneToMany(mappedBy = "schedule")
-	@JsonManagedReference
+	@JsonManagedReference(value = "schedule-booking")
 	private List<Booking> details = new ArrayList<>();
 
 	@ManyToMany

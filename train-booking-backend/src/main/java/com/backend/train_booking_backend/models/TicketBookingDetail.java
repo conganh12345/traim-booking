@@ -26,12 +26,12 @@ public class TicketBookingDetail {
 
 	@ManyToOne
 	@JoinColumn(name = "ticket_id")
-	@JsonBackReference 
+	@JsonBackReference(value = "ticket-booking-detail") 
 	private Ticket ticket;
 
 	@ManyToOne
 	@JoinColumn(name = "booking_id")
-	@JsonBackReference 
+	@JsonBackReference(value = "booking-ticket-detail") 
 	private Booking booking;
 
 	public Booking getBooking() {

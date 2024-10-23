@@ -44,7 +44,7 @@ public class User {
 	private LocalDateTime updatedTime;
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-	@JsonManagedReference
+	@JsonManagedReference(value = "user-booking")
 	private List<Booking> bookings = new ArrayList<>();
 
 	public Integer getId() {

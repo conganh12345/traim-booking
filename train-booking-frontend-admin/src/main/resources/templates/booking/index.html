@@ -55,7 +55,6 @@
 								<tr>
 									<th style="width: 5%">STT</th>
 									<th>Tên vé</th>
-									<th>Phương thức thanh toán</th>
 									<th>Trạm khởi hành</th>
 									<th>Trạm đích</th>
 									<th>Thời gian đặt vé</th>
@@ -67,14 +66,13 @@
 								<tr th:each="booking, stat : ${bookings}">
 									<td th:text="${stat.count}"></td>
 									<td th:text="${booking.fullName}"></td>
-									<td th:text="${booking.paymentMethod}"></td>
 									<td th:text="${booking.depatureStation}"></td>
 									<td th:text="${booking.destinationStation}"></td>
-									<td th:text="${booking.bookingTime}" class="text-truncate"
+									<td th:text="${#temporals.format(booking.bookingTime, 'HH:mm, dd/MM/yyyy')}"  class="text-truncate"
 										style="max-width: 250px;"></td>
-									<td th:text="${booking.status}"></td>
+									<td th:text="${booking.status.displayName}"></td>
 									<td>
-									<a th:href="@{/booking/edit/{id}(id=${booking.id})}"
+									<a th:href="@{/booking/show/{id}(id=${booking.id})}"
 										class="bs-tooltip edit" data-bs-toggle="tooltip"
 										data-bs-placement="top"> <svg
 												xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -124,48 +122,6 @@
 								"lengthMenu" : [ 7, 10, 20, 50 ],
 								"pageLength" : 10
 							});
-		</script>
-
-		<script>
-			$(document).ready(function() {
-				let bookingIdToDelete;
-
-				$('.delete').on('click', function(e) {
-					e.preventDefault();
-
-					bookingIdToDelete = $(this).data('booking-id');
-					$('#deleteModal').modal('show');
-				});
-
-				$('#confirmDelete').on('click', function() {
-					$.ajax({
-						url : `/booking/delete/${bookingIdToDelete}`,
-						type : 'DELETE',
-						success : function(response) {
-
-							Snackbar.show({
-								text : 'Xóa vé đặt thành công',
-								textColor : '#ddf5f0',
-								backgroundColor : '#00ab55',
-								actionText : 'Bỏ qua',
-								actionTextColor : '#3b3f5c'
-							});
-
-							location.reload();
-						},
-						error : function() {
-							Snackbar.show({
-								text : 'Xóa vé đặt thất bại',
-								textColor : '#fbeced',
-								backgroundColor : '#e7515a',
-								actionText : 'Bỏ qua',
-								actionTextColor : '#3b3f5c'
-							});
-						}
-					});
-					$('#deleteModal').modal('hide');
-				});
-			});
 		</script>
 	</div>
 	<!--  END CUSTOM SCRIPTS FILE  -->
