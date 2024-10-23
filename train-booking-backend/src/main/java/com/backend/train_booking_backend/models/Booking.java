@@ -4,7 +4,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -43,19 +44,21 @@ public class Booking {
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
-	@JsonIgnore
+	@JsonBackReference 
 	private User user;
 
 	@OneToMany(mappedBy = "booking", fetch = FetchType.LAZY)
+	@JsonManagedReference
 	private List<TicketBookingDetail> details = new ArrayList<>();
 
 	@ManyToOne
 	@JoinColumn(name = "payment_id")
-	@JsonBackReference // Sử dụng @JsonBackReference để ngăn ngừa vòng lặp
+	@JsonBackReference 
 	private Payment payment;
 
 	@ManyToOne
 	@JoinColumn(name = "schedule_id")
+	@JsonBackReference 
 	private Schedule schedule;
 
 	public User getUser() {

@@ -2,6 +2,10 @@ package com.backend.train_booking_backend.models;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,9 +34,11 @@ public class Coach {
 
 	@ManyToOne
 	@JoinColumn(name = "train_id")
+	@JsonBackReference 
 	private Train train;
 
 	@OneToMany(mappedBy = "coach")
+	@JsonManagedReference
 	private List<SeatType> details = new ArrayList<>();
 
 	public Integer getId() {

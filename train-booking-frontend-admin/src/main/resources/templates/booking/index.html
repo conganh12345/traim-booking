@@ -49,10 +49,6 @@
 						</div>
 					</div>
 					<div class="widget-content widget-content-area">
-						<div class="layout-top-spacing ps-3 pe-3 col-12 mb-3">
-							<a th:href="@{/booking/create}" class="btn btn-primary">Thêm
-								mới</a>
-						</div>
 						<table id="booking-table" class="table style-3 dt-table-hover"
 							style="width: 100%">
 							<thead>
@@ -77,31 +73,18 @@
 									<td th:text="${booking.bookingTime}" class="text-truncate"
 										style="max-width: 250px;"></td>
 									<td th:text="${booking.status}"></td>
-									<td><a th:href="@{/booking/edit/{id}(id=${booking.id})}"
+									<td>
+									<a th:href="@{/booking/edit/{id}(id=${booking.id})}"
 										class="bs-tooltip edit" data-bs-toggle="tooltip"
 										data-bs-placement="top"> <svg
 												xmlns="http://www.w3.org/2000/svg" width="24" height="24"
 												viewBox="0 0 24 24" fill="none" stroke="currentColor"
 												stroke-width="2" stroke-linecap="round"
-												stroke-linejoin="round"
-												class="feather feather-edit-2 p-1 br-6 mb-1">
-								                <path
-													d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z">
-								                </path>
-								            </svg>
-									</a> <a href="#" class="bs-tooltip delete"
-										th:data-booking-id="${booking.id}" data-bs-toggle="tooltip"
-										data-bs-placement="top"> <svg
-												xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-												viewBox="0 0 24 24" fill="none" stroke="currentColor"
-												stroke-width="2" stroke-linecap="round"
-												stroke-linejoin="round"
-												class="feather feather-trash p-1 br-6 mb-1">
-										        <polyline points="3 6 5 6 21 6"></polyline>
-										        <path
-													d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-										    </svg>
-									</a></td>
+												stroke-linejoin="round" class="feather feather-eye br-6 mb-1">
+												<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+												<circle cx="12" cy="12" r="3"></circle></svg>
+									</a> 
+									</td>
 								</tr>
 							</tbody>
 						</table>
@@ -149,7 +132,7 @@
 
 				$('.delete').on('click', function(e) {
 					e.preventDefault();
-					
+
 					bookingIdToDelete = $(this).data('booking-id');
 					$('#deleteModal').modal('show');
 				});

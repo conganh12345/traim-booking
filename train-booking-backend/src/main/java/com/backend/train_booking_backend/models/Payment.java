@@ -7,6 +7,8 @@ import java.util.List;
 import com.backend.train_booking_backend.models.enums.PaymentStatus;
 import com.backend.train_booking_backend.models.enums.TicketStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -37,7 +39,7 @@ public class Payment {
 	private LocalDateTime paymentTime;
 
 	@OneToMany(mappedBy = "payment")
-	@JsonIgnore
+	@JsonManagedReference
 	private List<Booking> bookings = new ArrayList<>();
 
 	public List<Booking> getBookings() {

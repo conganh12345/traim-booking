@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.backend.train_booking_backend.models.enums.TicketStatus;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -31,6 +33,7 @@ public class Ticket {
 	private TicketStatus status;
 
 	@OneToMany(mappedBy = "ticket")
+	@JsonManagedReference
 	private List<TicketBookingDetail> details = new ArrayList<>();
 
 	public List<TicketBookingDetail> getDetails() {

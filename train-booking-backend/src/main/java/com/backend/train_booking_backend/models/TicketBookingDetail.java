@@ -1,5 +1,7 @@
 package com.backend.train_booking_backend.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,10 +26,12 @@ public class TicketBookingDetail {
 
 	@ManyToOne
 	@JoinColumn(name = "ticket_id")
+	@JsonBackReference 
 	private Ticket ticket;
 
 	@ManyToOne
 	@JoinColumn(name = "booking_id")
+	@JsonBackReference 
 	private Booking booking;
 
 	public Booking getBooking() {

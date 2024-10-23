@@ -58,8 +58,11 @@ public class CoachController {
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
 		Coach coach = coachService.getCoachById(id);
+		List<Train> trains = trainService.getAllTrains();
 
-		model.addAttribute("page", "coach").addAttribute("coach", coach);
+		model.addAttribute("page", "coach")
+			.addAttribute("coach", coach)
+			.addAttribute("trains", trains);;
 
 		return "coach/edit";
 	}

@@ -4,6 +4,14 @@
 	layout:decorate="~{layouts/base-layout.html}">
 <head>
 <title>Chỉnh sửa toa</title>
+
+<div layout:fragment="headerFiles">
+	
+	<link rel="stylesheet" type="text/css" href="/css/plugins/light/tomSelect/custom-tomSelect.css">
+	<link rel="stylesheet" type="text/css" href="/css/plugins/dark/tomSelect/custom-tomSelect.css">
+	<link rel="stylesheet" type="text/css" href="/plugins/tomSelect/tom-select.default.min.css">
+</div>
+
 </head>
 <body>
 	<div layout:fragment="content">
@@ -40,6 +48,20 @@
 						<div class="col-12">
 							<form th:action="@{/coach/update/{id}(id=${coach.id})}"
 								th:object="${coach}" id="general-settings" method="POST">
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group mb-4">
+											<label for="train">Chọn tàu<strong
+												class="text-danger">*</strong></label> 
+												<select name="trainId"
+												id="trainId" class="form-control">
+												<option value="" selected>Chọn</option>
+												<option th:each="train : ${trains}" th:value="${train.id}"
+													th:text="${train.trainname}"></option>
+											</select>
+										</div>
+									</div>
+								</div>
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group mb-4">
@@ -84,7 +106,20 @@
 	</div>
 
 	<!--  BEGIN CUSTOM SCRIPTS FILE  -->
-	<div layout:fragment="footerFiles"></div>
+	<div layout:fragment="footerFiles">
+		<script src="/plugins/tomSelect/tom-select.base.js"></script>
+		<script src="/plugins/tomSelect/custom-tom-select.js"></script>
+		
+		<script type="text/javascript">
+			new TomSelect("#trainId", {
+				create: true,
+				sortField: {
+					field: "text",
+					direction: "asc"
+				}
+			});
+		</script>
+	</div>
 	<!--  END CUSTOM SCRIPTS FILE  -->
 </body>
 
