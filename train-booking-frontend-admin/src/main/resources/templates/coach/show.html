@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/base-layout.html}">
+<head>
+<title>Chi tiết</title>
+
+<div layout:fragment="headerFiles">
+
+	<link rel="stylesheet" type="text/css"
+		href="/css/plugins/light/tomSelect/custom-tomSelect.css">
+	<link rel="stylesheet" type="text/css"
+		href="/css/plugins/dark/tomSelect/custom-tomSelect.css">
+	<link rel="stylesheet" type="text/css"
+		href="/plugins/tomSelect/tom-select.default.min.css">
+
+	<link href="/css/assets/light/components/accordions.css"
+		rel="stylesheet" type="text/css" />
+	<link href="/css/assets/dark/components/accordions.css"
+		rel="stylesheet" type="text/css" />
+
+</div>
+
+</head>
+<body>
+	<div layout:fragment="content">
+		<!-- BREADCRUMB -->
+		<div class="page-meta">
+			<nav class="breadcrumb-style-one" aria-label="breadcrumb">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="#">Toa</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a
+						th:href="@{/coach/index}">Quản lý toa</a></li>
+					<li class="breadcrumb-item active" aria-current="page">Thêm
+						mới toa</li>
+				</ol>
+			</nav>
+		</div>
+		<!-- /BREADCRUMB -->
+
+		<div class="layout-top-spacing col-12">
+			<a th:href="@{/coach/index}" class="btn"> Trở lại </a>
+
+		</div>
+
+		<div class="row layout-top-spacing">
+			<div id="coach-management" class="col-lg-12 layout-spacing">
+				<div class="statbox widget box box-shadow">
+					<div class="widget-header">
+						<div class="row">
+							<div class="col-xl-12 col-md-12 col-sm-12 col-12">
+								<h4>Chi tiết toa</h4>
+							</div>
+						</div>
+					</div>
+					<div class="widget-content widget-content-area">
+						<div class="col-12">
+							<div class="table-responsive">
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th>Loại Tàu</th>
+											<th>Tên toa</th>
+											<th>Số lượng ghế</th>
+											<th>Trạng thái</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td
+												th:text="${coach.train != null ? coach.train.trainname : ''}"></td>
+											<td th:text="${coach.coachName}"></td>
+											<td th:text="${coach.seatCount}"></td>
+											<td class="text-truncate" style="max-width: 250px;"><span
+												th:class="'badge ' + ${coach.status.badgeClass}"
+												th:text="${coach.status.displayName}"></span></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+						<div class="col-12 mt-4">
+							<div class="accordion" id="descriptionAccordion">
+								<div class="card">
+									<div class="card-header" id="headingDescription">
+										<section class="mb-0 mt-0">
+											<div role="menu" class="collapsed" data-bs-toggle="collapse"
+												data-bs-target="#descriptionCollapse" aria-expanded="false"
+												aria-controls="descriptionCollapse">
+												<div class="accordion-icon">
+													<svg xmlns="http://www.w3.org/2000/svg" width="24"
+														height="24" viewBox="0 0 24 24" fill="none"
+														stroke="currentColor" stroke-width="2"
+														stroke-linecap="round" stroke-linejoin="round"
+														class="feather feather-box">
+														<path
+															d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+														<polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+														<line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+													Mô tả
+												</div>
+
+												<div class="icons">
+													<svg xmlns="http://www.w3.org/2000/svg" width="24"
+														height="24" viewBox="0 0 24 24" fill="none"
+														stroke="currentColor" stroke-width="2"
+														stroke-linecap="round" stroke-linejoin="round"
+														class="feather feather-chevron-down">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+												</div>
+											</div>
+										</section>
+									</div>
+
+									<div id="descriptionCollapse" class="collapse"
+										aria-labelledby="headingDescription"
+										data-bs-parent="#descriptionAccordion">
+										<div class="card-body">
+											<p
+												th:text="${coach.description != null ? coach.description : 'Không có mô tả'}"></p>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+
+
+			<div class="row layout-top-spacing">
+				<div id="coach-management" class="col-lg-12 layout-spacing">
+					<div class="statbox widget box box-shadow">
+						<div class="widget-header">
+							<div class="row">
+								<div class="col-xl-12 col-md-12 col-sm-12 col-12">
+									<h4>Danh sách ghế</h4>
+								</div>
+							</div>
+						</div>
+						<div class="widget-content widget-content-area">
+							<div class="col-12">
+								<div class="row ms-1 mb-4">* Danh sách ghế của toa:</div>
+								<div class="row layout-top-spacing">
+									<div id="contract-type-management"
+										class="col-lg-12 layout-spacing">
+										<div class="statbox widget box box-shadow">
+											<div class="widget-header"></div>
+											<div class="widget-content widget-content-area"
+												style="padding: 20px;">
+												<div class="row">
+													<div class="col-xl-12 col-md-12 col-sm-12 col-12">
+														<a
+															class="btn btn-block btn-outline-secondary mt-2 mb-2 me-4"
+															data-bs-toggle="modal"> Thêm mới ghế </a>
+													</div>
+												</div>
+												<div class="table-responsive">
+													<table class="table table-bordered">
+														<thead>
+															<tr>
+																<th width="10%">ID</th>
+																<th>Tên ghế</th>
+																<th>Trạng thái</th>
+																<th width="20%" class="text-center">Thao tác</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr th:if="${#lists.isEmpty(seats)}">
+																<td colspan="4" class="text-center">Không có ghế
+																	nào trong toa này.</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<a th:href="@{/coach/index}" class="btn btn-primary">Hoàn
+									tất</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--  BEGIN CUSTOM SCRIPTS FILE  -->
+		<div layout:fragment="footerFiles">
+			<script src="/plugins/tomSelect/tom-select.base.js"></script>
+			<script src="/plugins/tomSelect/custom-tom-select.js"></script>
+
+
+		</div>
+		<!--  END CUSTOM SCRIPTS FILE  -->
+</body>
+
+</html>

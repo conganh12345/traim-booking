@@ -45,7 +45,7 @@ public class Schedule {
 
 	@OneToMany(mappedBy = "schedule")
 	@JsonManagedReference(value = "schedule-booking")
-	private List<Booking> details = new ArrayList<>();
+	private List<Booking> bookings = new ArrayList<>();
 
 	@ManyToMany
 	@JoinTable(name = "schedule_train", joinColumns = @JoinColumn(name = "schedule_id"), inverseJoinColumns = @JoinColumn(name = "train_id"))
@@ -108,10 +108,10 @@ public class Schedule {
 	}
 
 	public List<Booking> getDetails() {
-		return details;
+		return bookings;
 	}
 
 	public void setDetails(List<Booking> details) {
-		this.details = details;
+		this.bookings = details;
 	}
 }

@@ -54,7 +54,7 @@ public class Booking {
 
 	@OneToMany(mappedBy = "booking", fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "booking-ticket-detail")
-	private List<TicketBookingDetail> details = new ArrayList<>();
+	private List<TicketBookingDetail> ticketBookingDetails = new ArrayList<>();
 
 	@ManyToOne
 	@JoinColumn(name = "payment_id")
@@ -139,11 +139,11 @@ public class Booking {
 	}
 
 	public List<TicketBookingDetail> getDetails() {
-		return details;
+		return ticketBookingDetails;
 	}
 
 	public void setDetails(List<TicketBookingDetail> details) {
-		this.details = details;
+		this.ticketBookingDetails = details;
 	}
 
 	public Schedule getSchedule() {

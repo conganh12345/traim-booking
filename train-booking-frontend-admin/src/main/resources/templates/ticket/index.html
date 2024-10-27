@@ -49,14 +49,15 @@
 					</div>
 					<div class="widget-content widget-content-area">
 						<div class="layout-top-spacing ps-3 pe-3 col-12 mb-3">
-							<a th:href="@{/ticket/create}" class="btn btn-primary">Thêm mới</a>
+							<a th:href="@{/ticket/create}" class="btn btn-primary">Thêm
+								mới</a>
 						</div>
 						<table id="ticket-table" class="table style-3 dt-table-hover"
 							style="width: 100%">
 							<thead>
 								<tr>
 									<th style="width: 5%">STT</th>
-									<th style="width: 10%">Tên vé</th>
+									<th>Tên vé</th>
 									<th>Giá vé</th>
 									<th>Trạng thái</th>
 									<th class="no-content" style="width: 5%">Thao tác</th>
@@ -67,8 +68,10 @@
 									<td th:text="${stat.count}"></td>
 									<td th:text="${ticket.ticketname}"></td>
 									<td th:text="${ticket.price}"></td>
-									<td th:text="${ticket.status.displayName}" class="text-truncate"
-										style="max-width: 250px;"></td>
+									<td class="text-truncate" style="max-width: 250px;"><span
+										th:class="'badge ' + ${ticket.status.badgeClass}"
+										th:text="${ticket.status.displayName}"></span></td>
+
 									<td><a th:href="@{/ticket/edit/{id}(id=${ticket.id})}"
 										class="bs-tooltip edit" data-bs-toggle="tooltip"
 										data-bs-placement="top"> <svg

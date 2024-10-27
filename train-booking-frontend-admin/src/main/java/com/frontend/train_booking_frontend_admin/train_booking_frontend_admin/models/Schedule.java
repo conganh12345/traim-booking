@@ -64,6 +64,4 @@ public class Schedule {
 	public void setEstimateArrivalDate(LocalDateTime estimateArrivalDate) {
 		this.estimateArrivalDate = estimateArrivalDate;
 	}
-	
-	
 }

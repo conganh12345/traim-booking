@@ -14,10 +14,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Booking;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Coach;
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Ticket;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Train;
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.enums.CoachStatus;
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.enums.TicketStatus;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.CoachService;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.TrainService;
+
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/coach")
@@ -40,13 +47,21 @@ public class CoachController {
 	public String create(Model model) {
 		List<Train> trains = trainService.getAllTrains();
 		
-		model.addAttribute("page", "coach").addAttribute("trains", trains);
+		model.addAttribute("page", "coach")
+			.addAttribute("trains", trains)
+			.addAttribute("coach", new Coach())
+			.addAttribute("coachStatuses", CoachStatus.values());
 
 		return "coach/create";
 	}
 
 	@PostMapping("/create")
-	public String create(@ModelAttribute() Coach coach, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+	public String create(@Valid @ModelAttribute("coach") Coach coach, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+		if (result.hasErrors()) {
+			model.addAttribute("page", "coach");
+			
+	        return "coach/create"; 
+	    }
 		if (coachService.addCoach(coach)) {
 			redirectAttributes.addFlashAttribute("success", "Thêm mới toa thành công!");
 		} else {
@@ -62,21 +77,36 @@ public class CoachController {
 
 		model.addAttribute("page", "coach")
 			.addAttribute("coach", coach)
-			.addAttribute("trains", trains);;
+			.addAttribute("trains", trains)
+			.addAttribute("coachStatuses", CoachStatus.values());
 
 		return "coach/edit";
 	}
 
 	@PostMapping("/update/{id}")
-	public String update(@PathVariable Integer id, @ModelAttribute Coach coach, BindingResult result,
-			RedirectAttributes redirectAttributes) {
+	public String update(@PathVariable Integer id,@Valid @ModelAttribute("coach") Coach coach, BindingResult result, RedirectAttributes redirectAttributes, Model model) {
 		coach.setId(id);
+		if (result.hasErrors()) {
+			model.addAttribute("page", "coach");
+			
+	        return "coach/edit"; 
+	    }
 		if (coachService.updateCoach(coach)) {
 			redirectAttributes.addFlashAttribute("success", "Cập nhật toa thành công!");
 		} else {
 			redirectAttributes.addFlashAttribute("error", "Cập nhật toa thất bại!");
 		}
 		return "redirect:/coach/index";
+	}
+	
+	@GetMapping("/show/{id}")
+	public String show(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
+		Coach coach = coachService.getCoachById(id);
+
+		model.addAttribute("page", "coach")
+			.addAttribute("coach", coach);
+
+		return "coach/show";
 	}
 
 	@DeleteMapping("/delete/{id}")

@@ -32,7 +32,7 @@ public class Station {
 
 	@OneToMany(mappedBy = "station")
 	@JsonManagedReference("station-schedules")
-	private List<Schedule> details = new ArrayList<>();
+	private List<Schedule> schedules = new ArrayList<>();
 
 	public Integer getId() {
 		return id;
@@ -67,10 +67,10 @@ public class Station {
 	}
 
 	public List<Schedule> getDetails() {
-		return details;
+		return schedules;
 	}
 
 	public void setDetails(List<Schedule> details) {
-		this.details = details;
+		this.schedules = details;
 	}
 }

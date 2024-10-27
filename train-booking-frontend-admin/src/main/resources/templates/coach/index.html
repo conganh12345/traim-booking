@@ -49,7 +49,8 @@
 					</div>
 					<div class="widget-content widget-content-area">
 						<div class="layout-top-spacing ps-3 pe-3 col-12 mb-3">
-							<a th:href="@{/coach/create}" class="btn btn-primary">Thêm mới</a>
+							<a th:href="@{/coach/create}" class="btn btn-primary">Thêm
+								mới</a>
 						</div>
 						<table id="coach-table" class="table style-3 dt-table-hover"
 							style="width: 100%">
@@ -60,18 +61,33 @@
 									<th>Tên toa</th>
 									<th>Số lượng ghế</th>
 									<th>Mô tả</th>
+									<th>Trạng thái</th>
 									<th class="no-content" style="width: 5%">Thao tác</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr th:each="coach, stat : ${coachs}">
 									<td th:text="${stat.count}"></td>
-									<td th:text="${coach.train != null ? coach.train.trainname : ''}"></td>
+									<td
+										th:text="${coach.train != null ? coach.train.trainname : ''}"></td>
 									<td th:text="${coach.coachName}"></td>
 									<td th:text="${coach.seatCount}"></td>
 									<td th:text="${coach.description}" class="text-truncate"
 										style="max-width: 250px;"></td>
-									<td><a th:href="@{/coach/edit/{id}(id=${coach.id})}"
+									<td class="text-truncate" style="max-width: 250px;"><span
+										th:class="'badge ' + ${coach.status.badgeClass}"
+										th:text="${coach.status.displayName}"></span></td>
+									<td><a th:href="@{/coach/show/{id}(id=${coach.id})}"
+										class="bs-tooltip edit" data-bs-toggle="tooltip"
+										data-bs-placement="top"> <svg
+												xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+												viewBox="0 0 24 24" fill="none" stroke="currentColor"
+												stroke-width="2" stroke-linecap="round"
+												stroke-linejoin="round"
+												class="feather feather-eye p-1 br-6 mb-1">
+												<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+												<circle cx="12" cy="12" r="3"></circle></svg>
+									</a> <a th:href="@{/coach/edit/{id}(id=${coach.id})}"
 										class="bs-tooltip edit" data-bs-toggle="tooltip"
 										data-bs-placement="top"> <svg
 												xmlns="http://www.w3.org/2000/svg" width="24" height="24"

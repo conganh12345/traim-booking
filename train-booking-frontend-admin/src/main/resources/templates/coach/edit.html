@@ -48,37 +48,31 @@
 						<div class="col-12">
 							<form th:action="@{/coach/update/{id}(id=${coach.id})}"
 								th:object="${coach}" id="general-settings" method="POST">
+								
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group mb-4">
-											<label for="train">Chọn tàu<strong
-												class="text-danger">*</strong></label> 
-												<select name="trainId"
+											<label for="trainId">Chọn tàu <strong
+												class="text-danger">*</strong></label> <select name="trainId"
 												id="trainId" class="form-control">
 												<option value="" selected>Chọn</option>
 												<option th:each="train : ${trains}" th:value="${train.id}"
 													th:text="${train.trainname}"></option>
-											</select>
+											</select> 
 										</div>
 									</div>
 								</div>
+
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group mb-4">
-											<label for="coach">Tên toa<strong
+											<label for="coachName">Tên toa <strong
 												class="text-danger">*</strong></label> <input type="text"
-												name="coachName" id="coachName" class="form-control"
-												placeholder="Tên toa" th:value="${coach.coachName}">
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-6">
-										<div class="form-group mb-4">
-											<label for="coach">Tổng số ghế<strong
-												class="text-danger">*</strong></label> <input type="number"
-												name="seatCount" id="seatCount" class="form-control"
-												placeholder="Tổng số ghế" th:value="${coach.seatCount}">
+												th:field="*{coachName}" id="coachName" class="form-control"
+												placeholder="Tên toa"
+												th:classappend="${#fields.hasErrors('coachName') ? 'is-invalid' : ''}">
+											<span th:if="${#fields.hasErrors('coachName')}"
+												class="text-danger" th:errors="*{coachName}"></span>
 										</div>
 									</div>
 								</div>
@@ -86,14 +80,46 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group mb-4">
-											<label for="coach">Mô tả<strong class="text-danger">*</strong></label>
-											<textarea name="description" id="description"
+											<label for="description">Mô tả <strong
+												class="text-danger">*</strong></label>
+											<textarea th:field="*{description}" id="description"
 												class="form-control" placeholder="Mô tả"
-												th:text="${coach.description}"></textarea>
+												th:classappend="${#fields.hasErrors('description') ? 'is-invalid' : ''}"></textarea>
+											<span th:if="${#fields.hasErrors('description')}"
+												class="text-danger" th:errors="*{description}"></span>
 										</div>
 									</div>
 								</div>
 
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group mb-4">
+											<label for="seatCount">Số lượng ghế <strong
+												class="text-danger">*</strong></label> <input type="number"
+												th:field="*{seatCount}" id="seatCount" class="form-control"
+												placeholder="Số lượng ghế"
+												th:classappend="${#fields.hasErrors('seatCount') ? 'is-invalid' : ''}">
+											<span th:if="${#fields.hasErrors('seatCount')}"
+												class="text-danger" th:errors="*{seatCount}"></span>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group mb-4">
+											<label for="status">Trạng thái <strong
+												class="text-danger">*</strong></label> <select th:field="*{status}"
+												id="status" class="form-control"
+												th:classappend="${#fields.hasErrors('status') ? 'is-invalid' : ''}">
+												<option value="">Chọn</option>
+												<option th:each="status : ${coachStatuses}"
+													th:value="${status}" th:text="${status.displayName}"></option>
+											</select> <span th:if="${#fields.hasErrors('status')}"
+												class="text-danger" th:errors="*{status}"></span>
+										</div>
+									</div>
+								</div>
 
 
 								<button type="submit" class="btn btn-primary">Hoàn tất</button>
@@ -116,6 +142,14 @@
 				sortField: {
 					field: "text",
 					direction: "asc"
+				}
+			});
+			
+			new TomSelect("#status", {
+				create : true,
+				sortField : {
+					field : "text",
+					direction : "asc"
 				}
 			});
 		</script>

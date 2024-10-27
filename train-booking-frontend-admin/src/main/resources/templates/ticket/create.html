@@ -76,7 +76,7 @@
 							            <div class="form-group mb-4">
 							                <label for="status">Trạng thái <strong class="text-danger">*</strong></label>
 							                <select th:field="*{status}" id="status" class="form-control">
-							                    <option value="" >Chọn trạng thái</option>
+							                    <option value="" >Chọn</option>
 							                    <option th:each="status : ${ticketStatuses}"
 							                            th:value="${status}"
 							                            th:text="${status.displayName}"></option>

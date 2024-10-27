@@ -34,14 +34,14 @@ public class Ticket {
 
 	@OneToMany(mappedBy = "ticket")
 	@JsonManagedReference(value = "ticket-booking-detail") 
-	private List<TicketBookingDetail> details = new ArrayList<>();
+	private List<TicketBookingDetail> ticketBookingDetails = new ArrayList<>();
 
 	public List<TicketBookingDetail> getDetails() {
-		return details;
+		return ticketBookingDetails;
 	}
 
 	public void setDetails(List<TicketBookingDetail> details) {
-		this.details = details;
+		this.ticketBookingDetails = details;
 	}
 
 	public Integer getId() {

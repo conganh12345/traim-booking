@@ -4,11 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,9 +37,9 @@ public class Train {
 	@Column
 	private String description;
 
-	@OneToMany(mappedBy = "train")
-	@JsonManagedReference("train-coaches")
-	private List<Coach> details = new ArrayList<>();
+	@OneToMany(mappedBy = "train", cascade = CascadeType.ALL)
+	@JsonManagedReference
+	private List<Coach> coachs = new ArrayList<>();
 
 	@ManyToMany(mappedBy = "trains")
 	private List<Schedule> schedules = new ArrayList<>();
@@ -72,11 +77,11 @@ public class Train {
 	}
 
 	public List<Coach> getDetails() {
-		return details;
+		return coachs;
 	}
 
 	public void setDetails(List<Coach> details) {
-		this.details = details;
+		this.coachs = details;
 	}
 
 	public List<Schedule> getSchedules() {
