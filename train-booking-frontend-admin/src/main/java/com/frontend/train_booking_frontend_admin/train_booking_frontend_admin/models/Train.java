@@ -1,5 +1,8 @@
 package com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models;
 
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.enums.CoachStatus;
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.enums.TrainStatus;
+
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -19,9 +22,18 @@ public class Train {
     @NotEmpty(message = "Mô tả không được để trống")
     @Size(max = 200, message = "Mô tả không được dài quá 200 ký tự")
     private String description;
+    
+	@NotNull(message = "Trạng thái không được để trống")
+	private TrainStatus status;
 	
 	public Integer getId() {
 		return id;
+	}
+	public TrainStatus getStatus() {
+		return status;
+	}
+	public void setStatus(TrainStatus status) {
+		this.status = status;
 	}
 	public void setId(Integer id) {
 		this.id = id;
@@ -44,6 +56,4 @@ public class Train {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	
 }

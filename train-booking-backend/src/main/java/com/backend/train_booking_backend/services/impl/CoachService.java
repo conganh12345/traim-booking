@@ -54,19 +54,17 @@ public class CoachService implements ICoachService {
 	public Coach getCoachByCoachName(String coachname) {
 		return coachRepo.findCoachByCoachName(coachname);
 	}
-
+	
 	@Override
 	@Transactional
-	public Optional<Coach> deleteCoach(Integer id) {
+	public boolean deleteCoach(Integer id) {
 	    try {
-	        Optional<Coach> coachOpt = coachRepo.findById(id);
-	        if (coachOpt.isPresent()) {
-	        	Coach coach = coachOpt.get();
+	        if (coachRepo.existsById(id)) {
 	        	coachRepo.deleteById(id);
-	            return Optional.of(coach); 
+	            return true; 
 	        } else {
 	            System.out.println("Coach with ID " + id + " not found.");
-	            return Optional.empty();
+	            return false;
 	        }
 	    } catch (Exception e) {
 	        throw new RuntimeException("Đã xảy ra lỗi khi xóa toa.", e);

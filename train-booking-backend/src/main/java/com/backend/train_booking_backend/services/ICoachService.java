@@ -16,5 +16,5 @@ public interface ICoachService {
 
 	Coach getCoachByCoachName(String coachname);
 
-	Optional<Coach> deleteCoach(Integer id);
+	boolean deleteCoach(Integer id);
 }

@@ -49,16 +49,18 @@
 					</div>
 					<div class="widget-content widget-content-area">
 						<div class="layout-top-spacing ps-3 pe-3 col-12 mb-3">
-							<a th:href="@{/train/create}" class="btn btn-primary">Thêm mới</a>
+							<a th:href="@{/train/create}" class="btn btn-primary">Thêm
+								mới</a>
 						</div>
 						<table id="train-table" class="table style-3 dt-table-hover"
 							style="width: 100%">
 							<thead>
 								<tr>
 									<th style="width: 5%">STT</th>
-									<th style="width: 10%">Tên tàu</th>
+									<th>Tên tàu</th>
 									<th>Số lượng toa</th>
 									<th>Mô tả</th>
+									<th>Trạng thái</th>
 									<th class="no-content" style="width: 5%">Thao tác</th>
 								</tr>
 							</thead>
@@ -69,6 +71,9 @@
 									<td th:text="${train.coachcount}"></td>
 									<td th:text="${train.description}" class="text-truncate"
 										style="max-width: 250px;"></td>
+									<td class="text-truncate" style="max-width: 250px;"><span
+										th:class="'badge ' + ${train.status.badgeClass}"
+										th:text="${train.status.displayName}"></span></td>
 									<td><a th:href="@{/train/edit/{id}(id=${train.id})}"
 										class="bs-tooltip edit" data-bs-toggle="tooltip"
 										data-bs-placement="top"> <svg

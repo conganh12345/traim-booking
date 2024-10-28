@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Train;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.User;
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.enums.CoachStatus;
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.enums.TrainStatus;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.TrainService;
 
 import jakarta.validation.Valid;
@@ -37,7 +39,9 @@ public class TrainController {
 
 	@GetMapping("/create")
 	public String create(Model model) {
-		model.addAttribute("page", "train").addAttribute("train", new Train());
+		model.addAttribute("page", "train")
+			.addAttribute("train", new Train())
+			.addAttribute("trainStatuses", TrainStatus.values());
 
 		return "train/create";
 	}
@@ -62,7 +66,9 @@ public class TrainController {
 	public String edit(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
 		Train train = trainService.getTrainById(id);
 
-		model.addAttribute("page", "train").addAttribute("train", train);
+		model.addAttribute("page", "train")
+			.addAttribute("train", train)
+			.addAttribute("trainStatuses", TrainStatus.values());
 
 		return "train/edit";
 	}

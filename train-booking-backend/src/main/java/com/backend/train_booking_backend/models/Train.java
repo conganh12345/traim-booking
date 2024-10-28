@@ -3,6 +3,8 @@ package com.backend.train_booking_backend.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.backend.train_booking_backend.models.enums.BookingStatus;
+import com.backend.train_booking_backend.models.enums.TrainStatus;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -13,6 +15,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -36,6 +40,9 @@ public class Train {
 
 	@Column
 	private String description;
+	
+	@Enumerated(EnumType.STRING)
+	private TrainStatus status;
 
 	@OneToMany(mappedBy = "train", cascade = CascadeType.ALL)
 	@JsonManagedReference
@@ -90,5 +97,21 @@ public class Train {
 
 	public void setSchedules(List<Schedule> schedules) {
 		this.schedules = schedules;
+	}
+	
+	public TrainStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(TrainStatus status) {
+		this.status = status;
+	}
+
+	public List<Coach> getCoachs() {
+		return coachs;
+	}
+
+	public void setCoachs(List<Coach> coachs) {
+		this.coachs = coachs;
 	}
 }
