@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
@@ -40,15 +41,15 @@ public class Schedule {
 
 	@ManyToOne
 	@JoinColumn(name = "station_id")
-	@JsonBackReference("station-schedules")  
 	private Station station;
 
 	@OneToMany(mappedBy = "schedule")
-	@JsonManagedReference(value = "schedule-booking")
+	@JsonIgnore
 	private List<Booking> bookings = new ArrayList<>();
 
 	@ManyToMany
 	@JoinTable(name = "schedule_train", joinColumns = @JoinColumn(name = "schedule_id"), inverseJoinColumns = @JoinColumn(name = "train_id"))
+	@JsonBackReference(value = "train-schedules") 
 	private List<Train> trains = new ArrayList<>();
 
 	public Integer getId() {

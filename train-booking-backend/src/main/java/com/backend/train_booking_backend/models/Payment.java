@@ -39,7 +39,7 @@ public class Payment {
 	private LocalDateTime paymentTime;
 
 	@OneToMany(mappedBy = "payment")
-	@JsonManagedReference(value = "payment-booking")
+	@JsonIgnore
 	private List<Booking> bookings = new ArrayList<>();
 
 	public List<Booking> getBookings() {

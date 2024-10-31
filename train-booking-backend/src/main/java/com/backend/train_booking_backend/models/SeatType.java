@@ -29,7 +29,6 @@ public class SeatType {
 
 	@ManyToOne
 	@JoinColumn(name = "coach_id")
-	@JsonBackReference("coach-seats")  
 	private Coach coach;
 
 	public Integer getId() {

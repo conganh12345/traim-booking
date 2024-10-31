@@ -45,10 +45,11 @@ public class Train {
 	private TrainStatus status;
 
 	@OneToMany(mappedBy = "train", cascade = CascadeType.ALL)
-	@JsonManagedReference
+	@JsonIgnore
 	private List<Coach> coachs = new ArrayList<>();
 
 	@ManyToMany(mappedBy = "trains")
+	@JsonManagedReference(value = "train-schedules") 
 	private List<Schedule> schedules = new ArrayList<>();
 
 	public Integer getId() {
@@ -83,13 +84,6 @@ public class Train {
 		this.description = description;
 	}
 
-	public List<Coach> getDetails() {
-		return coachs;
-	}
-
-	public void setDetails(List<Coach> details) {
-		this.coachs = details;
-	}
 
 	public List<Schedule> getSchedules() {
 		return schedules;

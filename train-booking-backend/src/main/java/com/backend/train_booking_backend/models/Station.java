@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
@@ -31,7 +32,7 @@ public class Station {
 	private String description;
 
 	@OneToMany(mappedBy = "station")
-	@JsonManagedReference("station-schedules")
+	@JsonIgnore
 	private List<Schedule> schedules = new ArrayList<>();
 
 	public Integer getId() {

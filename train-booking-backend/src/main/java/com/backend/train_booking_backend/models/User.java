@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
@@ -44,7 +45,7 @@ public class User {
 	private LocalDateTime updatedTime;
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-	@JsonManagedReference(value = "user-booking")
+	@JsonIgnore
 	private List<Booking> bookings = new ArrayList<>();
 
 	public Integer getId() {

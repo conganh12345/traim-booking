@@ -3,6 +3,7 @@ package com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.m
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.enums.CoachStatus;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.enums.TrainStatus;
 
+import jakarta.validation.constraints.AssertFalse.List;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -25,7 +26,7 @@ public class Train {
     
 	@NotNull(message = "Trạng thái không được để trống")
 	private TrainStatus status;
-	
+		
 	public Integer getId() {
 		return id;
 	}

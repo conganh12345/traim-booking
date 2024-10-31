@@ -49,7 +49,6 @@ public class Booking {
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
-	@JsonBackReference(value = "user-booking")
 	private User user;
 
 	@OneToMany(mappedBy = "booking", fetch = FetchType.LAZY)
@@ -58,12 +57,10 @@ public class Booking {
 
 	@ManyToOne
 	@JoinColumn(name = "payment_id")
-	@JsonBackReference(value = "payment-booking")
 	private Payment payment;
 
 	@ManyToOne
 	@JoinColumn(name = "schedule_id")
-	@JsonBackReference(value = "schedule-booking")
 	private Schedule schedule;
 
 	public User getUser() {

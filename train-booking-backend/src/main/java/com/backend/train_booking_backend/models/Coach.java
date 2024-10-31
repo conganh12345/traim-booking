@@ -7,6 +7,7 @@ import com.backend.train_booking_backend.models.enums.CoachStatus;
 import com.backend.train_booking_backend.models.enums.TicketStatus;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -25,6 +26,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "coach")
+
 public class Coach {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,11 +46,10 @@ public class Coach {
 
 	@ManyToOne
 	@JoinColumn(name = "train_id")
-	@JsonBackReference
 	private Train train;
 
 	@OneToMany(mappedBy = "coach")
-	@JsonManagedReference("coach-seats")
+	@JsonIgnore
 	private List<SeatType> seatTypes = new ArrayList<>();
 
 	public Integer getId() {
