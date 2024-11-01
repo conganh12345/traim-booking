@@ -49,7 +49,7 @@ public class Schedule {
 
 	@ManyToMany
 	@JoinTable(name = "schedule_train", joinColumns = @JoinColumn(name = "schedule_id"), inverseJoinColumns = @JoinColumn(name = "train_id"))
-	@JsonBackReference(value = "train-schedules") 
+	@JsonIgnore
 	private List<Train> trains = new ArrayList<>();
 
 	public Integer getId() {

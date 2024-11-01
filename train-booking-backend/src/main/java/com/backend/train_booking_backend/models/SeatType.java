@@ -1,9 +1,13 @@
 package com.backend.train_booking_backend.models;
 
+import com.backend.train_booking_backend.models.enums.CoachStatus;
+import com.backend.train_booking_backend.models.enums.SeatTypeStatus;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,8 +28,8 @@ public class SeatType {
 	@Column
 	private int seatPosition;
 
-	@Column
-	private int status;
+	@Enumerated(EnumType.STRING)
+	private SeatTypeStatus status;
 
 	@ManyToOne
 	@JoinColumn(name = "coach_id")
@@ -55,11 +59,11 @@ public class SeatType {
 		this.seatPosition = seatPosition;
 	}
 
-	public int getStatus() {
+	public SeatTypeStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(SeatTypeStatus status) {
 		this.status = status;
 	}
 

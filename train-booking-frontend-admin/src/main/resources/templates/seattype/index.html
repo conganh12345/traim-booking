@@ -63,6 +63,9 @@
 								</tr>
 							</thead>
 							<tbody>
+								<tr th:if="${#lists.isEmpty(seattypes)}">
+									<td colspan="5" class="text-center">Không có ghế nào</td>
+								</tr>
 								<tr th:each="seattype, stat : ${seattypes}">
 									<td th:text="${stat.count}"></td>
 									<td th:text="${seattype.seatTypeName}"></td>

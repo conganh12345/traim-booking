@@ -25,7 +25,18 @@ public class Coach {
 	@NotNull(message = "Trạng thái không được để trống")
 	private CoachStatus status;  
 	 
-    private Train train;  
+	@NotNull(message = "Toa không được để trống")
+    private Integer trainId;  
+	
+	private Train train; 
+
+    public Integer getTrainId() {
+		return trainId;
+	}
+
+	public void setTrainId(Integer trainId) {
+		this.trainId = trainId;
+	} 
 
 	public Integer getId() {
 		return id;

@@ -56,12 +56,16 @@
 									<div class="col-md-6">
 										<div class="form-group mb-4">
 											<label for="trainId">Chọn tàu <strong
-												class="text-danger">*</strong></label> <select name="trainId"
+												class="text-danger">*</strong></label> 
+												<select 
+												th:field="*{trainId}"
 												id="trainId" class="form-control">
 												<option value="" selected>Chọn</option>
 												<option th:each="train : ${trains}" th:value="${train.id}"
 													th:text="${train.trainname}"></option>
 											</select> 
+											<span th:if="${#fields.hasErrors('trainId')}"
+												class="text-danger" th:errors="*{trainId}"></span>
 										</div>
 									</div>
 								</div>

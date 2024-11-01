@@ -13,48 +13,62 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Coach;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.SeatType;
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.enums.CoachStatus;
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.enums.SeatTypeStatus;
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.CoachService;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.SeatTypeService;
+
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/seattype")
 public class SeatTypeController {
 	@Autowired
 	private SeatTypeService seattypeService;
-
-	@GetMapping("/index")
-	public String index(Model model) {
-		List<SeatType> seattypes = seattypeService.getAllSeatTypes();
-
-		model.addAttribute("page", "seattype").addAttribute("seattypes", seattypes);
-
-		return "seattype/index";
-	}
+	@Autowired
+	private CoachService coachService;
 
 	@GetMapping("/create")
-	public String create(Model model) {
-		model.addAttribute("page", "seattype");
+	public String create(@RequestParam("coachId") Integer coachId, Model model) {		
+		model.addAttribute("page", "coach")
+		.addAttribute("seattype", new SeatType())
+		.addAttribute("seattypeStatuses", SeatTypeStatus.values())
+		.addAttribute("coachId", coachId);
 
 		return "seattype/create";
 	}
 
 	@PostMapping("/create")
-	public String create(@ModelAttribute() SeatType seattype, BindingResult result, Model model,
+	public String create(@Valid @ModelAttribute("seattype") SeatType seattype, BindingResult result, Model model,
 			RedirectAttributes redirectAttributes) {
+		if (result.hasErrors()) {
+			model.addAttribute("page", "coach");
+			
+	        return "seattype/create"; 
+	    }
+		Coach coach = coachService.getCoachById(seattype.getCoachId());
+		seattype.setCoach(coach);
+		
 		if (seattypeService.addSeatType(seattype)) {
 			redirectAttributes.addFlashAttribute("success", "Thêm mới ghế thành công!");
 		} else {
 			redirectAttributes.addFlashAttribute("error", "Thêm mới ghế thất bại!");
 		}
-		return "redirect:/seattype/index";
+		return "redirect:/coach/show/" + seattype.getCoachId();
 	}
 
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
 		SeatType seattype = seattypeService.getSeatTypeById(id);
 
-		model.addAttribute("page", "seattype").addAttribute("seattype", seattype);
+		model.addAttribute("page", "seattype")
+			.addAttribute("seattype", seattype)
+			.addAttribute("seattypeStatuses", SeatTypeStatus.values());
 
 		return "seattype/edit";
 	}
@@ -62,6 +76,8 @@ public class SeatTypeController {
 	@PostMapping("/update/{id}")
 	public String update(@PathVariable Integer id, @ModelAttribute SeatType seattype, BindingResult result,
 			RedirectAttributes redirectAttributes) {
+		Coach coach = coachService.getCoachById(seattype.getCoachId());
+		seattype.setCoach(coach);
 		seattype.setId(id);
 		if (seattypeService.updateSeatType(seattype)) {
 			redirectAttributes.addFlashAttribute("success", "Cập nhật ghế thành công!");

@@ -1,7 +1,10 @@
 package com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models;
 
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.enums.SeatTypeStatus;
+
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class SeatType {
@@ -11,12 +14,32 @@ public class SeatType {
     @Size(min = 3, max = 50, message = "Tên loại ghế phải có độ dài từ 3 đến 50 ký tự")
     private String seatTypeName;
 
-	@NotEmpty(message = "Vị trí ghế không được để trống")
+	@NotNull(message = "Vị trí ghế không được để trống")
     @Min(value = 1, message = "Vị trí ghế phải lớn hơn hoặc bằng 1")
     private int seatPosition;
 
-	@NotEmpty(message = "Trạng thái không được để trống")
-    private int status;
+	@NotNull(message = "Trạng thái không được để trống")
+    private SeatTypeStatus status;
+	
+	private Integer coachId;
+	
+	public Coach getCoach() {
+		return coach;
+	}
+
+	public void setCoach(Coach coach) {
+		this.coach = coach;
+	}
+
+	private Coach coach;
+
+	public Integer getCoachId() {
+		return coachId;
+	}
+
+	public void setCoachId(Integer coachId) {
+		this.coachId = coachId;
+	}
 
 	public Integer getId() {
 		return id;
@@ -42,11 +65,11 @@ public class SeatType {
 		this.seatPosition = seatPosition;
 	}
 
-	public int getStatus() {
+	public SeatTypeStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(SeatTypeStatus status) {
 		this.status = status;
 	}
 	

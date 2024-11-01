@@ -33,6 +33,7 @@ public class CoachService implements ICoachService {
 		try {
 			return coachRepo.save(coach);
 		} catch (Exception e) {
+			 e.printStackTrace(); 
 			throw new RuntimeException("Đã xảy ra lỗi khi thêm toa.", e);
 		}
 	}

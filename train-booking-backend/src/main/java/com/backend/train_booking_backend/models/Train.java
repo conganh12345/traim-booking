@@ -27,6 +27,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "train")
+@JsonIgnoreProperties("coachs") 
 public class Train {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,7 +50,7 @@ public class Train {
 	private List<Coach> coachs = new ArrayList<>();
 
 	@ManyToMany(mappedBy = "trains")
-	@JsonManagedReference(value = "train-schedules") 
+	@JsonIgnore
 	private List<Schedule> schedules = new ArrayList<>();
 
 	public Integer getId() {

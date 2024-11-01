@@ -32,6 +32,7 @@ public class SeatTypeService implements ISeatTypeService {
 		try {
 			return seatTypeRepo.save(seattype);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new RuntimeException("Đã xảy ra lỗi khi thêm loại ghế.", e);
 		}
 	}

@@ -17,11 +17,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Booking;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Coach;
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.SeatType;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Ticket;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Train;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.enums.CoachStatus;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.enums.TicketStatus;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.CoachService;
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.SeatTypeService;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.TrainService;
 
 import jakarta.validation.Valid;
@@ -33,6 +35,8 @@ public class CoachController {
 	private CoachService coachService;
 	@Autowired
 	private TrainService trainService;
+	@Autowired
+	private SeatTypeService seattypeService;
 
 	@GetMapping("/index")
 	public String index(Model model) {
@@ -62,6 +66,9 @@ public class CoachController {
 			
 	        return "coach/create"; 
 	    }
+		Train train = trainService.getTrainById(coach.getTrainId());
+		
+		coach.setTrain(train);
 		if (coachService.addCoach(coach)) {
 			redirectAttributes.addFlashAttribute("success", "Thêm mới toa thành công!");
 		} else {
@@ -91,6 +98,10 @@ public class CoachController {
 			
 	        return "coach/edit"; 
 	    }
+		
+		Train train = trainService.getTrainById(coach.getTrainId());
+		
+		coach.setTrain(train);
 		if (coachService.updateCoach(coach)) {
 			redirectAttributes.addFlashAttribute("success", "Cập nhật toa thành công!");
 		} else {
@@ -102,9 +113,11 @@ public class CoachController {
 	@GetMapping("/show/{id}")
 	public String show(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
 		Coach coach = coachService.getCoachById(id);
+		List<SeatType> seattypes = seattypeService.getAllSeatTypes();
 
 		model.addAttribute("page", "coach")
-			.addAttribute("coach", coach);
+			.addAttribute("coach", coach)
+			.addAttribute("seattypes", seattypes);
 
 		return "coach/show";
 	}

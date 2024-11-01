@@ -1,5 +1,6 @@
 package com.backend.train_booking_backend.controllers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.backend.train_booking_backend.models.Coach;
 import com.backend.train_booking_backend.models.SeatType;
 import com.backend.train_booking_backend.services.ISeatTypeService;
 
@@ -42,7 +45,7 @@ public class SeatTypeController {
 	public ResponseEntity<List<SeatType>> getAllSeatType() {
 		List<SeatType> seatTypes = seatTypeService.getAllSeatTypes();
 		if (seatTypes.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			seatTypes = new ArrayList<SeatType>();
 		}
 		return new ResponseEntity<>(seatTypes, HttpStatus.OK);
 	}
