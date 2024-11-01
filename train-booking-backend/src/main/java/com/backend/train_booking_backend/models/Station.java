@@ -59,6 +59,14 @@ public class Station {
 		this.address = address;
 	}
 
+	public List<Schedule> getSchedules() {
+		return schedules;
+	}
+
+	public void setSchedules(List<Schedule> schedules) {
+		this.schedules = schedules;
+	}
+
 	public String getDescription() {
 		return description;
 	}
@@ -67,11 +75,5 @@ public class Station {
 		this.description = description;
 	}
 
-	public List<Schedule> getDetails() {
-		return schedules;
-	}
-
-	public void setDetails(List<Schedule> details) {
-		this.schedules = details;
-	}
+	
 }

@@ -18,12 +18,13 @@ public class Coach {
     @Min(value = 1, message = "Số lượng ghế phải lớn hơn hoặc bằng 1")
     private int seatCount;
 
+	@NotEmpty(message = "Mô tả không được để trống")
     @Size(max = 200, message = "Mô tả không được dài quá 200 ký tự")
     private String description;
     
 	@NotNull(message = "Trạng thái không được để trống")
-	private CoachStatus status;
-
+	private CoachStatus status;  
+	 
     private Train train;  
 
 	public Integer getId() {
