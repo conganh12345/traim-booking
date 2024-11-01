@@ -100,6 +100,14 @@ public class Schedule {
 		this.station = station;
 	}
 
+	public List<Booking> getBookings() {
+		return bookings;
+	}
+
+	public void setBookings(List<Booking> bookings) {
+		this.bookings = bookings;
+	}
+
 	public List<Train> getTrains() {
 		return trains;
 	}
@@ -108,11 +116,5 @@ public class Schedule {
 		this.trains = trains;
 	}
 
-	public List<Booking> getDetails() {
-		return bookings;
-	}
-
-	public void setDetails(List<Booking> details) {
-		this.bookings = details;
-	}
+	
 }

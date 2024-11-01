@@ -45,8 +45,10 @@
 					                    <p class="text-muted" th:text="${booking.fullName}"></p>
 					                </div>
 					                <div class="col-md-6 mb-3">
-					                    <strong class="text-dark">Trạng thái:</strong>
-					                    <p class="text-muted" th:text="${booking.status.displayName}"></p>
+					                    <strong class="text-dark">Trạng thái:</strong>					                    
+					                    <span
+										th:class="'badge ' + ${booking.status.badgeClass}"
+										th:text="${booking.status.displayName}"></span>
 					                </div>
 					                <div class="col-md-6 mb-3">
 					                    <strong class="text-dark">Phương thức thanh toán:</strong>

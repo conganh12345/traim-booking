@@ -70,7 +70,9 @@
 									<td th:text="${booking.destinationStation}"></td>
 									<td th:text="${#temporals.format(booking.bookingTime, 'HH:mm, dd/MM/yyyy')}"  class="text-truncate"
 										style="max-width: 250px;"></td>
-									<td th:text="${booking.status.displayName}"></td>
+									<td class="text-truncate" style="max-width: 250px;"><span
+										th:class="'badge ' + ${booking.status.badgeClass}"
+										th:text="${booking.status.displayName}"></span></td>
 									<td>
 									<a th:href="@{/booking/show/{id}(id=${booking.id})}"
 										class="bs-tooltip edit" data-bs-toggle="tooltip"
