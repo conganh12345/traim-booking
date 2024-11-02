@@ -181,32 +181,41 @@
 																<td th:text="${seat.id}"></td>
 																<td th:text="${seat.seatTypeName}"></td>
 																<td><span
-															th:class="'badge ' + ${seat.status.badgeClass}"
-															th:text="${seat.status.displayName}"></span></td>
+																	th:class="'badge ' + ${seat.status.badgeClass}"
+																	th:text="${seat.status.displayName}"></span></td>
 																<td class="text-center">
-																  <div class="action-btns"><a
-																	th:href="@{/seattype/edit/{id}(id=${seat.id})}"
-																	  class="action-btn btn-edit btn-edit-phone bs-tooltip me-2" data-bs-toggle="tooltip"
-																	data-bs-placement="top">   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                            stroke-linecap="round" stroke-linejoin="round"
-                                                            class="feather feather-edit-2">
-                                                            <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+																	<div class="action-btns">
+																		<a th:href="@{/seattype/edit/{id}(id=${seat.id}, coachId=${coach.id})}"
+																			class="action-btn btn-edit btn-edit-phone bs-tooltip me-2"
+																			data-bs-toggle="tooltip" data-bs-placement="top">
+																			<svg xmlns="http://www.w3.org/2000/svg" width="24"
+																				height="24" viewBox="0 0 24 24" fill="none"
+																				stroke="currentColor" stroke-width="2"
+																				stroke-linecap="round" stroke-linejoin="round"
+																				class="feather feather-edit-2">
+                                                            <path
+																					d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
                                                         </svg>
-																</a> <a href="#"   class="action-btn btn-delete bs-tooltip"
-																	
-																	data-bs-toggle="tooltip" data-bs-placement="top"> 
-																	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                            stroke-linecap="round" stroke-linejoin="round"
-                                                            class="feather feather-trash-2">
-                                                        <polyline points="3 6 5 6 21 6"></polyline>
-                                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                                        <line x1="10" y1="11" x2="10" y2="17"></line>
-                                                        <line x1="14" y1="11" x2="14" y2="17"></line>
+																		</a> <a href="#" class="action-btn btn-delete"
+																			th:data-seat-id="${seat.id}" data-bs-toggle="tooltip"
+																			data-bs-placement="top"> <svg
+																				xmlns="http://www.w3.org/2000/svg" width="24"
+																				height="24" viewBox="0 0 24 24" fill="none"
+																				stroke="currentColor" stroke-width="2"
+																				stroke-linecap="round" stroke-linejoin="round"
+																				class="feather feather-trash-2">
+                                                        <polyline
+																					points="3 6 5 6 21 6"></polyline>
+                                                        <path
+																					d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                        <line x1="10"
+																					y1="11" x2="10" y2="17"></line>
+                                                        <line x1="14"
+																					y1="11" x2="14" y2="17"></line>
                                                         </svg>
-																</a>
-																</div></td>
+																		</a>
+																	</div>
+																</td>
 
 															</tr>
 														</tbody>
@@ -224,15 +233,58 @@
 				</div>
 			</div>
 		</div>
-
+	</div>
 		<!--  BEGIN CUSTOM SCRIPTS FILE  -->
 		<div layout:fragment="footerFiles">
 			<script src="/plugins/tomSelect/tom-select.base.js"></script>
 			<script src="/plugins/tomSelect/custom-tom-select.js"></script>
 
+			<script>
+				$(document).ready(function() {
+					let seatIdToDelete;
+					console.log("test", 111);
+
+					$('.btn-delete').on('click', function(e) {
+						console.log("test", 111);
+						e.preventDefault();
+						seatIdToDelete = $(this).data('seat-id');
+						$('#deleteModal').modal('show');
+					});
+
+					$('#confirmDelete').on('click', function() {
+						$.ajax({
+							url : `/seattype/delete/${seatIdToDelete}`,
+							type : 'DELETE',
+							success : function(response) {
+
+								Snackbar.show({
+									text : 'Xóa ghế thành công',
+									textColor : '#ddf5f0',
+									backgroundColor : '#00ab55',
+									actionText : 'Bỏ qua',
+									actionTextColor : '#3b3f5c'
+								});
+
+								location.reload();
+							},
+							error : function() {
+								Snackbar.show({
+									text : 'Xóa ghế thất bại',
+									textColor : '#fbeced',
+									backgroundColor : '#e7515a',
+									actionText : 'Bỏ qua',
+									actionTextColor : '#3b3f5c'
+								});
+							}
+						});
+						$('#deleteModal').modal('hide');
+					});
+				});
+			</script>
 
 		</div>
-		<!--  END CUSTOM SCRIPTS FILE  -->
+	</div>
+	<!--  END CUSTOM SCRIPTS FILE  -->
 </body>
 
 </html>

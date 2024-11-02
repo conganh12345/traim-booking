@@ -63,12 +63,13 @@ public class SeatTypeController {
 	}
 
 	@GetMapping("/edit/{id}")
-	public String edit(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
+	public String edit(@RequestParam("coachId") Integer coachId, @PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
 		SeatType seattype = seattypeService.getSeatTypeById(id);
 
 		model.addAttribute("page", "seattype")
 			.addAttribute("seattype", seattype)
-			.addAttribute("seattypeStatuses", SeatTypeStatus.values());
+			.addAttribute("seattypeStatuses", SeatTypeStatus.values())
+			.addAttribute("coachId", coachId);
 
 		return "seattype/edit";
 	}
@@ -84,7 +85,7 @@ public class SeatTypeController {
 		} else {
 			redirectAttributes.addFlashAttribute("error", "Cập nhật ghế thất bại!");
 		}
-		return "redirect:/seattype/index";
+		return "redirect:/coach/show/" + seattype.getCoachId();
 	}
 
 	@DeleteMapping("/delete/{id}")

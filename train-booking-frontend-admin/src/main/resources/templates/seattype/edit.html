@@ -14,8 +14,8 @@
 					<li class="breadcrumb-item"><a href="#">Toa</a></li>
 					<li class="breadcrumb-item" aria-current="page"><a
 						th:href="@{/coach/index}">Quản lý toa</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a th:href="@{/coach/show/{id}(id=${coachId})}"> Chi
-						tiết toa</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a
+						th:href="@{/coach/show/{id}(id=${coachId})}"> Chi tiết toa</a></li>
 					<li class="breadcrumb-item active" aria-current="page">Chỉnh
 						sửa ghế</li>
 				</ol>
@@ -24,7 +24,8 @@
 		<!-- /BREADCRUMB -->
 
 		<div class="layout-top-spacing col-12">
-		    <a th:href="@{/coach/show/{id}(id=${coachId})}" class="btn"> Trở lại </a>
+			<a th:href="@{/coach/show/{id}(id=${coachId})}" class="btn"> Trở
+				lại </a>
 		</div>
 
 		<div class="row layout-top-spacing">
@@ -41,27 +42,32 @@
 						<div class="col-12">
 							<form th:action="@{/seattype/update/{id}(id=${seattype.id})}"
 								th:object="${seattype}" id="general-settings" method="POST">
-								
+
+								<input type="hidden" th:value="${coachId}" id="coachId"
+									name="coachId" />
+
 								<div class="row">
-								    <div class="col-md-6">
-								        <div class="form-group mb-4">
-								            <label for="seatTypeName">Tên ghế<strong class="text-danger">*</strong></label>
-								            <input type="text" th:field="*{seatTypeName}" id="seatTypeName"
-								                class="form-control" placeholder="Tên ghế" />
-								        </div>
-								    </div>
+									<div class="col-md-6">
+										<div class="form-group mb-4">
+											<label for="seatTypeName">Tên ghế<strong
+												class="text-danger">*</strong></label> <input type="text"
+												th:field="*{seatTypeName}" id="seatTypeName"
+												class="form-control" placeholder="Tên ghế" />
+										</div>
+									</div>
 								</div>
-								
+
 								<div class="row">
-								    <div class="col-md-6">
-								        <div class="form-group mb-4">
-								            <label for="seatPosition">Vị trí ghế<strong class="text-danger">*</strong></label>
-								            <input type="number" th:field="*{seatPosition}" id="seatPosition" class="form-control"
-								                placeholder="Vị trí ghế" />
-								        </div>
-								    </div>
+									<div class="col-md-6">
+										<div class="form-group mb-4">
+											<label for="seatPosition">Vị trí ghế<strong
+												class="text-danger">*</strong></label> <input type="number"
+												th:field="*{seatPosition}" id="seatPosition"
+												class="form-control" placeholder="Vị trí ghế" />
+										</div>
+									</div>
 								</div>
-																
+
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group mb-4">
@@ -77,7 +83,7 @@
 										</div>
 									</div>
 								</div>
-								
+
 
 								<button type="submit" class="btn btn-primary">Hoàn tất</button>
 							</form>
@@ -87,7 +93,6 @@
 			</div>
 		</div>
 	</div>
-
 	<!--  BEGIN CUSTOM SCRIPTS FILE  -->
 	<div layout:fragment="footerFiles"></div>
 	<!--  END CUSTOM SCRIPTS FILE  -->
