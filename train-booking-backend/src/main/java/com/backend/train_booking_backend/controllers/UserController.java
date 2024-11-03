@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.backend.train_booking_backend.models.User;
+import com.backend.train_booking_backend.models.AppUser;
 import com.backend.train_booking_backend.repositories.UserRepository;
 import com.backend.train_booking_backend.services.IUserService;
 
@@ -42,17 +42,17 @@ public class UserController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<User>> getAllUser() {
-		List<User> users = userService.getAllUsers();
+	public ResponseEntity<List<AppUser>> getAllUser() {
+		List<AppUser> users = userService.getAllUsers();
 		if (users.isEmpty()) {
-			users = new ArrayList<User>();
+			users = new ArrayList<AppUser>();
 		}
 		return new ResponseEntity<>(users, HttpStatus.OK);
 	}
 
 	@GetMapping("/id/{id}")
-	public ResponseEntity<User> getUser(@PathVariable Integer id) {
-		User user = userService.getUser(id);
+	public ResponseEntity<AppUser> getUser(@PathVariable Integer id) {
+		AppUser user = userService.getUser(id);
 		if (user == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -60,32 +60,32 @@ public class UserController {
 	}
 
 	@PostMapping
-	public ResponseEntity<User> addUser(@RequestBody User user) {
-		User createdUser = userService.addUser(user);
+	public ResponseEntity<AppUser> addUser(@RequestBody AppUser user) {
+		AppUser createdUser = userService.addUser(user);
 		return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<User> updateUser(@RequestBody User user, @PathVariable Integer id) {
-		User updatedUser = userService.updateUser(id, user);
+	public ResponseEntity<AppUser> updateUser(@RequestBody AppUser user, @PathVariable Integer id) {
+		AppUser updatedUser = userService.updateUser(id, user);
 		if (updatedUser == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<>(updatedUser, HttpStatus.OK);
 	}
 
-	@GetMapping("/{username}")
-	public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
-		User user = userService.getUserByUsername(username);
-		if (user == null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		return new ResponseEntity<>(user, HttpStatus.OK);
-	}
+//	@GetMapping("/{username}")
+//	public ResponseEntity<AppUser> getUserByUsername(@PathVariable String username) {
+//		AppUser user = userService.getUserByUsername(username);
+//		if (user == null) {
+//			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//		}
+//		return new ResponseEntity<>(user, HttpStatus.OK);
+//	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<User> deleteUser(@PathVariable Integer id) {
-		Optional<User> deletedUser = userService.deleteUser(id);
+	public ResponseEntity<AppUser> deleteUser(@PathVariable Integer id) {
+		Optional<AppUser> deletedUser = userService.deleteUser(id);
 		if (deletedUser.isPresent()) {
 			return new ResponseEntity<>(deletedUser.get(), HttpStatus.OK);
 		} else {
@@ -93,19 +93,19 @@ public class UserController {
 		}
 	}
 
-	@GetMapping("/findByEmail/{email}")
-	public ResponseEntity<User> findUserByEmail(@PathVariable String email) {
-		User user = userService.findUserByEmail(email);
-		if (user == null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		return new ResponseEntity<>(user, HttpStatus.OK);
-	}
+//	@GetMapping("/findByEmail/{email}")
+//	public ResponseEntity<AppUser> findUserByEmail(@PathVariable String email) {
+//		AppUser user = userService.findByEmail(email);
+//		if (user == null) {
+//			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//		}
+//		return new ResponseEntity<>(user, HttpStatus.OK);
+//	}
 
 	@GetMapping("/findByEmailAndPassword/{email}/{password}")
-	public ResponseEntity<User> findUserByEmailAndPassword(@PathVariable String email, @PathVariable String password) {
+	public ResponseEntity<AppUser> findUserByEmailAndPassword(@PathVariable String email, @PathVariable String password) {
 
-		User user = userService.findUserByEmailAndPassword(email, password);
+		AppUser user = userService.findUserByEmailAndPassword(email, password);
 		if (user == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}

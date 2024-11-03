@@ -18,13 +18,21 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "user")
-public class User {
+public class AppUser {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@Column
 	private String username;
+	
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
 	@Column
 	private String email;
@@ -37,7 +45,13 @@ public class User {
 
 	@Column
 	private String address;
-
+	
+	@Column
+	private String identifyCard;
+	
+	@Column
+	private String lastToken;
+	
 	@Column
 	private LocalDateTime createdTime;
 
@@ -56,21 +70,13 @@ public class User {
 		this.id = id;
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
+//	public String getEmail() {
+//		return email;
+//	}
+//
+//	public void setEmail(String email) {
+//		this.email = email;
+//	}
 
 	public String getPassword() {
 		return password;
@@ -95,6 +101,26 @@ public class User {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+
+
+	public String getIdentifyCard() {
+		return identifyCard;
+	}
+
+	public void setIdentifyCard(String identifyCard) {
+		this.identifyCard = identifyCard;
+	}
+
+	
+	public String getLastToken() {
+		return lastToken;
+	}
+
+	public void setLastToken(String lastToken) {
+		this.lastToken = lastToken;
+	}
+
+
 
 	public LocalDateTime getCreatedTime() {
 		return createdTime;

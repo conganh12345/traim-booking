@@ -7,7 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.backend.train_booking_backend.models.User;
+import com.backend.train_booking_backend.models.AppUser;
 import com.backend.train_booking_backend.repositories.UserRepository;
 import com.backend.train_booking_backend.services.IUserService;
 
@@ -18,18 +18,18 @@ public class UserService implements IUserService {
 	private UserRepository userRepo;
 
 	@Override
-	public List<User> getAllUsers() {
+	public List<AppUser> getAllUsers() {
 		return userRepo.findAll();
 	}
 
 	@Override
-	public User getUser(Integer id) {
+	public AppUser getUser(Integer id) {
 		return userRepo.findById(id).get();
 	}
 
 	@Override
 	@Transactional
-	public User addUser(User user) {
+	public AppUser addUser(AppUser user) {
 		try {
 			user.setCreatedTime(LocalDateTime.now());
 
@@ -41,9 +41,9 @@ public class UserService implements IUserService {
 
 	@Override
 	@Transactional
-	public User updateUser(Integer id, User user) {
+	public AppUser updateUser(Integer id, AppUser user) {
 		try {
-			Optional<User> oldUserOpt = userRepo.findById(id);
+			Optional<AppUser> oldUserOpt = userRepo.findById(id);
 			if (oldUserOpt.isPresent()) {
 				user.setId(id);
 				user.setCreatedTime(oldUserOpt.get().getCreatedTime());
@@ -56,17 +56,17 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public User getUserByUsername(String username) {
+	public AppUser findUserByUsername(String username) {
 		return userRepo.findUserByUsername(username);
 	}
 
 	@Override
 	@Transactional
-	public Optional<User> deleteUser(Integer id) {
+	public Optional<AppUser> deleteUser(Integer id) {
 	    try {
-	        Optional<User> userOpt = userRepo.findById(id);
+	        Optional<AppUser> userOpt = userRepo.findById(id);
 	        if (userOpt.isPresent()) {
-	            User user = userOpt.get();
+	            AppUser user = userOpt.get();
 	            userRepo.deleteById(id);
 	            return Optional.of(user); 
 	        } else {
@@ -78,25 +78,39 @@ public class UserService implements IUserService {
 	    }
 	}
 	
-	@Override
-	public User findUserByEmail(String email) {
-	    List<User> users = userRepo.findByEmail(email);
+//	@Override
+//	public AppUser findUserByEmail(String email) {
+//	    List<AppUser> users = userRepo.findByEmail(email);
+//
+//	    if (users != null && !users.isEmpty()) {
+//	        return users.get(0);
+//	    }
+//	    
+//	    return null; 
+//	}
+	
+//	@Override
+//	public AppUser findByEmail(String email) {
+//	    AppUser user = userRepo.findByEmail(email);
+//
+//	    if (user != null) {
+//	        return user;
+//	    }
+//	    
+//	    return null; 
+//	}
 
-	    if (users != null && !users.isEmpty()) {
-	        return users.get(0);
-	    }
-	    
-	    return null; 
-	}
-
 	@Override
-	public User findUserByEmailAndPassword(String email, String password) {
-		User user = userRepo.findByEmailAndPassword(email, password);
+	public AppUser findUserByEmailAndPassword(String email, String password) {
+		AppUser user = userRepo.findByEmailAndPassword(email, password);
 		if(user != null) {
 			return user;
 		}
 		return null;
 	}
-
+	
+	public AppUser save(AppUser user) {
+		return userRepo.save(user);
+	}
 	
 }
