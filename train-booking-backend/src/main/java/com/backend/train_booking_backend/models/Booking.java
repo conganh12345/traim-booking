@@ -49,7 +49,7 @@ public class Booking {
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
-	private User user;
+	private AppUser user;
 
 	@OneToMany(mappedBy = "booking", fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "booking-ticket-detail")
@@ -63,11 +63,11 @@ public class Booking {
 	@JoinColumn(name = "schedule_id")
 	private Schedule schedule;
 
-	public User getUser() {
+	public AppUser getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(AppUser user) {
 		this.user = user;
 	}
 

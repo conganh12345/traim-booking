@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.backend.train_booking_backend.models.Coach;
-import com.backend.train_booking_backend.models.User;
+import com.backend.train_booking_backend.models.AppUser;
 import com.backend.train_booking_backend.services.ICoachService;
 
 @RestController

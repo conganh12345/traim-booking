@@ -3,24 +3,28 @@ package com.backend.train_booking_backend.services;
 import java.util.List;
 import java.util.Optional;
 
-import com.backend.train_booking_backend.models.User;
+import com.backend.train_booking_backend.models.AppUser;
 
 public interface IUserService {
-	List<User> getAllUsers();
+	List<AppUser> getAllUsers();
 
-	User getUser(Integer id);
+	AppUser getUser(Integer id);
 
-	User addUser(User user);
+	AppUser addUser(AppUser user);
 
-	User updateUser(Integer id, User user);
+	AppUser updateUser(Integer id, AppUser user);
 
-	User getUserByUsername(String username);
+	AppUser findUserByUsername(String username);
 
 //	List<User> deleteUser(Integer[] ids);
 	
-	User findUserByEmail(String email);
+//	AppUser findUserByEmail(String email);
 	
-	User findUserByEmailAndPassword(String email, String password);
+	AppUser findUserByEmailAndPassword(String email, String password);
 	
-	Optional<User> deleteUser(Integer id);
+	Optional<AppUser> deleteUser(Integer id);
+
+//	AppUser findByEmail(String email);
+	
+	AppUser save(AppUser user);
 }
