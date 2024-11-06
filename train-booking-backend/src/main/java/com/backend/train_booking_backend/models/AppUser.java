@@ -13,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "user")
@@ -39,7 +40,7 @@ public class AppUser {
 	@Column
 	private String identifyCard;
 
-	@Column
+	@Column(length = 512)
 	private String lastToken;
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
