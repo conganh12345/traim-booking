@@ -11,10 +11,11 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<AppUser, Integer> {
-	public AppUser findUserByUsername(String username);
+//	public AppUser findUserByUsername(String username);
 
 	public AppUser findByEmailAndPassword(String email, String password);
 
-	public AppUser findByEmail(String email);
+//	public AppUser findByEmail(String email);
+	public AppUser findUserByEmail(String email);
 
 }

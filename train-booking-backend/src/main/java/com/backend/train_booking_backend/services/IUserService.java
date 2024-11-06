@@ -14,11 +14,11 @@ public interface IUserService {
 
 	AppUser updateUser(Integer id, AppUser user);
 
-	AppUser findUserByUsername(String username);
+//	AppUser findUserByUsername(String username);
 
 	// List<User> deleteUser(Integer[] ids);
 
-	// AppUser findUserByEmail(String email);
+	AppUser findUserByEmail(String email);
 
 	AppUser findUserByEmailAndPassword(String email, String password);
 

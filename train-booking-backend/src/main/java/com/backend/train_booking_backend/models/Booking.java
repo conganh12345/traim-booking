@@ -29,6 +29,9 @@ public class Booking {
 
 	@Column
 	private String totalPrice;
+	
+	@Column
+	private String code;
 
 	@Column
 	private LocalDateTime bookingTime;
