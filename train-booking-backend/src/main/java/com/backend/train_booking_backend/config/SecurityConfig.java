@@ -32,10 +32,19 @@ public class SecurityConfig {
 	    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 	        http.csrf(AbstractHttpConfigurer::disable) // Tắt CSRF
 	            .authorizeHttpRequests(auth -> auth
-	                .requestMatchers("/api/auth/**").permitAll() // Cho phép truy cập các endpoint công khai
-	                .requestMatchers("/api/test/**").permitAll() // Endpoint test cũng được phép truy cập
-	                .anyRequest().authenticated()) // Các endpoint khác yêu cầu xác thực
-	            .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class); // Thêm jwtRequestFilter vào chuỗi
+	            		// Cho phép truy cập các endpoint công khai
+	                .requestMatchers("/api/auth/**").permitAll() 
+	                .requestMatchers("/api/user/**").permitAll()
+	                .requestMatchers("/api/booking/**").permitAll()
+	                .requestMatchers("/api/coach/**").permitAll()
+	                .requestMatchers("/api/route/**").permitAll()
+	                .requestMatchers("/api/schedule/**").permitAll()
+	                .requestMatchers("/api/station/**").permitAll()
+	                .requestMatchers("/api/ticket/**").permitAll()
+	                .requestMatchers("/api/train/**").permitAll()
+	                .requestMatchers("/api/seatype/**").permitAll()
+	                .anyRequest().authenticated()) 
+	            .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class); 
 
 	        return http.build(); // Xây dựng SecurityFilterChain
 	    }

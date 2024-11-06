@@ -37,7 +37,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		// Kiểm tra xem header có tồn tại và bắt đầu bằng "Bearer "
 		if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
 			jwt = authorizationHeader.substring(7); // Bỏ tiền tố "Bearer "
-			username = jwtUtils.extractUsername(jwt); // Lấy username từ token
+			username = jwtUtils.extractEmail(jwt); // Lấy username từ token
 		}
 
 		// Nếu username không null và chưa xác thực

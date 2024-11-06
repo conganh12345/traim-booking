@@ -16,6 +16,8 @@ import com.backend.train_booking_backend.security.JwtUtils;
 import com.backend.train_booking_backend.services.IUserService;
 import com.backend.train_booking_backend.services.impl.UserDetailsServiceImplement;
 
+import io.jsonwebtoken.Claims;
+
 
 @RestController
 @RequestMapping("/api/auth")
@@ -35,11 +37,11 @@ public class AuthController {
 
     public static String token;
     
-    @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getUsername());
+    @PostMapping("/generateToken")
+    public ResponseEntity<String> generateToken(@RequestBody LoginRequest loginRequest) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
         if (userDetails != null && passwordEncoder.matches(loginRequest.getPassword(), userDetails.getPassword())) {
-            AppUser user = userService.findUserByUsername(loginRequest.getUsername());
+            AppUser user = userService.findUserByEmail(loginRequest.getEmail());
             
             // Tạo token chứa thông tin từ AppUser
             token = jwtUtil.generateToken(user);
@@ -48,16 +50,49 @@ public class AuthController {
             user.setLastToken(token);
             userService.save(user);
 
+            
+            
             return ResponseEntity.ok(token);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+        }
+    }
+    
+    
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
+        AppUser user = userService.findUserByEmail(loginRequest.getEmail());
+
+        if (user != null && userDetails != null && passwordEncoder.matches(loginRequest.getPassword(), userDetails.getPassword())) {
+            // Generate token and store it
+            String token = jwtUtil.generateToken(user);
+            user.setLastToken(token);
+            userService.save(user);
+
+            if (token == null || !jwtUtil.isTokenValid(token)) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            }
+
+            Claims claims = jwtUtil.extractAllClaims(token);
+
+            AppUser userLogin = new AppUser();
+            if (claims != null) {
+                userLogin.setEmail(claims.get("email", String.class));
+                userLogin.setPhoneNumber(claims.get("phoneNumber", String.class));
+                userLogin.setAddress(claims.get("address", String.class));
+            }
+            
+            return ResponseEntity.ok(userLogin);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody AppUser user) {
         // Check if the username already exists
-        if (userService.findUserByUsername(user.getUsername()) != null) {
+        if (userService.findUserByEmail(user.getEmail()) != null) {
             return ResponseEntity.status(400).body("Username already exists");
         }
 

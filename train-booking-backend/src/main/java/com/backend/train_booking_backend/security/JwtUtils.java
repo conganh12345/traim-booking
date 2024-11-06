@@ -33,7 +33,7 @@ public class JwtUtils {
 //        return builder.compact();
 //    }
 
-    public String extractUsername(String token) {
+    public String extractEmail(String token) {
         Claims claims = Jwts.parser()
             .setSigningKey(SECRET_KEY)
             .parseClaimsJws(token)
@@ -45,14 +45,14 @@ public class JwtUtils {
     
     public String generateToken(AppUser user) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("username", user.getUsername());
+        claims.put("email", user.getEmail());
         claims.put("phoneNumber", user.getPhoneNumber());
 //        claims.put("fullName", user.getFullName());
         claims.put("address", user.getAddress());
 
         return Jwts.builder()
             .setClaims(claims)
-            .setSubject(user.getUsername())
+            .setSubject(user.getEmail())
             .setIssuedAt(new Date())
             .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
             .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
@@ -67,8 +67,8 @@ public class JwtUtils {
     
 
     public boolean validateToken(String token, UserDetails userDetails) {
-        String username = extractUsername(token);
-        AppUser user = userRepository.findUserByUsername(username);
+        String username = extractEmail(token);
+        AppUser user = userRepository.findUserByEmail(username);
 
         // Kiểm tra token trong yêu cầu có khớp với token gần nhất đã lưu không
         if (user == null || !token.equals(user.getLastToken())) {
