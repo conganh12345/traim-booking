@@ -1,23 +1,18 @@
 package com.backend.train_booking_backend.models;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 
 @Entity
@@ -28,29 +23,26 @@ public class Schedule {
 	private Integer id;
 
 	@Column
-	private LocalDateTime departureDate;
+	private String scheduleName;
+
+	@Column
+	private String departureStation ;
 
 	@Column
 	private String destinationStation;
 
 	@Column
-	private String scheduleName;
+	private LocalDateTime departureDate;
 
 	@Column
 	private LocalDateTime estimateArrivalDate;
-
+	
 	@ManyToOne
-	@JoinColumn(name = "station_id")
-	private Station station;
-
-	@OneToMany(mappedBy = "schedule")
-	@JsonIgnore
-	private List<Booking> bookings = new ArrayList<>();
-
-	@ManyToMany
-	@JoinTable(name = "schedule_train", joinColumns = @JoinColumn(name = "schedule_id"), inverseJoinColumns = @JoinColumn(name = "train_id"))
-	@JsonIgnore
-	private List<Train> trains = new ArrayList<>();
+    @JoinColumn(name="train_id", nullable=false)
+    private Train train;
+	
+	@OneToOne(mappedBy = "schedule", cascade = CascadeType.ALL)
+    private Booking booking;
 
 	public Integer getId() {
 		return id;
@@ -58,6 +50,30 @@ public class Schedule {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public String getScheduleName() {
+		return scheduleName;
+	}
+
+	public void setScheduleName(String scheduleName) {
+		this.scheduleName = scheduleName;
+	}
+
+	public String getDepartureStation() {
+		return departureStation;
+	}
+
+	public void setDepartureStation(String departureStation) {
+		this.departureStation = departureStation;
+	}
+
+	public String getDestinationStation() {
+		return destinationStation;
+	}
+
+	public void setDestinationStation(String destinationStation) {
+		this.destinationStation = destinationStation;
 	}
 
 	public LocalDateTime getDepartureDate() {
@@ -68,22 +84,6 @@ public class Schedule {
 		this.departureDate = departureDate;
 	}
 
-	public String getDestinationStation() {
-		return destinationStation;
-	}
-
-	public void setDestinationStation(String destinationStation) {
-		this.destinationStation = destinationStation;
-	}
-	
-	public String getScheduleName() {
-		return scheduleName;
-	}
-
-	public void setScheduleName(String scheduleName) {
-		this.scheduleName = scheduleName;
-	}
-
 	public LocalDateTime getEstimateArrivalDate() {
 		return estimateArrivalDate;
 	}
@@ -92,29 +92,19 @@ public class Schedule {
 		this.estimateArrivalDate = estimateArrivalDate;
 	}
 
-	public Station getStation() {
-		return station;
+	public Train getTrain() {
+		return train;
 	}
 
-	public void setStation(Station station) {
-		this.station = station;
+	public void setTrain(Train train) {
+		this.train = train;
 	}
 
-	public List<Booking> getBookings() {
-		return bookings;
+	public Booking getBooking() {
+		return booking;
 	}
 
-	public void setBookings(List<Booking> bookings) {
-		this.bookings = bookings;
+	public void setBooking(Booking booking) {
+		this.booking = booking;
 	}
-
-	public List<Train> getTrains() {
-		return trains;
-	}
-
-	public void setTrains(List<Train> trains) {
-		this.trains = trains;
-	}
-
-	
 }

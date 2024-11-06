@@ -1,12 +1,13 @@
 package com.backend.train_booking_backend.services.impl;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.backend.train_booking_backend.models.Schedule;
 import com.backend.train_booking_backend.repositories.ScheduleRepository;
 import com.backend.train_booking_backend.services.IScheduleService;
@@ -59,10 +60,7 @@ public class ScheduleService implements IScheduleService {
 		}
 	}
 
-	@Override
-	public Schedule getScheduleByScheduleName(String schedulename) {
-		return scheduleRepo.findScheduleByScheduleName(schedulename);
-	}
+
 
 	@Override
 	@Transactional
@@ -72,7 +70,7 @@ public class ScheduleService implements IScheduleService {
 	        if (scheduleOpt.isPresent()) {
 	        	Schedule schedule = scheduleOpt.get();
 	            scheduleRepo.deleteById(id);
-	            return Optional.of(schedule); 
+	            return Optional.of(schedule);
 	        } else {
 	            System.out.println("Schedule with ID " + id + " not found.");
 	            return Optional.empty();

@@ -1,7 +1,6 @@
 package com.backend.train_booking_backend.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.backend.train_booking_backend.models.Booking;
 
@@ -14,7 +13,6 @@ public interface IBookingService {
 
 	Booking updateBooking(Integer id, Booking booking);
 
-	Booking getBookingByFullName(String fullname);
 
 	boolean deleteBooking(Integer id);
 }

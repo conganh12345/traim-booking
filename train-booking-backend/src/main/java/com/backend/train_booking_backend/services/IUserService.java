@@ -16,15 +16,15 @@ public interface IUserService {
 
 	AppUser findUserByUsername(String username);
 
-//	List<User> deleteUser(Integer[] ids);
-	
-//	AppUser findUserByEmail(String email);
-	
+	// List<User> deleteUser(Integer[] ids);
+
+	// AppUser findUserByEmail(String email);
+
 	AppUser findUserByEmailAndPassword(String email, String password);
-	
+
 	Optional<AppUser> deleteUser(Integer id);
 
-//	AppUser findByEmail(String email);
-	
+	// AppUser findByEmail(String email);
+
 	AppUser save(AppUser user);
 }

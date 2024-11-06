@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
-import jakarta.validation.Valid;
-import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +18,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.backend.train_booking_backend.models.Station;
 import com.backend.train_booking_backend.services.IStationService;
+
+import jakarta.validation.ValidationException;
 
 @RestController
 @Validated
@@ -44,7 +44,7 @@ public class StationController {
 	public ResponseEntity<List<Station>> getAllStation() {
 		List<Station> stations = stationService.getAllStations();
 		if (stations.isEmpty()) {
-			stations = new ArrayList<Station>();
+			stations = new ArrayList<>();
 		}
 		return new ResponseEntity<>(stations, HttpStatus.OK);
 	}
@@ -74,14 +74,7 @@ public class StationController {
 		return new ResponseEntity<>(updatedStation, HttpStatus.OK);
 	}
 
-	@GetMapping("/{stationname}")
-	public ResponseEntity<Station> getStationByStationname(@PathVariable String stationname) {
-		Station station = stationService.getStationByStationname(stationname);
-		if (station == null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		return new ResponseEntity<>(station, HttpStatus.OK);
-	}
+
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Station> deleteStation(@PathVariable Integer id) {

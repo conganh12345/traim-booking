@@ -1,17 +1,15 @@
 package com.backend.train_booking_backend.services.impl;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.backend.train_booking_backend.models.Station;
 import com.backend.train_booking_backend.repositories.StationRepository;
 import com.backend.train_booking_backend.services.IStationService;
-
-import jakarta.validation.ValidationException;
 
 @Service
 public class StationService implements IStationService {
@@ -52,18 +50,15 @@ public class StationService implements IStationService {
 		}
 	}
 
-	@Override
-	public Station getStationByStationname(String stationname) {
-		return stationRepo.findStationByStationname(stationname);
-	}
-	
+
+
 	@Override
 	@Transactional
 	public boolean deleteStation(Integer id) {
 	    try {
 	        if (stationRepo.existsById(id)) {
 	        	stationRepo.deleteById(id);
-	            return true; 
+	            return true;
 	        } else {
 	            System.out.println("Train with ID " + id + " not found.");
 	            return false;

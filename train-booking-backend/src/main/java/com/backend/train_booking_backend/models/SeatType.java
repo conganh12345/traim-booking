@@ -1,39 +1,34 @@
 package com.backend.train_booking_backend.models;
 
-import com.backend.train_booking_backend.models.enums.CoachStatus;
-import com.backend.train_booking_backend.models.enums.SeatTypeStatus;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "seat_type")
+@Table(name = "seattype")
 public class SeatType {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@Column
-	private String seatTypeName;
+	private String seatName;
 
 	@Column
-	private int seatPosition;
+	private double price;
 
-	@Enumerated(EnumType.STRING)
-	private SeatTypeStatus status;
-
-	@ManyToOne
-	@JoinColumn(name = "coach_id")
-	private Coach coach;
+	@OneToMany(mappedBy = "seattype")
+	@JsonIgnore
+	private List<Seat> seat = new ArrayList<>();
 
 	public Integer getId() {
 		return id;
@@ -43,35 +38,27 @@ public class SeatType {
 		this.id = id;
 	}
 
-	public String getSeatTypeName() {
-		return seatTypeName;
+	public String getSeatName() {
+		return seatName;
 	}
 
-	public void setSeatTypeName(String seatTypeName) {
-		this.seatTypeName = seatTypeName;
+	public void setSeatName(String seatName) {
+		this.seatName = seatName;
 	}
 
-	public int getSeatPosition() {
-		return seatPosition;
+	public double getPrice() {
+		return price;
 	}
 
-	public void setSeatPosition(int seatPosition) {
-		this.seatPosition = seatPosition;
+	public void setPrice(double price) {
+		this.price = price;
 	}
 
-	public SeatTypeStatus getStatus() {
-		return status;
+	public List<Seat> getSeats() {
+		return seat;
 	}
 
-	public void setStatus(SeatTypeStatus status) {
-		this.status = status;
-	}
-
-	public Coach getCoach() {
-		return coach;
-	}
-
-	public void setCoach(Coach coach) {
-		this.coach = coach;
+	public void setSeats(List<Seat> seats) {
+		this.seat = seats;
 	}
 }

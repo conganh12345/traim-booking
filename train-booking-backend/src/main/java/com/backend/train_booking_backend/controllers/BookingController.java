@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import jakarta.validation.Valid;
-import jakarta.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +18,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.backend.train_booking_backend.models.Booking;
 import com.backend.train_booking_backend.services.IBookingService;
+
+import jakarta.validation.ValidationException;
 
 @RestController
 @Validated
@@ -43,7 +44,7 @@ public class BookingController {
 	public ResponseEntity<List<Booking>> getAllBooking() {
 		List<Booking> bookings = bookingService.getAllBookings();
 		if (bookings.isEmpty()) {
-			bookings = new ArrayList<Booking>();
+			bookings = new ArrayList<>();
 		}
 		return new ResponseEntity<>(bookings, HttpStatus.OK);
 	}
@@ -72,14 +73,14 @@ public class BookingController {
 		return new ResponseEntity<>(updatedBooking, HttpStatus.OK);
 	}
 
-	@GetMapping("/{fullname}")
-	public ResponseEntity<Booking> getBookingByFullName(@PathVariable String fullname) {
-		Booking booking = bookingService.getBookingByFullName(fullname);
-		if (booking == null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		return new ResponseEntity<>(booking, HttpStatus.OK);
-	}
+//	@GetMapping("/{fullname}")
+//	public ResponseEntity<Booking> getBookingByUserName(@PathVariable String fullname) {
+//		Booking booking = bookingService.getBookingByUserName(fullname);
+//		if (booking == null) {
+//			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//		}
+//		return new ResponseEntity<>(booking, HttpStatus.OK);
+//	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Booking> deleteBooking(@PathVariable Integer id) {

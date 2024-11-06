@@ -5,8 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import jakarta.validation.Valid;
-import jakarta.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +18,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.backend.train_booking_backend.models.AppUser;
 import com.backend.train_booking_backend.repositories.UserRepository;
 import com.backend.train_booking_backend.services.IUserService;
+
+import jakarta.validation.ValidationException;
 
 @RestController
 @Validated
@@ -74,14 +74,15 @@ public class UserController {
 		return new ResponseEntity<>(updatedUser, HttpStatus.OK);
 	}
 
-//	@GetMapping("/{username}")
-//	public ResponseEntity<AppUser> getUserByUsername(@PathVariable String username) {
-//		AppUser user = userService.getUserByUsername(username);
-//		if (user == null) {
-//			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//		}
-//		return new ResponseEntity<>(user, HttpStatus.OK);
-//	}
+	// @GetMapping("/{username}")
+	// public ResponseEntity<AppUser> getUserByUsername(@PathVariable String
+	// username) {
+	// AppUser user = userService.getUserByUsername(username);
+	// if (user == null) {
+	// return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	// }
+	// return new ResponseEntity<>(user, HttpStatus.OK);
+	// }
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<AppUser> deleteUser(@PathVariable Integer id) {
@@ -93,17 +94,18 @@ public class UserController {
 		}
 	}
 
-//	@GetMapping("/findByEmail/{email}")
-//	public ResponseEntity<AppUser> findUserByEmail(@PathVariable String email) {
-//		AppUser user = userService.findByEmail(email);
-//		if (user == null) {
-//			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//		}
-//		return new ResponseEntity<>(user, HttpStatus.OK);
-//	}
+	// @GetMapping("/findByEmail/{email}")
+	// public ResponseEntity<AppUser> findUserByEmail(@PathVariable String email) {
+	// AppUser user = userService.findByEmail(email);
+	// if (user == null) {
+	// return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	// }
+	// return new ResponseEntity<>(user, HttpStatus.OK);
+	// }
 
 	@GetMapping("/findByEmailAndPassword/{email}/{password}")
-	public ResponseEntity<AppUser> findUserByEmailAndPassword(@PathVariable String email, @PathVariable String password) {
+	public ResponseEntity<AppUser> findUserByEmailAndPassword(@PathVariable String email,
+			@PathVariable String password) {
 
 		AppUser user = userService.findUserByEmailAndPassword(email, password);
 		if (user == null) {

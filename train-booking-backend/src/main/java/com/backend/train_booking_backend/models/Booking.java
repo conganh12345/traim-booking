@@ -1,25 +1,23 @@
 package com.backend.train_booking_backend.models;
 
 import java.time.LocalDateTime;
+
+import com.backend.train_booking_backend.models.enums.BookingStatus;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.backend.train_booking_backend.models.enums.BookingStatus;
-import com.backend.train_booking_backend.models.enums.PaymentStatus;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -30,54 +28,24 @@ public class Booking {
 	private Integer id;
 
 	@Column
-	private String fullName;
+	private String totalPrice;
 
 	@Column
 	private LocalDateTime bookingTime;
 
-	@Column
-	private int paymentMethod;
-
 	@Enumerated(EnumType.STRING)
 	private BookingStatus status;
 
-	@Column
-	private String depatureStation;
+	@OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
+	private List<Ticket> tickets = new ArrayList<>();
 
-	@Column
-	private String destinationStation;
+	@OneToOne
+	@JoinColumn(name = "schedule_id")
+	private Schedule schedule;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private AppUser user;
-
-	@OneToMany(mappedBy = "booking", fetch = FetchType.LAZY)
-	@JsonManagedReference(value = "booking-ticket-detail")
-	private List<TicketBookingDetail> ticketBookingDetails = new ArrayList<>();
-
-	@ManyToOne
-	@JoinColumn(name = "payment_id")
-	private Payment payment;
-
-	@ManyToOne
-	@JoinColumn(name = "schedule_id")
-	private Schedule schedule;
-
-	public AppUser getUser() {
-		return user;
-	}
-
-	public void setUser(AppUser user) {
-		this.user = user;
-	}
-
-	public Payment getPayment() {
-		return payment;
-	}
-
-	public void setPayment(Payment payment) {
-		this.payment = payment;
-	}
 
 	public Integer getId() {
 		return id;
@@ -87,12 +55,12 @@ public class Booking {
 		this.id = id;
 	}
 
-	public String getFullName() {
-		return fullName;
+	public String getTotalPrice() {
+		return totalPrice;
 	}
 
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
+	public void setTotalPrice(String totalPrice) {
+		this.totalPrice = totalPrice;
 	}
 
 	public LocalDateTime getBookingTime() {
@@ -103,14 +71,6 @@ public class Booking {
 		this.bookingTime = bookingTime;
 	}
 
-	public int getPaymentMethod() {
-		return paymentMethod;
-	}
-
-	public void setPaymentMethod(int paymentMethod) {
-		this.paymentMethod = paymentMethod;
-	}
-
 	public BookingStatus getStatus() {
 		return status;
 	}
@@ -119,28 +79,12 @@ public class Booking {
 		this.status = status;
 	}
 
-	public String getDepatureStation() {
-		return depatureStation;
+	public List<Ticket> getTickets() {
+		return tickets;
 	}
 
-	public void setDepatureStation(String depatureStation) {
-		this.depatureStation = depatureStation;
-	}
-
-	public String getDestinationStation() {
-		return destinationStation;
-	}
-
-	public void setDestinationStation(String destinationStation) {
-		this.destinationStation = destinationStation;
-	}
-
-	public List<TicketBookingDetail> getDetails() {
-		return ticketBookingDetails;
-	}
-
-	public void setDetails(List<TicketBookingDetail> details) {
-		this.ticketBookingDetails = details;
+	public void setTickets(List<Ticket> tickets) {
+		this.tickets = tickets;
 	}
 
 	public Schedule getSchedule() {
@@ -149,5 +93,13 @@ public class Booking {
 
 	public void setSchedule(Schedule schedule) {
 		this.schedule = schedule;
+	}
+
+	public AppUser getUser() {
+		return user;
+	}
+
+	public void setUser(AppUser user) {
+		this.user = user;
 	}
 }

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 //import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -63,54 +64,54 @@ public class UserService implements IUserService {
 	@Override
 	@Transactional
 	public Optional<AppUser> deleteUser(Integer id) {
-	    try {
-	        Optional<AppUser> userOpt = userRepo.findById(id);
-	        if (userOpt.isPresent()) {
-	            AppUser user = userOpt.get();
-	            userRepo.deleteById(id);
-	            return Optional.of(user); 
-	        } else {
-	            System.out.println("User with ID " + id + " not found.");
-	            return Optional.empty();
-	        }
-	    } catch (Exception e) {
-	        throw new RuntimeException("Đã xảy ra lỗi khi xóa người dùng.", e);
-	    }
+		try {
+			Optional<AppUser> userOpt = userRepo.findById(id);
+			if (userOpt.isPresent()) {
+				AppUser user = userOpt.get();
+				userRepo.deleteById(id);
+				return Optional.of(user);
+			} else {
+				System.out.println("User with ID " + id + " not found.");
+				return Optional.empty();
+			}
+		} catch (Exception e) {
+			throw new RuntimeException("Đã xảy ra lỗi khi xóa người dùng.", e);
+		}
 	}
-	
-//	@Override
-//	public AppUser findUserByEmail(String email) {
-//	    List<AppUser> users = userRepo.findByEmail(email);
-//
-//	    if (users != null && !users.isEmpty()) {
-//	        return users.get(0);
-//	    }
-//	    
-//	    return null; 
-//	}
-	
-//	@Override
-//	public AppUser findByEmail(String email) {
-//	    AppUser user = userRepo.findByEmail(email);
-//
-//	    if (user != null) {
-//	        return user;
-//	    }
-//	    
-//	    return null; 
-//	}
+
+	// @Override
+	// public AppUser findUserByEmail(String email) {
+	// List<AppUser> users = userRepo.findByEmail(email);
+	//
+	// if (users != null && !users.isEmpty()) {
+	// return users.get(0);
+	// }
+	//
+	// return null;
+	// }
+
+	// @Override
+	// public AppUser findByEmail(String email) {
+	// AppUser user = userRepo.findByEmail(email);
+	//
+	// if (user != null) {
+	// return user;
+	// }
+	//
+	// return null;
+	// }
 
 	@Override
 	public AppUser findUserByEmailAndPassword(String email, String password) {
 		AppUser user = userRepo.findByEmailAndPassword(email, password);
-		if(user != null) {
+		if (user != null) {
 			return user;
 		}
 		return null;
 	}
-	
+
 	public AppUser save(AppUser user) {
 		return userRepo.save(user);
 	}
-	
+
 }

@@ -1,12 +1,12 @@
 package com.backend.train_booking_backend.services.impl;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.backend.train_booking_backend.models.SeatType;
 import com.backend.train_booking_backend.repositories.SeatTypeRepository;
 import com.backend.train_booking_backend.services.ISeatTypeService;
@@ -50,11 +50,7 @@ public class SeatTypeService implements ISeatTypeService {
 		}
 	}
 
-	@Override
-	@Transactional
-	public SeatType getSeatTypeBySeatTypename(String seatTypeName) {
-		return seatTypeRepo.findSeatTypeBySeatTypeName(seatTypeName);
-	}
+
 
 	@Override
 	@Transactional
@@ -64,7 +60,7 @@ public class SeatTypeService implements ISeatTypeService {
 	        if (seatTypeOpt.isPresent()) {
 	        	SeatType seatType = seatTypeOpt.get();
 	        	seatTypeRepo.deleteById(id);
-	            return Optional.of(seatType); 
+	            return Optional.of(seatType);
 	        } else {
 	            System.out.println("SeatType with ID " + id + " not found.");
 	            return Optional.empty();

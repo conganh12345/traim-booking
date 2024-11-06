@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import jakarta.validation.Valid;
-import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +19,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.backend.train_booking_backend.models.Schedule;
 import com.backend.train_booking_backend.services.IScheduleService;
+
+import jakarta.validation.ValidationException;
 
 @RestController
 @Validated
@@ -44,7 +45,7 @@ public class ScheduleController {
 	public ResponseEntity<List<Schedule>> getAllSchedule() {
 		List<Schedule> schedule = scheduleService.getAllSchedules();
 		if (schedule.isEmpty()) {
-			schedule = new ArrayList<Schedule>();
+			schedule = new ArrayList<>();
 		}
 		return new ResponseEntity<>(schedule, HttpStatus.OK);
 	}
@@ -73,18 +74,10 @@ public class ScheduleController {
 		return new ResponseEntity<>(updatedSchedule, HttpStatus.OK);
 	}
 
-	@GetMapping("/{schedulename}")
-	public ResponseEntity<Schedule> getScheduleByScheduleName(@PathVariable String schedule) {
-		Schedule schedules = scheduleService.getScheduleByScheduleName(schedule);
-		if (schedules == null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		return new ResponseEntity<>(schedules, HttpStatus.OK);
-	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Schedule> deleteSchedule(@PathVariable Integer id) {
-	    Optional<Schedule> deletedSchedule = scheduleService.deleteSchedule(id); 
+	    Optional<Schedule> deletedSchedule = scheduleService.deleteSchedule(id);
 	    if (deletedSchedule.isPresent()) {
 	        return new ResponseEntity<>(deletedSchedule.get(), HttpStatus.OK);
 	    } else {
