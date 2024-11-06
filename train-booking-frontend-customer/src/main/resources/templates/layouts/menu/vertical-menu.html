@@ -19,7 +19,8 @@
 			</a>
 			</li>
 
-			<li th:class="menu"><a href="#" class="dropdown-toggle">
+			<li th:class="${page == 'booking'} ? 'menu active' : 'menu'"><a
+				th:href="@{/booking/index}" class="dropdown-toggle">
 					<div>
 						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
 							viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -29,13 +30,25 @@
 							<line x1="2" y1="12" x2="22" y2="12"></line>
 							<path
 								d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-						<span>Thông tin đặt chỗ</span>
+						<span>Thông tin đặt vé</span>
 					</div>
 			</a></li>
 
-			<li th:class="${page == 'instruct'} ? 'menu active' : 'menu'">
+			<li th:class="menu"><a href="#" class="dropdown-toggle">
+					<div>
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+							viewBox="0 0 24 24" fill="none" stroke="currentColor"
+							stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+							class="feather feather-tag">
+							<path
+								d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+							<line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+						<span>Kiểm tra vé</span>
+					</div>
+			</a></li>
 
-				<a th:href="@{/instruct/index}" class="dropdown-toggle">
+			<li th:class="${page == 'instruct'} ? 'menu active' : 'menu'"><a
+				th:href="@{/instruct/index}" class="dropdown-toggle">
 					<div>
 						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
 							viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -46,8 +59,7 @@
 								d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
 						<span>Hướng dẫn</span>
 					</div>
-			</a>
-			</li>
+			</a></li>
 
 		</ul>
 
