@@ -4,13 +4,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.backend.train_booking_backend.models.enums.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,13 +18,21 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "user")
-public class User {
+public class AppUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column
     private String username;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     @Column
     private String email;
@@ -41,20 +47,16 @@ public class User {
     private String address;
 
     @Column
-    private LocalDateTime createdTime;
-
-    @Column
-    private LocalDateTime updatedTime;
-
-    @Column
     private String identifyCard;
 
     @Column
     private String lastToken;
 
-    @Enumerated(EnumType.STRING)
     @Column
-    private Role role;
+    private LocalDateTime createdTime;
+
+    @Column
+    private LocalDateTime updatedTime;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     @JsonIgnore
@@ -68,21 +70,13 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    // public String getEmail() {
+    // return email;
+    // }
+    //
+    // public void setEmail(String email) {
+    // this.email = email;
+    // }
 
     public String getPassword() {
         return password;
@@ -108,6 +102,22 @@ public class User {
         this.address = address;
     }
 
+    public String getIdentifyCard() {
+        return identifyCard;
+    }
+
+    public void setIdentifyCard(String identifyCard) {
+        this.identifyCard = identifyCard;
+    }
+
+    public String getLastToken() {
+        return lastToken;
+    }
+
+    public void setLastToken(String lastToken) {
+        this.lastToken = lastToken;
+    }
+
     public LocalDateTime getCreatedTime() {
         return createdTime;
     }
@@ -124,14 +134,6 @@ public class User {
         this.updatedTime = updatedTime;
     }
 
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
     public List<Booking> getBookings() {
         return bookings;
     }
@@ -139,20 +141,4 @@ public class User {
     public void setBookings(List<Booking> bookings) {
         this.bookings = bookings;
     }
-
-	public String getIdentifyCard() {
-		return identifyCard;
-	}
-
-	public void setIdentifyCard(String identifyCard) {
-		this.identifyCard = identifyCard;
-	}
-
-	public String getLastToken() {
-		return lastToken;
-	}
-
-	public void setLastToken(String lastToken) {
-		this.lastToken = lastToken;
-	}
 }

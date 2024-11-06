@@ -16,7 +16,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -27,7 +26,7 @@ public class Booking {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	@Column
 	private String totalPrice;
 
@@ -41,12 +40,12 @@ public class Booking {
 	private List<Ticket> tickets = new ArrayList<>();
 
 	@OneToOne
-    @JoinColumn(name = "schedule_id")
-    private Schedule schedule;
+	@JoinColumn(name = "schedule_id")
+	private Schedule schedule;
 
 	@ManyToOne
-    @JoinColumn(name="user_id", nullable=false)
-    private User user;
+	@JoinColumn(name = "user_id")
+	private AppUser user;
 
 	public Integer getId() {
 		return id;
@@ -96,11 +95,11 @@ public class Booking {
 		this.schedule = schedule;
 	}
 
-	public User getUser() {
+	public AppUser getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(AppUser user) {
 		this.user = user;
 	}
 }

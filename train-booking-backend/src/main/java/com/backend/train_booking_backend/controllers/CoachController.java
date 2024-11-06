@@ -72,14 +72,12 @@ public class CoachController {
 		return new ResponseEntity<>(updatedCoach, HttpStatus.OK);
 	}
 
-
-
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Coach> deleteCoach(@PathVariable Integer id) {
-	    if (coachService.deleteCoach(id)) {
-	        return new ResponseEntity<>(HttpStatus.OK);
-	    } else {
-	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	    }
+		if (coachService.deleteCoach(id)) {
+			return new ResponseEntity<>(HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 }
