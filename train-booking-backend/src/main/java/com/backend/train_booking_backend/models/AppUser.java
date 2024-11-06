@@ -19,126 +19,103 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "user")
 public class AppUser {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
-    @Column
-    private String username;
+	@Column
+	private String fullName;
 
-    @Column
-    private String email;
+	@Column
+	private String email;
 
-    @Column
-    private String password;
+	@Column
+	private String password;
 
-    @Column
-    private String phoneNumber;
+	@Column
+	private String phoneNumber;
 
-    @Column
-    private String address;
+	@Column
+	private String address;
 
-    @Column
-    private String identifyCard;
+	@Column
+	private String identifyCard;
 
-    @Column
-    private String lastToken;
+	@Column
+	private String lastToken;
 
-    @Column
-    private LocalDateTime createdTime;
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+	@JsonIgnore
+	private List<Booking> bookings = new ArrayList<>();
 
-    @Column
-    private LocalDateTime updatedTime;
+	public Integer getId() {
+		return id;
+	}
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    @JsonIgnore
-    private List<Booking> bookings = new ArrayList<>();
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public Integer getId() {
-        return id;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getFullName() {
+		return fullName;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
 
-    public String getUsername() {
-        return username;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
+	public String getAddress() {
+		return address;
+	}
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
+	public void setAddress(String address) {
+		this.address = address;
+	}
 
-    public String getAddress() {
-        return address;
-    }
+	public String getIdentifyCard() {
+		return identifyCard;
+	}
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+	public void setIdentifyCard(String identifyCard) {
+		this.identifyCard = identifyCard;
+	}
 
-    public String getIdentifyCard() {
-        return identifyCard;
-    }
+	public String getLastToken() {
+		return lastToken;
+	}
 
-    public void setIdentifyCard(String identifyCard) {
-        this.identifyCard = identifyCard;
-    }
+	public void setLastToken(String lastToken) {
+		this.lastToken = lastToken;
+	}
+	public List<Booking> getBookings() {
+		return bookings;
+	}
 
-    public String getLastToken() {
-        return lastToken;
-    }
-
-    public void setLastToken(String lastToken) {
-        this.lastToken = lastToken;
-    }
-
-    public LocalDateTime getCreatedTime() {
-        return createdTime;
-    }
-
-    public void setCreatedTime(LocalDateTime createdTime) {
-        this.createdTime = createdTime;
-    }
-
-    public LocalDateTime getUpdatedTime() {
-        return updatedTime;
-    }
-
-    public void setUpdatedTime(LocalDateTime updatedTime) {
-        this.updatedTime = updatedTime;
-    }
-
-    public List<Booking> getBookings() {
-        return bookings;
-    }
-
-    public void setBookings(List<Booking> bookings) {
-        this.bookings = bookings;
-    }
+	public void setBookings(List<Booking> bookings) {
+		this.bookings = bookings;
+	}
 }

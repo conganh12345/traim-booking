@@ -94,14 +94,14 @@ public class UserController {
 		}
 	}
 
-	// @GetMapping("/findByEmail/{email}")
-	// public ResponseEntity<AppUser> findUserByEmail(@PathVariable String email) {
-	// AppUser user = userService.findByEmail(email);
-	// if (user == null) {
-	// return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	// }
-	// return new ResponseEntity<>(user, HttpStatus.OK);
-	// }
+	 @GetMapping("/findByEmail/{email}")
+	 public ResponseEntity<AppUser> findUserByEmail(@PathVariable String email) {
+	 AppUser user = userService.findUserByEmail(email);
+	 if (user == null) {
+	 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	 }
+	 return new ResponseEntity<>(user, HttpStatus.OK);
+	 }
 
 	@GetMapping("/findByEmailAndPassword/{email}/{password}")
 	public ResponseEntity<AppUser> findUserByEmailAndPassword(@PathVariable String email,

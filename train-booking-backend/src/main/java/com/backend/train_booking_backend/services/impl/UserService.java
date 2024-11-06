@@ -32,7 +32,6 @@ public class UserService implements IUserService {
 	@Transactional
 	public AppUser addUser(AppUser user) {
 		try {
-			user.setCreatedTime(LocalDateTime.now());
 
 			return userRepo.save(user);
 		} catch (Exception e) {
@@ -47,8 +46,6 @@ public class UserService implements IUserService {
 			Optional<AppUser> oldUserOpt = userRepo.findById(id);
 			if (oldUserOpt.isPresent()) {
 				user.setId(id);
-				user.setCreatedTime(oldUserOpt.get().getCreatedTime());
-				user.setUpdatedTime(LocalDateTime.now());
 			}
 			return userRepo.save(user);
 		} catch (Exception e) {
@@ -56,10 +53,10 @@ public class UserService implements IUserService {
 		}
 	}
 
-	@Override
-	public AppUser findUserByUsername(String username) {
-		return userRepo.findUserByUsername(username);
-	}
+//	@Override
+//	public AppUser findUserByUsername(String username) {
+//		return userRepo.findUserByUsername(username);
+//	}
 
 	@Override
 	@Transactional
@@ -101,6 +98,17 @@ public class UserService implements IUserService {
 	// return null;
 	// }
 
+	@Override
+	public AppUser findUserByEmail(String email) {
+	    AppUser user = userRepo.findUserByEmail(email);
+
+	    if (user != null) {
+	        return user;
+	    }
+	    
+	    return null; 
+	}
+	
 	@Override
 	public AppUser findUserByEmailAndPassword(String email, String password) {
 		AppUser user = userRepo.findByEmailAndPassword(email, password);
