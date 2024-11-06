@@ -1,12 +1,12 @@
 package com.backend.train_booking_backend.services.impl;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.backend.train_booking_backend.models.Ticket;
 import com.backend.train_booking_backend.repositories.TicketRepository;
 import com.backend.train_booking_backend.services.ITicketService;
@@ -48,11 +48,7 @@ public class TicketService implements ITicketService {
 		}
 	}
 
-	@Override
-	@Transactional
-	public Ticket getTicketByTicketName(String ticketname) {
-		return ticketRepo.findTicketByTicketname(ticketname);
-	}
+
 
 	@Override
 	@Transactional
@@ -60,7 +56,7 @@ public class TicketService implements ITicketService {
 	    try {
 	        if (ticketRepo.existsById(id)) {
 	        	ticketRepo.deleteById(id);
-	            return true; 
+	            return true;
 	        } else {
 	            System.out.println("Ticket with ID " + id + " not found.");
 	            return false;

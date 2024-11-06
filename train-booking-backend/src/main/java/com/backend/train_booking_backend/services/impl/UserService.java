@@ -4,9 +4,11 @@ import java.time.LocalDateTime;
 //import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.backend.train_booking_backend.models.User;
 import com.backend.train_booking_backend.repositories.UserRepository;
 import com.backend.train_booking_backend.services.IUserService;
@@ -68,7 +70,7 @@ public class UserService implements IUserService {
 	        if (userOpt.isPresent()) {
 	            User user = userOpt.get();
 	            userRepo.deleteById(id);
-	            return Optional.of(user); 
+	            return Optional.of(user);
 	        } else {
 	            System.out.println("User with ID " + id + " not found.");
 	            return Optional.empty();
@@ -77,7 +79,7 @@ public class UserService implements IUserService {
 	        throw new RuntimeException("Đã xảy ra lỗi khi xóa người dùng.", e);
 	    }
 	}
-	
+
 	@Override
 	public User findUserByEmail(String email) {
 	    List<User> users = userRepo.findByEmail(email);
@@ -85,8 +87,8 @@ public class UserService implements IUserService {
 	    if (users != null && !users.isEmpty()) {
 	        return users.get(0);
 	    }
-	    
-	    return null; 
+
+	    return null;
 	}
 
 	@Override
@@ -98,5 +100,5 @@ public class UserService implements IUserService {
 		return null;
 	}
 
-	
+
 }

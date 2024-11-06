@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
-import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +18,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.backend.train_booking_backend.models.Coach;
-import com.backend.train_booking_backend.models.User;
 import com.backend.train_booking_backend.services.ICoachService;
+
+import jakarta.validation.ValidationException;
 
 @RestController
 @Validated
@@ -43,7 +43,7 @@ public class CoachController {
 	public ResponseEntity<List<Coach>> getAllCoach() {
 		List<Coach> coach = coachService.getAllCoachs();
 		if (coach.isEmpty()) {
-			coach = new ArrayList<Coach>();
+			coach = new ArrayList<>();
 		}
 		return new ResponseEntity<>(coach, HttpStatus.OK);
 	}
@@ -72,14 +72,7 @@ public class CoachController {
 		return new ResponseEntity<>(updatedCoach, HttpStatus.OK);
 	}
 
-	@GetMapping("/{coachname}")
-	public ResponseEntity<Coach> getCoachByCoachName(@PathVariable String coachname) {
-		Coach coach = coachService.getCoachByCoachName(coachname);
-		if (coach == null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		return new ResponseEntity<>(coach, HttpStatus.OK);
-	}
+
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Coach> deleteCoach(@PathVariable Integer id) {

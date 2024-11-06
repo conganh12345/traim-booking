@@ -1,12 +1,13 @@
 package com.backend.train_booking_backend.services.impl;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.backend.train_booking_backend.models.Booking;
 import com.backend.train_booking_backend.repositories.BookingRepository;
 import com.backend.train_booking_backend.services.IBookingService;
@@ -54,18 +55,15 @@ public class BookingService implements IBookingService {
 		}
 	}
 
-	@Override
-	public Booking getBookingByFullName(String fullname) {
-		return bookingRepo.findBookingByFullName(fullname);
-	}
-	
+
+
 	@Override
 	@Transactional
 	public boolean deleteBooking(Integer id) {
 	    try {
 	        if (bookingRepo.existsById(id)) {
 	        	bookingRepo.deleteById(id);
-	            return true; 
+	            return true;
 	        } else {
 	            System.out.println("Train with ID " + id + " not found.");
 	            return false;

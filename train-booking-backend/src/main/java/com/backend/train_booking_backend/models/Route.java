@@ -16,26 +16,28 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "coach")
-
-public class Coach {
+@Table(name = "route")
+public class Route {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@Column
-	private String coachName;
+	private String routeName;
 
 	@Column
-	private String description;
+	private String departureLocation;
+
+	@Column
+	private String destinationLocation;
+
+	@OneToMany(mappedBy = "route")
+	@JsonIgnore
+	private List<Station> station = new ArrayList<>();
 
 	@ManyToOne
 	@JoinColumn(name = "train_id")
 	private Train train;
-
-	@OneToMany(mappedBy = "coach")
-	@JsonIgnore
-	private List<Seat> seat = new ArrayList<>();
 
 	public Integer getId() {
 		return id;
@@ -45,12 +47,20 @@ public class Coach {
 		this.id = id;
 	}
 
-	public String getCoachName() {
-		return coachName;
+	public String getDepartureLocation() {
+		return departureLocation;
 	}
 
-	public void setCoachName(String coachName) {
-		this.coachName = coachName;
+	public void setDepartureLocation(String departureLocation) {
+		this.departureLocation = departureLocation;
+	}
+
+	public String getDestinationLocation() {
+		return destinationLocation;
+	}
+
+	public void setDestinationLocation(String destinationLocation) {
+		this.destinationLocation = destinationLocation;
 	}
 
 	public Train getTrain() {
@@ -61,19 +71,19 @@ public class Coach {
 		this.train = train;
 	}
 
-	public List<Seat> getSeat() {
-		return seat;
+	public List<Station> getStation() {
+		return station;
 	}
 
-	public void setSeat(List<Seat> seat) {
-		this.seat = seat;
+	public void setStation(List<Station> station) {
+		this.station = station;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getRouteName() {
+		return routeName;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setRouteName(String routeName) {
+		this.routeName = routeName;
 	}
 }

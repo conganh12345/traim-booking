@@ -1,13 +1,12 @@
 package com.backend.train_booking_backend.services.impl;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import javax.management.RuntimeErrorException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.backend.train_booking_backend.models.Coach;
 import com.backend.train_booking_backend.repositories.CoachRepository;
 import com.backend.train_booking_backend.services.ICoachService;
@@ -33,7 +32,7 @@ public class CoachService implements ICoachService {
 		try {
 			return coachRepo.save(coach);
 		} catch (Exception e) {
-			 e.printStackTrace(); 
+			 e.printStackTrace();
 			throw new RuntimeException("Đã xảy ra lỗi khi thêm toa.", e);
 		}
 	}
@@ -51,18 +50,15 @@ public class CoachService implements ICoachService {
 		}
 	}
 
-	@Override
-	public Coach getCoachByCoachName(String coachname) {
-		return coachRepo.findCoachByCoachName(coachname);
-	}
-	
+
+
 	@Override
 	@Transactional
 	public boolean deleteCoach(Integer id) {
 	    try {
 	        if (coachRepo.existsById(id)) {
 	        	coachRepo.deleteById(id);
-	            return true; 
+	            return true;
 	        } else {
 	            System.out.println("Coach with ID " + id + " not found.");
 	            return false;

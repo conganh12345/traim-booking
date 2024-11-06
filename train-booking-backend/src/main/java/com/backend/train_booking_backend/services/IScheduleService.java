@@ -14,7 +14,6 @@ public interface IScheduleService {
 
 	Schedule updateSchedule(Integer id, Schedule user);
 
-	Schedule getScheduleByScheduleName(String schedulename);
 
 	Optional<Schedule> deleteSchedule(Integer id);
 }

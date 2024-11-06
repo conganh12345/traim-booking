@@ -14,7 +14,6 @@ public interface ISeatTypeService {
 
 	SeatType updateSeatType(Integer id, SeatType seattype);
 
-	SeatType getSeatTypeBySeatTypename(String seattypename);
 
 	Optional<SeatType> deleteSeatType(Integer id);
 }
