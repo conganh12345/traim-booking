@@ -25,6 +25,13 @@ public class UserController {
 	@Autowired
 	private IUserService userService;
 
+	@GetMapping("/profile")
+	public String profile(Model model) {
+		model.addAttribute("page", "user");
+
+		return "user/profile";
+	}
+	
 	@GetMapping("/index")
 	public String index(Model model) {
 		List<User> users = userService.getAllUsers();
@@ -74,5 +81,4 @@ public class UserController {
 		userService.signUp(user);
 		return "user/signIn";
 	}
-
 }
