@@ -39,7 +39,6 @@ public class Ticket {
 	@JoinColumn(name = "booking_id")
 	private Booking booking;
 
-
 	@OneToOne(mappedBy = "ticket", cascade = CascadeType.ALL)
     private Seat seat;
 
