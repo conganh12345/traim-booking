@@ -14,59 +14,62 @@ import com.backend.train_booking_backend.services.ISeatTypeService;
 @Service
 public class SeatTypeService implements ISeatTypeService {
 	@Autowired
-	private SeatTypeRepository seatTypeRepo;
+	private SeatTypeRepository seattypeRepo;
 
 	@Override
 	public List<SeatType> getAllSeatTypes() {
-		return seatTypeRepo.findAll();
+		return seattypeRepo.findAll();
 	}
 
 	@Override
 	public SeatType getSeatType(Integer id) {
-		return seatTypeRepo.findById(id).get();
+		return seattypeRepo.findById(id).get();
 	}
 
 	@Override
-	@Transactional
 	public SeatType addSeatType(SeatType seattype) {
 		try {
-			return seatTypeRepo.save(seattype);
+			return seattypeRepo.save(seattype);
 		} catch (Exception e) {
-			e.printStackTrace();
-			throw new RuntimeException("Đã xảy ra lỗi khi thêm loại ghế.", e);
+			 e.printStackTrace();
+			throw new RuntimeException("Đã xảy ra lỗi khi thêm lịch trình.", e);
 		}
 	}
 
 	@Override
-	public SeatType updateSeatType(Integer id, SeatType seatType) {
+	public SeatType updateSeatType(Integer id, SeatType seattype) {
 		try {
-			Optional<SeatType> oldSeatTypeOpt = seatTypeRepo.findById(id);
+			Optional<SeatType> oldSeatTypeOpt = seattypeRepo.findById(id);
 			if (oldSeatTypeOpt.isPresent()) {
-				seatType.setId(id);
+				seattype.setId(id);
 			}
-			return seatTypeRepo.save(seatType);
+			return seattypeRepo.save(seattype);
 		} catch (Exception e) {
-			throw new RuntimeException("Đã xảy ra lỗi khi sửa loại ghế.", e);
+			throw new RuntimeException("Đã xảy ra lỗi khi sửa lịch trình.", e);
 		}
 	}
-
-
 
 	@Override
 	@Transactional
-	public Optional<SeatType> deleteSeatType(Integer id) {
+	public boolean deleteSeatType(Integer id) {
 	    try {
-	        Optional<SeatType> seatTypeOpt = seatTypeRepo.findById(id);
-	        if (seatTypeOpt.isPresent()) {
-	        	SeatType seatType = seatTypeOpt.get();
-	        	seatTypeRepo.deleteById(id);
-	            return Optional.of(seatType);
+	        if (seattypeRepo.existsById(id)) {
+	        	seattypeRepo.deleteById(id);
+	            return true;
 	        } else {
-	            System.out.println("SeatType with ID " + id + " not found.");
-	            return Optional.empty();
+	            System.out.println("Seattype with ID " + id + " not found.");
+	            return false;
 	        }
 	    } catch (Exception e) {
-	        throw new RuntimeException("Đã xảy ra lỗi khi xóa loại ghế.", e);
+	        throw new RuntimeException("Đã xảy ra lỗi khi xóa lịch trình.", e);
 	    }
 	}
 }
+
+
+
+
+
+
+
+

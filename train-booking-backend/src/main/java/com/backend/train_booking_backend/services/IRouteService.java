@@ -13,6 +13,5 @@ public interface IRouteService {
 
 	Route updateRoute(Integer id, Route route);
 
-
 	boolean deleteRoute(Integer id);
 }

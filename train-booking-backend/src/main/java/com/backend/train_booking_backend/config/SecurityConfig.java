@@ -42,7 +42,8 @@ public class SecurityConfig {
 	                .requestMatchers("/api/station/**").permitAll()
 	                .requestMatchers("/api/ticket/**").permitAll()
 	                .requestMatchers("/api/train/**").permitAll()
-	                .requestMatchers("/api/seatype/**").permitAll()
+	                .requestMatchers("/api/seattype/**").permitAll()
+	                .requestMatchers("/api/seat/**").permitAll()
 	                .anyRequest().authenticated()) 
 	            .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class); 
 

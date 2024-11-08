@@ -49,8 +49,6 @@ public class RouteService implements IRouteService {
 		}
 	}
 
-
-
 	@Override
 	@Transactional
 	public boolean deleteRoute(Integer id) {

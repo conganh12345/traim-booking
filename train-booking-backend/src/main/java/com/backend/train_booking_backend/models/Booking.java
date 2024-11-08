@@ -3,6 +3,8 @@ package com.backend.train_booking_backend.models;
 import java.time.LocalDateTime;
 
 import com.backend.train_booking_backend.models.enums.BookingStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +42,7 @@ public class Booking {
 	private BookingStatus status;
 
 	@OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<Ticket> tickets = new ArrayList<>();
 
 	@OneToOne
