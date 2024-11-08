@@ -1,4 +1,7 @@
-package com.frontend.train_booking_frontend_customer.services;
+package com.frontend.train_booking_frontend_customer.services.impl;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +16,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.frontend.train_booking_frontend_customer.models.LoginRequest;
 import com.frontend.train_booking_frontend_customer.models.User;
-import com.frontend.train_booking_frontend_customer.services.impl.IAuthService;
+import com.frontend.train_booking_frontend_customer.services.IAuthService;
 
 @Service
 public class AuthService implements IAuthService{
@@ -41,6 +44,29 @@ public class AuthService implements IAuthService{
 			} else {
 				e.printStackTrace();
 				return null;
+			}
+		}
+	}
+	
+	@Override
+	public User getUserByEmail(String email) {
+		RestTemplate restTemplate = new RestTemplate();
+
+		try {
+			String url = apiUrl + "api/auth/findByEmail/{email}";
+			Map<String, String> params = new HashMap<>();
+			params.put("email", email);
+			User user = restTemplate.getForObject(url, User.class, params);
+
+			return user;
+
+		} catch (HttpClientErrorException e) {
+			// Cannot to find any account
+			if (e.getStatusCode() == HttpStatus.NOT_FOUND) {
+				return null;
+			} else {
+				e.printStackTrace();
+				throw new RuntimeException("Failed to fetch user: " + e.getMessage());
 			}
 		}
 	}

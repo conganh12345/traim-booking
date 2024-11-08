@@ -1,13 +1,16 @@
 package com.frontend.train_booking_frontend_customer.models;
 
+import com.frontend.train_booking_frontend_customer.models.enums.ERole;
+
 public class User 
 {
 	private Integer id;
-    private String username;
+    private String fullName;
     private String email;
     private String phoneNumber;
     private String address;
     private String password;
+    private ERole role;
 
     public String getPassword() {
 		return password;
@@ -26,15 +29,15 @@ public class User
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
-    }
+    public String getFullName() {
+		return fullName;
+	}
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
 
-    public String getEmail() {
+	public String getEmail() {
         return email;
     }
 
@@ -57,5 +60,13 @@ public class User
     public void setAddress(String address) {
         this.address = address;
     }
+
+	public ERole getRole() {
+		return role;
+	}
+
+	public void setRole(ERole role) {
+		this.role = role;
+	}
 }
 
