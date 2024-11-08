@@ -40,8 +40,11 @@ public class Booking {
 	private BookingStatus status;
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 	@OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
 =======
+=======
+>>>>>>> Stashed changes
 	@OneToMany(mappedBy = "booking")
 	@JsonIgnore
 >>>>>>> Stashed changes
