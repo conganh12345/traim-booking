@@ -11,7 +11,7 @@ function checkEmailExist() {
 	return new Promise((resolve) => {
 		$.ajax({
 			type: 'POST',
-			url: '/user/check-email-exist',
+			url: '/auth/check-email-exist',
 			data: { email: email },
 			success: function(result) {
 				if (result) {
@@ -49,13 +49,13 @@ async function validateForm() {
 
 
 function submitForm() {
-	const name = document.getElementById("username").value;
+	const fullName = document.getElementById("full-name").value;
 	const email = document.getElementById("email").value;
 	const password = document.getElementById("password").value;
 	const phoneNumber = document.getElementById("phone-number").value;
 
 	const formData = {
-		name: name,
+		fullName: fullName,
 		email: email,
 		password: password,
 		phoneNumber: phoneNumber
@@ -63,11 +63,11 @@ function submitForm() {
 
 	$.ajax({
 		type: "POST",
-		url: "/user/register",
+		url: "/auth/register",
 		data: formData,
 		success: function(response) {
 			alert("Đăng ký thành công");
-			window.location.href = "/user/login"; 
+			window.location.href = "/auth/login"; 
 		},
 		error: function(error) {
 			alert("Error occurred: " + error.responseText);

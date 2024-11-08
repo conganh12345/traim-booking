@@ -1,6 +1,6 @@
 package com.backend.train_booking_backend.models.enums;
 
-public enum Role {
+public enum ERole {
     USER,
     ADMIN
 }

@@ -5,7 +5,7 @@ $(document).ready(function() {
             const formData = $(this).serialize(); 
 
             $.ajax({
-                url: '/user/check-login',
+                url: '/auth/check-login',
                 type: 'POST',
                 data: formData,
                 success: function(response) {
@@ -25,14 +25,15 @@ $(document).ready(function() {
                         }, 500, function() {
                             $('#successNotification').hide(); 
                             $('.overlay').fadeOut(500); 
-                            window.location.href = '/user/base-layout';
+                            window.location.href = '/auth/base-layout';
                         });
                     }, 2000);
                 },
                 error: function(xhr, status, error) {
                     $('.overlay').fadeIn(500);
                     
-                    $('#successNotification').text('Đăng nhập thất bại: ' + xhr.responseText).css({
+                    //$('#successNotification').text('Đăng nhập thất bại: ' + xhr.responseText).css({
+                    $('#successNotification').text(xhr.responseText).css({
                         backgroundColor: '#ff573e',
                         right: '-300px', 
                         display: 'block'

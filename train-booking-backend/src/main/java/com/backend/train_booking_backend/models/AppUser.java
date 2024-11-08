@@ -3,10 +3,13 @@ package com.backend.train_booking_backend.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.backend.train_booking_backend.models.enums.ERole;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -39,6 +42,9 @@ public class AppUser {
 
 	@Column
 	private String identifyCard;
+	
+	@Enumerated(EnumType.STRING)
+	private ERole role;
 
 	@Column(length = 512)
 	private String lastToken;
@@ -101,6 +107,14 @@ public class AppUser {
 
 	public void setIdentifyCard(String identifyCard) {
 		this.identifyCard = identifyCard;
+	}
+
+	public ERole getRole() {
+		return role;
+	}
+
+	public void setRole(ERole role) {
+		this.role = role;
 	}
 
 	public String getLastToken() {
