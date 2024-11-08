@@ -35,7 +35,7 @@ public class Ticket {
 	@Enumerated(EnumType.STRING)
 	private TicketStatus status;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "booking_id")
 	private Booking booking;
 

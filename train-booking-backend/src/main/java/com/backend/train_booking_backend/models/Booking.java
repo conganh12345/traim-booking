@@ -39,7 +39,12 @@ public class Booking {
 	@Enumerated(EnumType.STRING)
 	private BookingStatus status;
 
+<<<<<<< Updated upstream
 	@OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
+=======
+	@OneToMany(mappedBy = "booking")
+	@JsonIgnore
+>>>>>>> Stashed changes
 	private List<Ticket> tickets = new ArrayList<>();
 
 	@OneToOne
