@@ -5,7 +5,7 @@ $(document).ready(function() {
             const formData = $(this).serialize(); 
 
             $.ajax({
-                url: '/user/check-login',
+                url: '/auth/check-login',
                 type: 'POST',
                 data: formData,
                 success: function(response) {
