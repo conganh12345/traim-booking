@@ -1,6 +1,5 @@
 package com.backend.train_booking_backend.services.impl;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,7 +13,6 @@ import com.backend.train_booking_backend.services.IScheduleService;
 
 @Service
 public class ScheduleService implements IScheduleService {
-
 	@Autowired
 	private ScheduleRepository scheduleRepo;
 
@@ -29,54 +27,49 @@ public class ScheduleService implements IScheduleService {
 	}
 
 	@Override
-	@Transactional
 	public Schedule addSchedule(Schedule schedule) {
 		try {
-			schedule.setDepartureDate(LocalDateTime.now());
-			if (schedule.getEstimateArrivalDate() == null) {
-				schedule.setEstimateArrivalDate(schedule.getDepartureDate().plusHours(5));
-			}
-
 			return scheduleRepo.save(schedule);
 		} catch (Exception e) {
-			throw new RuntimeException("Đã xảy ra lỗi khi thêm lịch trình.", e);
+			 e.printStackTrace();
+			throw new RuntimeException("Đã xảy ra lỗi khi thêm chuyến đi.", e);
 		}
 	}
 
 	@Override
-	@Transactional
 	public Schedule updateSchedule(Integer id, Schedule schedule) {
 		try {
 			Optional<Schedule> oldScheduleOpt = scheduleRepo.findById(id);
 			if (oldScheduleOpt.isPresent()) {
 				schedule.setId(id);
-				schedule.setDepartureDate(null);
-				schedule.setDepartureDate(oldScheduleOpt.get().getDepartureDate());
-				schedule.setEstimateArrivalDate(LocalDateTime.now());
 			}
 			return scheduleRepo.save(schedule);
 		} catch (Exception e) {
-			throw new RuntimeException("Đã xảy ra lỗi khi sửa lịch trình.", e);
+			throw new RuntimeException("Đã xảy ra lỗi khi sửa chuyến đi.", e);
 		}
 	}
 
-
-
 	@Override
 	@Transactional
-	public Optional<Schedule> deleteSchedule(Integer id) {
+	public boolean deleteSchedule(Integer id) {
 	    try {
-	        Optional<Schedule> scheduleOpt = scheduleRepo.findById(id);
-	        if (scheduleOpt.isPresent()) {
-	        	Schedule schedule = scheduleOpt.get();
-	            scheduleRepo.deleteById(id);
-	            return Optional.of(schedule);
+	        if (scheduleRepo.existsById(id)) {
+	        	scheduleRepo.deleteById(id);
+	            return true;
 	        } else {
 	            System.out.println("Schedule with ID " + id + " not found.");
-	            return Optional.empty();
+	            return false;
 	        }
 	    } catch (Exception e) {
-	        throw new RuntimeException("Đã xảy ra lỗi khi xóa lịch trình.", e);
+	        throw new RuntimeException("Đã xảy ra lỗi khi xóa chuyến đi.", e);
 	    }
 	}
 }
+
+
+
+
+
+
+
+
