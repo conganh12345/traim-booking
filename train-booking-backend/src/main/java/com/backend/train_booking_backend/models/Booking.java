@@ -3,6 +3,8 @@ package com.backend.train_booking_backend.models;
 import java.time.LocalDateTime;
 
 import com.backend.train_booking_backend.models.enums.BookingStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,15 +41,9 @@ public class Booking {
 	@Enumerated(EnumType.STRING)
 	private BookingStatus status;
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-	@OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
-=======
-=======
->>>>>>> Stashed changes
+
 	@OneToMany(mappedBy = "booking")
 	@JsonIgnore
->>>>>>> Stashed changes
 	private List<Ticket> tickets = new ArrayList<>();
 
 	@OneToOne

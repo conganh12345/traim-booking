@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -54,11 +55,11 @@ public class SeatType {
 		this.price = price;
 	}
 
-	public List<Seat> getSeats() {
+	public List<Seat> getSeat() {
 		return seat;
 	}
 
-	public void setSeats(List<Seat> seats) {
-		this.seat = seats;
+	public void setSeat(List<Seat> seat) {
+		this.seat = seat;
 	}
 }

@@ -13,6 +13,5 @@ public interface ITicketService {
 
 	Ticket updateTicket(Integer id, Ticket ticket);
 
-
 	boolean deleteTicket(Integer ids);
 }

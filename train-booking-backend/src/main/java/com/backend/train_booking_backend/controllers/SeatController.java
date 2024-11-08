@@ -19,17 +19,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.backend.train_booking_backend.models.Booking;
-import com.backend.train_booking_backend.services.IBookingService;
+import com.backend.train_booking_backend.models.Seat;
+import com.backend.train_booking_backend.services.ISeatService;
 
 import jakarta.validation.ValidationException;
 
 @RestController
 @Validated
-@RequestMapping("/api/booking")
-public class BookingController {
+@RequestMapping("/api/seat")
+public class SeatController {
 	@Autowired
-	private IBookingService bookingService;
+	private ISeatService seatService;
 
 	// Exception to return error json
 	@ExceptionHandler(ValidationException.class)
@@ -40,41 +40,41 @@ public class BookingController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<Booking>> getAllBooking() {
-		List<Booking> booking = bookingService.getAllBookings();
-		if (booking.isEmpty()) {
-			booking = new ArrayList<>();
+	public ResponseEntity<List<Seat>> getAllSeat() {
+		List<Seat> seat = seatService.getAllSeats();
+		if (seat.isEmpty()) {
+			seat = new ArrayList<>();
 		}
-		return new ResponseEntity<>(booking, HttpStatus.OK);
+		return new ResponseEntity<>(seat, HttpStatus.OK);
 	}
 
 	@GetMapping("/id/{id}")
-	public ResponseEntity<Booking> getBooking(@PathVariable Integer id) {
-		Booking booking = bookingService.getBooking(id);
-		if (booking == null) {
+	public ResponseEntity<Seat> getSeat(@PathVariable Integer id) {
+		Seat seat = seatService.getSeat(id);
+		if (seat == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(booking, HttpStatus.OK);
+		return new ResponseEntity<>(seat, HttpStatus.OK);
 	}
 
 	@PostMapping
-	public ResponseEntity<Booking> addBooking(@RequestBody Booking booking) {
-		Booking createdBooking = bookingService.addBooking(booking);
-		return new ResponseEntity<>(createdBooking, HttpStatus.CREATED);
+	public ResponseEntity<Seat> addSeat(@RequestBody Seat seat) {
+		Seat createdSeat = seatService.addSeat(seat);
+		return new ResponseEntity<>(createdSeat, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Booking> updateBooking(@RequestBody Booking booking, @PathVariable Integer id) {
-		Booking updatedBooking = bookingService.updateBooking(id, booking);
-		if (updatedBooking == null) {
+	public ResponseEntity<Seat> updateSeat(@RequestBody Seat seat, @PathVariable Integer id) {
+		Seat updatedSeat = seatService.updateSeat(id, seat);
+		if (updatedSeat == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(updatedBooking, HttpStatus.OK);
+		return new ResponseEntity<>(updatedSeat, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Booking> deleteBooking(@PathVariable Integer id) {
-	    if (bookingService.deleteBooking(id)) {
+	public ResponseEntity<Seat> deleteSeat(@PathVariable Integer id) {
+	    if (seatService.deleteSeat(id)) {
 	        return new ResponseEntity<>(HttpStatus.OK);
 	    } else {
 	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);

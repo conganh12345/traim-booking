@@ -1,6 +1,7 @@
 package com.backend.train_booking_backend.models;
 
 import com.backend.train_booking_backend.models.enums.TicketStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -40,6 +41,7 @@ public class Ticket {
 	private Booking booking;
 
 	@OneToOne(mappedBy = "ticket", cascade = CascadeType.ALL)
+	@JsonIgnore
     private Seat seat;
 
 

@@ -2,6 +2,8 @@ package com.backend.train_booking_backend.models;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -42,6 +44,7 @@ public class Schedule {
     private Train train;
 	
 	@OneToOne(mappedBy = "schedule", cascade = CascadeType.ALL)
+	@JsonIgnore
     private Booking booking;
 
 	public Integer getId() {
