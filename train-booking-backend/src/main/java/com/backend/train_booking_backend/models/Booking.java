@@ -41,7 +41,8 @@ public class Booking {
 	@Enumerated(EnumType.STRING)
 	private BookingStatus status;
 
-	@OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "booking")
 	@JsonIgnore
 	private List<Ticket> tickets = new ArrayList<>();
 

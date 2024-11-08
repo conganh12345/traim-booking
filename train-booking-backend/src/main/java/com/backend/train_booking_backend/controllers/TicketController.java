@@ -50,7 +50,7 @@ public class TicketController {
 	}
 
 	@GetMapping("/id/{id}")
-	public ResponseEntity<Ticket> getSeatType(@PathVariable Integer id) {
+	public ResponseEntity<Ticket> getTicket(@PathVariable Integer id) {
 		Ticket ticket = ticketService.getTicket(id);
 		if (ticket == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -60,8 +60,8 @@ public class TicketController {
 
 	@PostMapping
 	public ResponseEntity<Ticket> addTicket(@RequestBody Ticket ticket) {
-		Ticket createdSeatType = ticketService.addTicket(ticket);
-		return new ResponseEntity<>(createdSeatType, HttpStatus.CREATED);
+		Ticket createdTicket = ticketService.addTicket(ticket);
+		return new ResponseEntity<>(createdTicket, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")
