@@ -9,12 +9,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.backend.train_booking_backend.models.Booking;
 import com.backend.train_booking_backend.repositories.BookingRepository;
+import com.backend.train_booking_backend.repositories.TicketRepository;
 import com.backend.train_booking_backend.services.IBookingService;
 
 @Service
 public class BookingService implements IBookingService {
 	@Autowired
 	private BookingRepository bookingRepo;
+	
+	@Autowired
+	private TicketRepository ticketRepo;
 
 	@Override
 	public List<Booking> getAllBookings() {
@@ -51,17 +55,32 @@ public class BookingService implements IBookingService {
 
 	@Override
 	@Transactional
-	public boolean deleteBooking(Integer id) {
+	public int deleteBooking(Integer id) {
 	    try {
 	        if (bookingRepo.existsById(id)) {
-	        	bookingRepo.deleteById(id);
-	            return true;
+	            int seatCount = ticketRepo.countByBookingId(id); 
+
+	            if (seatCount > 0) {
+	                System.out.println("Không thể xóa booking với ID " + id + " vì vẫn còn vé liên kết.");
+	                return 0; 
+	            }
+
+	            bookingRepo.deleteById(id);
+
+	            if (!bookingRepo.existsById(id)) {
+	                System.out.println("Đã xóa booking với ID " + id);
+	                return 1;  
+	            } else {
+	                System.out.println("Không thể xóa booking với ID " + id);
+	                return 0; 
+	            }
 	        } else {
-	            System.out.println("Booking with ID " + id + " not found.");
-	            return false;
+	            System.out.println("Booking với ID " + id + " không tồn tại.");
+	            return 2;  
 	        }
 	    } catch (Exception e) {
-	        throw new RuntimeException("Đã xảy ra lỗi khi xóa vé đặt.", e);
+	        e.printStackTrace();
+	        return 0; 
 	    }
 	}
 }

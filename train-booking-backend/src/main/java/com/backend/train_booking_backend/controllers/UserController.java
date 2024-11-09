@@ -85,12 +85,14 @@ public class UserController {
 	// }
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<AppUser> deleteUser(@PathVariable Integer id) {
-		Optional<AppUser> deletedUser = userService.deleteUser(id);
-		if (deletedUser.isPresent()) {
-			return new ResponseEntity<>(deletedUser.get(), HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	public ResponseEntity<String> deleteUser(@PathVariable Integer id) {
+		switch (userService.deleteUser(id)) {
+			case 2:
+				return new ResponseEntity<>("Không tìm thấy người dùng này: " + id, HttpStatus.NOT_FOUND);
+			case 1:
+				return new ResponseEntity<>("Người dùng này đã bị xóa", HttpStatus.OK);
+			default:
+				return new ResponseEntity<>("Không thể xóa người dùng với ID: " + id, HttpStatus.BAD_REQUEST);
 		}
 	}
 

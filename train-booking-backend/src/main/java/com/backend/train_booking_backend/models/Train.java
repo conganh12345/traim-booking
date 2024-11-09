@@ -31,15 +31,15 @@ public class Train {
 	@Column
 	private String description;
 
-	@OneToMany(mappedBy = "train", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "train")
 	@JsonIgnore
 	private List<Coach> coach = new ArrayList<>();
 
-	@OneToMany(mappedBy = "train", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "train")
 	@JsonIgnore
 	private List<Schedule> schedule = new ArrayList<>();
 
-	@OneToMany(mappedBy = "train", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "train")
 	@JsonIgnore
 	private List<Route> route = new ArrayList<>();
 

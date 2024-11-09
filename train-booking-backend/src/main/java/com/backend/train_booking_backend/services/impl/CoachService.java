@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.backend.train_booking_backend.models.Coach;
 import com.backend.train_booking_backend.repositories.CoachRepository;
+import com.backend.train_booking_backend.repositories.SeatRepository;
 import com.backend.train_booking_backend.services.ICoachService;
 
 @Service
@@ -16,6 +17,9 @@ public class CoachService implements ICoachService {
 
 	@Autowired
 	private CoachRepository coachRepo;
+	
+	@Autowired
+	private SeatRepository seatRepo;
 
 	@Override
 	public List<Coach> getAllCoachs() {
@@ -32,7 +36,7 @@ public class CoachService implements ICoachService {
 		try {
 			return coachRepo.save(coach);
 		} catch (Exception e) {
-			 e.printStackTrace();
+			e.printStackTrace();
 			throw new RuntimeException("Đã xảy ra lỗi khi thêm toa.", e);
 		}
 	}
@@ -50,21 +54,34 @@ public class CoachService implements ICoachService {
 		}
 	}
 
-
-
 	@Override
 	@Transactional
-	public boolean deleteCoach(Integer id) {
+	public int deleteCoach(Integer id) {
 	    try {
 	        if (coachRepo.existsById(id)) {
-	        	coachRepo.deleteById(id);
-	            return true;
+	            int seatCount = seatRepo.countByCoachId(id); 
+
+	            if (seatCount > 0) {
+	                System.out.println("Không thể xóa coach với ID " + id + " vì vẫn còn ghế liên kết.");
+	                return 0; 
+	            }
+
+	            coachRepo.deleteById(id);
+
+	            if (!coachRepo.existsById(id)) {
+	                System.out.println("Đã xóa coach với ID " + id);
+	                return 1;  
+	            } else {
+	                System.out.println("Không thể xóa coach với ID " + id);
+	                return 0; 
+	            }
 	        } else {
-	            System.out.println("Coach with ID " + id + " not found.");
-	            return false;
+	            System.out.println("Coach với ID " + id + " không tồn tại.");
+	            return 2;  
 	        }
 	    } catch (Exception e) {
-	        throw new RuntimeException("Đã xảy ra lỗi khi xóa toa.", e);
+	        e.printStackTrace();
+	        return 0; 
 	    }
 	}
 }

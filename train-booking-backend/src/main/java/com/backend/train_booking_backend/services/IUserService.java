@@ -22,7 +22,7 @@ public interface IUserService {
 
 	AppUser findUserByEmailAndPassword(String email, String password);
 
-	Optional<AppUser> deleteUser(Integer id);
+	int deleteUser(Integer id);
 
 	// AppUser findByEmail(String email);
 

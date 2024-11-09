@@ -82,53 +82,5 @@ public class UserController {
 		return "user/profile";
 	}
 	
-	@GetMapping("/index")
-	public String index(Model model) {
-		List<User> users = userService.getAllUsers();
-
-		model.addAttribute("page", "user").addAttribute("users", users);
-
-		return "user/signIn";
-	}
-
-	@GetMapping("/base-layout")
-	public String showBaseLayout() {
-		return "redirect:/dashboard/index";
-	}
-
-	@GetMapping("/login")
-	public String login() {
-		return "user/signIn";
-	}
-
-	@PostMapping("/check-login")
-	public ResponseEntity<String> handleLogin(@RequestParam String email, @RequestParam String password) {
-		User user = userService.getUserByEmailPassword(email, password);
-		if (user != null) {
-			return ResponseEntity.ok("Đăng nhập thành công!");
-		} else {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Sai email hoặc mật khẩu.");
-		}
-	}
-
-	@PostMapping("/check-email-exist")
-	public ResponseEntity<String> checkEmailExist(@RequestParam String email) {
-		User user = userService.getUserByEmail(email);
-		if (user != null) {
-			return ResponseEntity.ok("Email đã tồn tại");
-		} else {
-			return null;
-		}
-	}
-
-	@GetMapping("/signup")
-	public String signup() {
-		return "user/signup";
-	}
-
-	@PostMapping("/register")
-	public String register(@ModelAttribute User user) {
-		userService.signUp(user);
-		return "user/signIn";
-	}
+	
 }
