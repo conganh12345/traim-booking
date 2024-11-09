@@ -66,8 +66,8 @@
 							<tbody>
 								<tr th:each="ticket, stat : ${tickets}">
 									<td th:text="${stat.count}"></td>
-									<td th:text="${ticket.ticketname}"></td>
-									<td th:text="${ticket.price}"></td>
+									<td th:text="${ticket.ticketName}"></td>
+									<td th:text="${ticket.priceTicket}"></td>
 									<td class="text-truncate" style="max-width: 250px;"><span
 										th:class="'badge ' + ${ticket.status.badgeClass}"
 										th:text="${ticket.status.displayName}"></span></td>

@@ -11,7 +11,7 @@ public class User
 	
 	@NotEmpty(message = "Tên người dùng không được để trống")
     @Size(min = 3, max = 50, message = "Tên người dùng phải có độ dài từ 3 đến 50 ký tự")
-    private String username;
+    private String fullName;
 
     @NotEmpty(message = "Email không được để trống")
     @Email(message = "Email không đúng định dạng")
@@ -27,8 +27,28 @@ public class User
     @NotEmpty(message = "Mật khẩu không được để trống")
     @Size(min = 6, message = "Mật khẩu phải có ít nhất 6 ký tự")
     private String password;
+    
+    @NotEmpty(message = "CMND/CCCD không được để trống")
+    @Size(min = 6, message = "CMND/CCCD phải có ít nhất 6 ký tự")
+	private String identifyCard;
 
-    public String getPassword() {
+    public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	public String getIdentifyCard() {
+		return identifyCard;
+	}
+
+	public void setIdentifyCard(String identifyCard) {
+		this.identifyCard = identifyCard;
+	}
+
+	public String getPassword() {
 		return password;
 	}
 
@@ -42,14 +62,6 @@ public class User
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getEmail() {

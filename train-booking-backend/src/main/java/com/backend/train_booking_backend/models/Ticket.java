@@ -30,9 +30,6 @@ public class Ticket {
 	@Column
 	private double priceTicket;
 
-	@Column
-	private int seatPosition;
-
 	@Enumerated(EnumType.STRING)
 	private TicketStatus status;
 
@@ -72,16 +69,6 @@ public class Ticket {
 
 	public void setPriceTicket(double priceTicket) {
 		this.priceTicket = priceTicket;
-	}
-
-
-	public int getSeatPosition() {
-		return seatPosition;
-	}
-
-
-	public void setSeatPosition(int seatPosition) {
-		this.seatPosition = seatPosition;
 	}
 
 
