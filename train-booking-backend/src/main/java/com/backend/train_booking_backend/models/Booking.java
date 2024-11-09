@@ -40,11 +40,11 @@ public class Booking {
 	private BookingStatus status;
 
 
-	// TODO: một booking có nhiều vé
 	@OneToMany(mappedBy = "booking")
 	@JsonIgnore
 	private List<Ticket> tickets = new ArrayList<>();
 
+	// TODO: một booking có nhiều chuyến đi
 	@OneToOne
 	@JoinColumn(name = "schedule_id")
 	private Schedule schedule;

@@ -73,11 +73,14 @@ public class RouteController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Route> deleteRoute(@PathVariable Integer id) {
-	    if (routeService.deleteRoute(id)) {
-	        return new ResponseEntity<>(HttpStatus.OK);
-	    } else {
-	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	    }
+	public ResponseEntity<String> deleteRoute(@PathVariable Integer id) {
+		switch (routeService.deleteRoute(id)) {
+			case 2:
+				return new ResponseEntity<>("Không tìm thấy tuyến đường này: " + id, HttpStatus.NOT_FOUND);
+			case 1:
+				return new ResponseEntity<>("Tuyến đường đã bị xóa", HttpStatus.OK);
+			default:
+				return new ResponseEntity<>("Không thể xóa tuyến đường với ID: " + id, HttpStatus.BAD_REQUEST);
+		}
 	}
 }

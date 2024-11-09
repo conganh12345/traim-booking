@@ -9,12 +9,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.backend.train_booking_backend.models.Route;
 import com.backend.train_booking_backend.repositories.RouteRepository;
+import com.backend.train_booking_backend.repositories.StationRepository;
 import com.backend.train_booking_backend.services.IRouteService;
 
 @Service
 public class RouteService implements IRouteService {
 	@Autowired
 	private RouteRepository routeRepo;
+	
+	@Autowired
+	private StationRepository stationRepo;
 
 	@Override
 	public List<Route> getAllRoutes() {
@@ -51,17 +55,32 @@ public class RouteService implements IRouteService {
 
 	@Override
 	@Transactional
-	public boolean deleteRoute(Integer id) {
-	    try {
+	public int deleteRoute(Integer id) {
+		try {
 	        if (routeRepo.existsById(id)) {
-	        	routeRepo.deleteById(id);
-	            return true;
+	            int seatCount = stationRepo.countByRouteId(id); 
+
+	            if (seatCount > 0) {
+	                System.out.println("Không thể xóa tuyến đường với ID " + id + " vì vẫn còn vé liên kết.");
+	                return 0; 
+	            }
+
+	            routeRepo.deleteById(id);
+
+	            if (!routeRepo.existsById(id)) {
+	                System.out.println("Đã xóa tuyến đường với ID " + id);
+	                return 1;  
+	            } else {
+	                System.out.println("Không thể xóa tuyến đường với ID " + id);
+	                return 0; 
+	            }
 	        } else {
-	            System.out.println("Route with ID " + id + " not found.");
-	            return false;
+	            System.out.println("Tuyến đường với ID " + id + " không tồn tại.");
+	            return 2;  
 	        }
 	    } catch (Exception e) {
-	        throw new RuntimeException("Đã xảy ra lỗi khi xóa lịch trình.", e);
+	        e.printStackTrace();
+	        return 0; 
 	    }
 	}
 }

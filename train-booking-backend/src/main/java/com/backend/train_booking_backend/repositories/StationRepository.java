@@ -7,4 +7,5 @@ import com.backend.train_booking_backend.models.Station;
 
 @Repository
 public interface StationRepository extends JpaRepository<Station, Integer> {
+	int countByRouteId(int routeId);
 }

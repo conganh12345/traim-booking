@@ -40,7 +40,7 @@ public class Schedule {
 	private LocalDateTime estimateArrivalDate;
 	
 	@ManyToOne
-    @JoinColumn(name="train_id", nullable=false)
+    @JoinColumn(name="train_id")
     private Train train;
 	
 	@OneToOne(mappedBy = "schedule")
