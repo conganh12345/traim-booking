@@ -13,5 +13,5 @@ public interface IBookingService {
 
 	Booking updateBooking(Integer id, Booking booking);
 
-	boolean deleteBooking(Integer id);
+	int deleteBooking(Integer id);
 }

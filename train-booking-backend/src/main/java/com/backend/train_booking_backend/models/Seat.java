@@ -28,11 +28,11 @@ public class Seat {
 	private Ticket ticket;
 
 	@ManyToOne
-    @JoinColumn(name="coach_id", nullable=false)
+    @JoinColumn(name="coach_id")
     private Coach coach;
 
 	@ManyToOne
-    @JoinColumn(name="seattype_id", nullable=false)
+    @JoinColumn(name="seattype_id")
     private SeatType seattype;
 
 	public Integer getId() {

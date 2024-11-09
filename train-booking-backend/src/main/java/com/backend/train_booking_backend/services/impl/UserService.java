@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.backend.train_booking_backend.models.AppUser;
+import com.backend.train_booking_backend.repositories.BookingRepository;
 import com.backend.train_booking_backend.repositories.UserRepository;
 import com.backend.train_booking_backend.services.IUserService;
 
@@ -17,6 +18,9 @@ public class UserService implements IUserService {
 
 	@Autowired
 	private UserRepository userRepo;
+	
+	@Autowired
+	private BookingRepository bookingRepo;
 
 	@Override
 	public List<AppUser> getAllUsers() {
@@ -60,20 +64,33 @@ public class UserService implements IUserService {
 
 	@Override
 	@Transactional
-	public Optional<AppUser> deleteUser(Integer id) {
+	public int deleteUser(Integer id) {
 		try {
-			Optional<AppUser> userOpt = userRepo.findById(id);
-			if (userOpt.isPresent()) {
-				AppUser user = userOpt.get();
-				userRepo.deleteById(id);
-				return Optional.of(user);
-			} else {
-				System.out.println("User with ID " + id + " not found.");
-				return Optional.empty();
-			}
-		} catch (Exception e) {
-			throw new RuntimeException("Đã xảy ra lỗi khi xóa người dùng.", e);
-		}
+	        if (userRepo.existsById(id)) {
+	            int seatCount = bookingRepo.countByUserId(id); 
+
+	            if (seatCount > 0) {
+	                System.out.println("Không thể xóa user với ID " + id + " vì vẫn còn đặt vé liên kết.");
+	                return 0; 
+	            }
+
+	            userRepo.deleteById(id);
+
+	            if (!userRepo.existsById(id)) {
+	                System.out.println("Đã xóa user với ID " + id);
+	                return 1;  
+	            } else {
+	                System.out.println("Không thể xóa user với ID " + id);
+	                return 0; 
+	            }
+	        } else {
+	            System.out.println("User với ID " + id + " không tồn tại.");
+	            return 2;  
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return 0; 
+	    }
 	}
 
 	// @Override

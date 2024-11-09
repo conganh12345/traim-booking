@@ -73,11 +73,15 @@ public class CoachController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Coach> deleteCoach(@PathVariable Integer id) {
-		if (coachService.deleteCoach(id)) {
-			return new ResponseEntity<>(HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	public ResponseEntity<String> deleteCoach(@PathVariable Integer id) {
+		switch (coachService.deleteCoach(id)) {
+			case 2:
+				return new ResponseEntity<>("Không tìm thấy toa này: " + id, HttpStatus.NOT_FOUND);
+			case 1:
+				return new ResponseEntity<>("Toa này đã bị xóa", HttpStatus.OK);
+			default:
+				return new ResponseEntity<>("Không thể xóa toa với ID: " + id, HttpStatus.BAD_REQUEST);
 		}
+
 	}
 }

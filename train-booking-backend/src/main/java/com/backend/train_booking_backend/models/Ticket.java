@@ -40,7 +40,7 @@ public class Ticket {
 	@JoinColumn(name = "booking_id")
 	private Booking booking;
 
-	@OneToOne(mappedBy = "ticket", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "ticket")
 	@JsonIgnore
     private Seat seat;
 

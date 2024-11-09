@@ -7,8 +7,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -42,6 +40,7 @@ public class Booking {
 	private BookingStatus status;
 
 
+	// TODO: một booking có nhiều vé
 	@OneToMany(mappedBy = "booking")
 	@JsonIgnore
 	private List<Ticket> tickets = new ArrayList<>();

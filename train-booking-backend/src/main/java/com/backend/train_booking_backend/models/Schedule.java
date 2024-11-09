@@ -43,7 +43,7 @@ public class Schedule {
     @JoinColumn(name="train_id", nullable=false)
     private Train train;
 	
-	@OneToOne(mappedBy = "schedule", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "schedule")
 	@JsonIgnore
     private Booking booking;
 

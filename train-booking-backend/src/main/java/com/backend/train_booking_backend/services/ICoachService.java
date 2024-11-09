@@ -13,5 +13,5 @@ public interface ICoachService {
 
 	Coach updateCoach(Integer id, Coach coach);
 
-	boolean deleteCoach(Integer id);
+	int deleteCoach(Integer id);
 }

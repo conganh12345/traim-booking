@@ -54,10 +54,15 @@ public class SeatService implements ISeatService {
 	public boolean deleteSeat(Integer id) {
 	    try {
 	        if (seatRepo.existsById(id)) {
-	        	seatRepo.deleteById(id);
+	            seatRepo.deleteById(id);
+
+	            if (seatRepo.existsById(id)) {
+	                System.out.println("Không thể xóa ghế với ID " + id);
+	                return false;
+	            }
 	            return true;
 	        } else {
-	            System.out.println("Seat with ID " + id + " not found.");
+	            System.out.println("Ghế với ID " + id + " không tồn tại.");
 	            return false;
 	        }
 	    } catch (Exception e) {
