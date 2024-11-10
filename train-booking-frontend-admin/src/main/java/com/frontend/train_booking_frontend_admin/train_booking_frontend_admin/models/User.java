@@ -1,5 +1,7 @@
 package com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models;
 
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.enums.ERole;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
@@ -31,6 +33,8 @@ public class User
     @NotEmpty(message = "CMND/CCCD không được để trống")
     @Size(min = 6, message = "CMND/CCCD phải có ít nhất 6 ký tự")
 	private String identifyCard;
+    
+    private ERole role;
 
     public String getFullName() {
 		return fullName;
@@ -87,4 +91,12 @@ public class User
     public void setAddress(String address) {
         this.address = address;
     }
+
+	public ERole getRole() {
+		return role;
+	}
+
+	public void setRole(ERole role) {
+		this.role = role;
+	}
 }

@@ -6,7 +6,7 @@ $(document).ready(function() {
 
             $.ajax({
             	// take url from form action
-                url: '/user/check-login',
+                url: '/auth/check-login',
                 type: 'POST',
                 // send form data
                 data: formData,
@@ -32,7 +32,7 @@ $(document).ready(function() {
                         }, 500, function() {
                             $('#successNotification').hide(); 
                             $('.overlay').fadeOut(500); 
-                            window.location.href = '/user/base-layout';
+                            window.location.href = '/auth/base-layout';
                         });
                     }, 2000);
                 },

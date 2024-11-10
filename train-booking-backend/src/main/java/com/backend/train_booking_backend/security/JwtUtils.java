@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.backend.train_booking_backend.models.AppUser;
 import com.backend.train_booking_backend.repositories.UserRepository;
+import com.backend.train_booking_backend.models.enums.ERole;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -50,7 +51,7 @@ public class JwtUtils {
         claims.put("phoneNumber", user.getPhoneNumber());
         claims.put("address", user.getAddress());
         claims.put("identifyCard", user.getIdentifyCard());
-        claims.put("role", user.getRole());
+        claims.put("role", user.getRole().name());
 
         return Jwts.builder()
             .setClaims(claims)
@@ -69,15 +70,22 @@ public class JwtUtils {
     
 
     public boolean validateToken(String token, UserDetails userDetails) {
-        String username = extractEmail(token);
-        AppUser user = userRepository.findUserByEmail(username);
+    	String email = extractEmail(token);
+        AppUser user = userRepository.findUserByEmail(email);
 
-        // Kiểm tra token trong yêu cầu có khớp với token gần nhất đã lưu không
         if (user == null || !token.equals(user.getLastToken())) {
             return false;
         }
 
-        return (!isTokenExpired(token));
+        Claims claims = extractAllClaims(token);
+        String roleFromToken = claims.get("role", String.class);
+        ERole role = ERole.valueOf(roleFromToken);
+
+        if (!role.equals(user.getRole())) {
+            return false;
+        }
+
+        return !isTokenExpired(token);
     }
 
     private boolean isTokenExpired(String token) {
