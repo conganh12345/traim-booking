@@ -29,6 +29,9 @@ public class UserController {
 	@GetMapping("/index")
 	public String index(Model model) {
 		List<User> users = userService.getAllUsers();
+		if(users == null) {
+			return "auth/signIn";
+		}
 
 		model.addAttribute("page", "user").addAttribute("users", users);
 
@@ -53,6 +56,7 @@ public class UserController {
 			redirectAttributes.addFlashAttribute("success", "Thêm mới người dùng thành công!");
 		} else {
 			redirectAttributes.addFlashAttribute("error", "Thêm mới người dùng thất bại!");
+			return "auth/signIn";
 		}
 		return "redirect:/user/index";
 	}
@@ -91,45 +95,45 @@ public class UserController {
 		}
 	}
 	
-	@GetMapping("/base-layout")
-    public String showBaseLayout() {
-        return "redirect:/dashboard/index";
-    }
-    
-    @GetMapping("/login")
-    public String login() {
-    	return "user/signIn";
-    }
+//	@GetMapping("/base-layout")
+//    public String showBaseLayout() {
+//        return "redirect:/dashboard/index";
+//    }
+//    
+//    @GetMapping("/login")
+//    public String login() {
+//    	return "user/signIn";
+//    }
 
-    @PostMapping("/check-login")
-    public ResponseEntity<String> handleLogin(@RequestParam String email, @RequestParam String password) {
-    	User user = userService.getUserByEmailPassword(email, password);
-        if (user != null) {
-            return ResponseEntity.ok("Login successful!"); 
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invalid email or password.");
-        }
-    }
-    
-    @PostMapping("/check-email-exist")
-    public ResponseEntity<String> checkEmailExist(@RequestParam String email) {
-        User user = userService.getUserByEmail(email);
-        if (user != null) {
-            return ResponseEntity.ok("Email exists");
-        } else {
-            return null;
-        }
-    }
-
-    @GetMapping("/signup")
-    public String signup() {
-    	return "user/signup";
-    }
-    
-    @PostMapping("/register")
-    public String register(@ModelAttribute User user) {
-    	userService.signUp(user);
-    	
-    	return "user/signIn";
-    }
+//    @PostMapping("/check-login")
+//    public ResponseEntity<String> handleLogin(@RequestParam String email, @RequestParam String password) {
+//    	User user = userService.getUserByEmailPassword(email, password);
+//        if (user != null) {
+//            return ResponseEntity.ok("Login successful!"); 
+//        } else {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invalid email or password.");
+//        }
+//    }
+//    
+//    @PostMapping("/check-email-exist")
+//    public ResponseEntity<String> checkEmailExist(@RequestParam String email) {
+//        User user = userService.getUserByEmail(email);
+//        if (user != null) {
+//            return ResponseEntity.ok("Email exists");
+//        } else {
+//            return null;
+//        }
+//    }
+//
+//    @GetMapping("/signup")
+//    public String signup() {
+//    	return "user/signup";
+//    }
+//    
+//    @PostMapping("/register")
+//    public String register(@ModelAttribute User user) {
+//    	userService.signUp(user);
+//    	
+//    	return "user/signIn";
+//    }
 }

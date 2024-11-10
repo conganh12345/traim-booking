@@ -34,16 +34,17 @@ public class SecurityConfig {
 	            .authorizeHttpRequests(auth -> auth
 	            		// Cho phép truy cập các endpoint công khai
 	                .requestMatchers("/api/auth/**").permitAll() 
-	                .requestMatchers("/api/user/**").permitAll()
-	                .requestMatchers("/api/booking/**").permitAll()
-	                .requestMatchers("/api/coach/**").permitAll()
-	                .requestMatchers("/api/route/**").permitAll()
-	                .requestMatchers("/api/schedule/**").permitAll()
-	                .requestMatchers("/api/station/**").permitAll()
-	                .requestMatchers("/api/ticket/**").permitAll()
-	                .requestMatchers("/api/train/**").permitAll()
-	                .requestMatchers("/api/seattype/**").permitAll()
-	                .requestMatchers("/api/seat/**").permitAll()
+//	                .requestMatchers("/api/booking/**").permitAll()
+//	                .requestMatchers("/api/coach/**").permitAll()
+//	                .requestMatchers("/api/route/**").permitAll()
+//	                .requestMatchers("/api/schedule/**").permitAll()
+//	                .requestMatchers("/api/station/**").permitAll()
+//	                .requestMatchers("/api/ticket/**").permitAll()
+//	                .requestMatchers("/api/train/**").permitAll()
+//	                .requestMatchers("/api/seattype/**").permitAll()
+//	                .requestMatchers("/api/seat/**").permitAll()
+	                .requestMatchers("/api/user/**").hasAuthority("USER")
+	                .requestMatchers("/api/admin/**").hasAuthority("ADMIN")
 	                .anyRequest().authenticated()) 
 	            .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class); 
 

@@ -1,4 +1,4 @@
-package com.frontend.train_booking_frontend_customer.services.impl;
+package com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,9 +14,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import com.frontend.train_booking_frontend_customer.models.LoginRequest;
-import com.frontend.train_booking_frontend_customer.models.User;
-import com.frontend.train_booking_frontend_customer.services.IAuthService;
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.LoginRequest;
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.User;
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.IService.IAuthService;
+
 
 @Service
 public class AuthService implements IAuthService{
@@ -71,29 +72,5 @@ public class AuthService implements IAuthService{
 		}
 	}
 
-	@Override
-	public User signUp(User user) {
-		try {
-			String url = apiUrl + "api/auth/register";
-			HttpHeaders headers = new HttpHeaders();
-			headers.setContentType(MediaType.APPLICATION_JSON);
-
-			HttpEntity<User> requestEntity = new HttpEntity<>(user, headers);
-			ResponseEntity<User> responseEntity = restTemplate.postForEntity(url, requestEntity, User.class);
-
-			if (responseEntity.getStatusCode() == HttpStatus.CREATED) {
-				return responseEntity.getBody();
-			} else {
-				throw new RuntimeException("Failed to sign up: " + responseEntity.getStatusCode());
-			}
-		} catch (HttpClientErrorException e) {
-			e.printStackTrace();
-			throw new RuntimeException("Error during sign up: " + e.getMessage());
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
 	
 }
-

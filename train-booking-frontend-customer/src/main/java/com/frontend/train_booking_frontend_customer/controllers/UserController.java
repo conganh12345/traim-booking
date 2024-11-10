@@ -77,7 +77,13 @@ public class UserController {
 
 	@GetMapping("/profile")
 	public String profile(Model model) {
-		model.addAttribute("page", "user");
+		
+		User user = userService.userProfile();
+		if(user == null) {
+			return "auth/signIn";
+		}
+		model.addAttribute("page", "user")
+			.addAttribute("userLogin",user);
 
 		return "user/profile";
 	}

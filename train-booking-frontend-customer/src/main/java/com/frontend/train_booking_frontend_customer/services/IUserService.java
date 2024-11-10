@@ -9,4 +9,6 @@ public interface IUserService {
 //	User getUserByEmail(String email);
 //	User getUserByEmailPassword(String email, String password);
 //	User signUp(User user);
+	
+	User userProfile();
 }

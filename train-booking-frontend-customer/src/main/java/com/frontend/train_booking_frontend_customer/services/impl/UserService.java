@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -19,15 +20,26 @@ import org.springframework.web.client.RestTemplate;
 import com.frontend.train_booking_frontend_customer.models.User;
 import com.frontend.train_booking_frontend_customer.services.IUserService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Service
 public class UserService implements IUserService {
 	@Value("${api.base.url}")
 	private String apiUrl;
+	
+	@Autowired
+	private HttpSession session;
+	
+	@Autowired
+	RestTemplate restTemplate;
+	
+	private String jwtToken;
+	public void setJwtToken() {
+		this.jwtToken = (String)session.getAttribute("token");
+	}
 
 	@Override
 	public List<User> getAllUsers() {
-		// Call API to get all users
-		RestTemplate restTemplate = new RestTemplate();
 
 		try {
 			// Get list user from API
@@ -39,6 +51,23 @@ public class UserService implements IUserService {
 			return null;
 		}
 
+	}
+
+	@Override
+	public User userProfile() {
+		try {
+			String email = (String)session.getAttribute("loginEmail");
+			HttpHeaders headers = new HttpHeaders();
+			setJwtToken();
+			headers.set("Authorization", "Bearer " + jwtToken);
+			
+			String url = apiUrl + "api/auth/findByEmail/" + email;
+			HttpEntity<User> entity = new HttpEntity<>(headers);
+			return restTemplate.exchange(url, HttpMethod.GET, entity, User.class).getBody();
+		}catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 //	@Override
