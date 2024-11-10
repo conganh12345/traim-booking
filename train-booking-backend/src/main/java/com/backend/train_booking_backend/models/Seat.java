@@ -32,8 +32,8 @@ public class Seat {
     private Coach coach;
 
 	@ManyToOne
-    @JoinColumn(name="seattype_id")
-    private SeatType seattype;
+    @JoinColumn(name="seat_type_id")
+    private SeatType seatType;
 
 	public Integer getId() {
 		return id;
@@ -67,11 +67,12 @@ public class Seat {
 		this.coach = coach;
 	}
 
-	public SeatType getSeattype() {
-		return seattype;
+	public SeatType getSeatType() {
+		return seatType;
 	}
 
-	public void setSeattype(SeatType seattype) {
-		this.seattype = seattype;
+	public void setSeatType(SeatType seatType) {
+		this.seatType = seatType;
 	}
+
 }

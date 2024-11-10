@@ -1,6 +1,8 @@
 package com.backend.train_booking_backend.models;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -13,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
@@ -43,9 +46,9 @@ public class Schedule {
     @JoinColumn(name="train_id")
     private Train train;
 	
-	@OneToOne(mappedBy = "schedule")
+	@OneToMany(mappedBy = "schedule")
 	@JsonIgnore
-    private Booking booking;
+	private List<Booking> booking = new ArrayList<>();
 
 	public Integer getId() {
 		return id;
@@ -103,11 +106,11 @@ public class Schedule {
 		this.train = train;
 	}
 
-	public Booking getBooking() {
+	public List<Booking> getBooking() {
 		return booking;
 	}
 
-	public void setBooking(Booking booking) {
+	public void setBooking(List<Booking> booking) {
 		this.booking = booking;
 	}
 }

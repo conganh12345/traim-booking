@@ -73,14 +73,15 @@ public class TicketController {
 		return new ResponseEntity<>(updatedTicket, HttpStatus.OK);
 	}
 
-
-
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Ticket> deleteTicket(@PathVariable Integer id) {
-		if (ticketService.deleteTicket(id)) {
-			return new ResponseEntity<>(HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	public ResponseEntity<String> deleteTicket(@PathVariable Integer id) {
+		switch (ticketService.deleteTicket(id)) {
+			case 2:
+				return new ResponseEntity<>("Không tìm thấy vé này: " + id, HttpStatus.NOT_FOUND);
+			case 1:
+				return new ResponseEntity<>("Vé này đã bị xóa", HttpStatus.OK);
+			default:
+				return new ResponseEntity<>("Không thể xóa vé với ID: " + id, HttpStatus.BAD_REQUEST);
 		}
 	}
 }

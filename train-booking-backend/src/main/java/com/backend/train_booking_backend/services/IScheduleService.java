@@ -13,5 +13,5 @@ public interface IScheduleService {
 
 	Schedule updateSchedule(Integer id, Schedule schedule);
 
-	boolean deleteSchedule(Integer id);
+	int deleteSchedule(Integer id);
 }
