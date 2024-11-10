@@ -13,5 +13,5 @@ public interface ITrainService {
 
 	Train updateTrain(Integer id, Train train);
 
-	boolean deleteTrain(Integer id);
+	int deleteTrain(Integer id);
 }

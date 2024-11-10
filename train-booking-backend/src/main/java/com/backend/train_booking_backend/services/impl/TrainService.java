@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.backend.train_booking_backend.models.Train;
+import com.backend.train_booking_backend.repositories.BookingRepository;
+import com.backend.train_booking_backend.repositories.RouteRepository;
+import com.backend.train_booking_backend.repositories.ScheduleRepository;
 import com.backend.train_booking_backend.repositories.TrainRepository;
 import com.backend.train_booking_backend.services.ITrainService;
 
@@ -16,6 +19,12 @@ public class TrainService implements ITrainService {
 
 	@Autowired
 	private TrainRepository trainRepo;
+	
+	@Autowired
+	private ScheduleRepository scheduleRepo;
+	
+	@Autowired
+	private RouteRepository routeRepo;
 
 	@Override
 	public List<Train> getAllTrains() {
@@ -49,21 +58,36 @@ public class TrainService implements ITrainService {
 		}
 	}
 
-
-
 	@Override
 	@Transactional
-	public boolean deleteTrain(Integer id) {
+	public int deleteTrain(Integer id) {
 	    try {
 	        if (trainRepo.existsById(id)) {
+	            int seatCount = scheduleRepo.countByTrainId(id); 
+	            int routeCount = routeRepo.countByTrainId(id);
+
+	            if (seatCount > 0 || routeCount > 0) { 
+	                System.out.println("Không thể xóa tàu với ID " + id + " vì vẫn còn đặt vé hoặc lịch trình liên kết.");
+	                return 0; 
+	            }
+
 	            trainRepo.deleteById(id);
-	            return true;
+
+	            if (!trainRepo.existsById(id)) {
+	                System.out.println("Đã xóa tàu với ID " + id);
+	                return 1;  
+	            } else {
+	                System.out.println("Không thể xóa tàu với ID " + id);
+	                return 0; 
+	            }
 	        } else {
-	            System.out.println("Train with ID " + id + " not found.");
-	            return false;
+	            System.out.println("Tàu với ID " + id + " không tồn tại.");
+	            return 2;  
 	        }
 	    } catch (Exception e) {
-	        throw new RuntimeException("Đã xảy ra lỗi khi xóa tàu.", e);
+	        e.printStackTrace();
+	        return 0; 
 	    }
 	}
+
 }

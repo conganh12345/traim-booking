@@ -72,14 +72,15 @@ public class TrainController {
 		return new ResponseEntity<>(updatedTrain, HttpStatus.OK);
 	}
 
-
-
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Train> deleteTrain(@PathVariable Integer id) {
-	    if (trainService.deleteTrain(id)) {
-	    	return new ResponseEntity<>(HttpStatus.OK);
-	    } else {
-	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	    }
+	public ResponseEntity<String> deleteTrain(@PathVariable Integer id) {
+		switch (trainService.deleteTrain(id)) {
+			case 2:
+				return new ResponseEntity<>("Không tìm thấy tàu này: " + id, HttpStatus.NOT_FOUND);
+			case 1:
+				return new ResponseEntity<>("Tàu này đã bị xóa", HttpStatus.OK);
+			default:
+				return new ResponseEntity<>("Không thể xóa tàu với ID: " + id, HttpStatus.BAD_REQUEST);
+		}
 	}
 }

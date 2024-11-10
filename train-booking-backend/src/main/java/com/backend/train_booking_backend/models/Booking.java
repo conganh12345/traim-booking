@@ -39,13 +39,11 @@ public class Booking {
 	@Enumerated(EnumType.STRING)
 	private BookingStatus status;
 
-
 	@OneToMany(mappedBy = "booking")
 	@JsonIgnore
 	private List<Ticket> tickets = new ArrayList<>();
 
-	// TODO: một booking có nhiều chuyến đi
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "schedule_id")
 	private Schedule schedule;
 
@@ -67,6 +65,14 @@ public class Booking {
 
 	public void setTotalPrice(String totalPrice) {
 		this.totalPrice = totalPrice;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public LocalDateTime getBookingTime() {
@@ -108,4 +114,6 @@ public class Booking {
 	public void setUser(AppUser user) {
 		this.user = user;
 	}
+
+	
 }

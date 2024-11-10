@@ -73,11 +73,14 @@ public class ScheduleController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Schedule> deleteSchedule(@PathVariable Integer id) {
-	    if (scheduleService.deleteSchedule(id)) {
-	        return new ResponseEntity<>(HttpStatus.OK);
-	    } else {
-	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	    }
+	public ResponseEntity<String> deleteSchedule(@PathVariable Integer id) {
+		switch (scheduleService.deleteSchedule(id)) {
+			case 2:
+				return new ResponseEntity<>("Không tìm thấy chuyến đi này: " + id, HttpStatus.NOT_FOUND);
+			case 1:
+				return new ResponseEntity<>("Chuyến đi này đã bị xóa", HttpStatus.OK);
+			default:
+				return new ResponseEntity<>("Không thể xóa chuyến đi với ID: " + id, HttpStatus.BAD_REQUEST);
+		}
 	}
 }

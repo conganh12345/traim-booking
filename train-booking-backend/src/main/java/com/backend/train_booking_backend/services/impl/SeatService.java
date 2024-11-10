@@ -51,24 +51,25 @@ public class SeatService implements ISeatService {
 
 	@Override
 	@Transactional
-	public boolean deleteSeat(Integer id) {
+	public int deleteSeat(Integer id) {
 	    try {
 	        if (seatRepo.existsById(id)) {
 	            seatRepo.deleteById(id);
 
 	            if (seatRepo.existsById(id)) {
 	                System.out.println("Không thể xóa ghế với ID " + id);
-	                return false;
+	                return -1; 
 	            }
-	            return true;
+	            return 1;
 	        } else {
 	            System.out.println("Ghế với ID " + id + " không tồn tại.");
-	            return false;
+	            return 0; 
 	        }
 	    } catch (Exception e) {
 	        throw new RuntimeException("Đã xảy ra lỗi khi xóa ghế.", e);
 	    }
 	}
+
 }
 
 

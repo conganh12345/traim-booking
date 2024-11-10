@@ -73,11 +73,14 @@ public class SeatTypeController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<SeatType> deleteSeatType(@PathVariable Integer id) {
-	    if (seattypeService.deleteSeatType(id)) {
-	        return new ResponseEntity<>(HttpStatus.OK);
-	    } else {
-	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	    }
+	public ResponseEntity<String> deleteSeattye(@PathVariable Integer id) {
+		switch (seattypeService.deleteSeatType(id)) {
+			case 2:
+				return new ResponseEntity<>("Không tìm thấy loại ghế này: " + id, HttpStatus.NOT_FOUND);
+			case 1:
+				return new ResponseEntity<>("Loại ghê này đã bị xóa", HttpStatus.OK);
+			default:
+				return new ResponseEntity<>("Không thể xóa loại ghế với ID: " + id, HttpStatus.BAD_REQUEST);
+		}
 	}
 }

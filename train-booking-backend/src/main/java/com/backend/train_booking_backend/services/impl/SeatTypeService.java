@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.backend.train_booking_backend.models.SeatType;
+import com.backend.train_booking_backend.repositories.SeatRepository;
 import com.backend.train_booking_backend.repositories.SeatTypeRepository;
 import com.backend.train_booking_backend.services.ISeatTypeService;
 
@@ -15,6 +16,9 @@ import com.backend.train_booking_backend.services.ISeatTypeService;
 public class SeatTypeService implements ISeatTypeService {
 	@Autowired
 	private SeatTypeRepository seattypeRepo;
+	
+	@Autowired
+	private SeatRepository seatRepo;
 
 	@Override
 	public List<SeatType> getAllSeatTypes() {
@@ -31,7 +35,7 @@ public class SeatTypeService implements ISeatTypeService {
 		try {
 			return seattypeRepo.save(seattype);
 		} catch (Exception e) {
-			 e.printStackTrace();
+			e.printStackTrace();
 			throw new RuntimeException("Đã xảy ra lỗi khi thêm lịch trình.", e);
 		}
 	}
@@ -51,25 +55,32 @@ public class SeatTypeService implements ISeatTypeService {
 
 	@Override
 	@Transactional
-	public boolean deleteSeatType(Integer id) {
-	    try {
+	public int deleteSeatType(Integer id) {
+		try {
 	        if (seattypeRepo.existsById(id)) {
-	        	seattypeRepo.deleteById(id);
-	            return true;
+	            int seatCount = seatRepo.countBySeatTypeId(id); 
+
+	            if (seatCount > 0) {
+	                System.out.println("Không thể xóa loại ghế với ID " + id + " vì vẫn còn ghế liên kết.");
+	                return 0; 
+	            }
+
+	            seattypeRepo.deleteById(id);
+
+	            if (!seattypeRepo.existsById(id)) {
+	                System.out.println("Đã xóa  loại ghế  với ID " + id);
+	                return 1;  
+	            } else {
+	                System.out.println("Không thể xóa  loại ghế  với ID " + id);
+	                return 0; 
+	            }
 	        } else {
-	            System.out.println("Seattype with ID " + id + " not found.");
-	            return false;
+	            System.out.println("Loại ghế  với ID " + id + " không tồn tại.");
+	            return 2;  
 	        }
 	    } catch (Exception e) {
-	        throw new RuntimeException("Đã xảy ra lỗi khi xóa lịch trình.", e);
+	        e.printStackTrace();
+	        return 0; 
 	    }
 	}
 }
-
-
-
-
-
-
-
-
