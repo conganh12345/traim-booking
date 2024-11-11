@@ -68,22 +68,25 @@
 									<td th:text="${booking.fullName}"></td>
 									<td th:text="${booking.depatureStation}"></td>
 									<td th:text="${booking.destinationStation}"></td>
-									<td th:text="${#temporals.format(booking.bookingTime, 'HH:mm, dd/MM/yyyy')}"  class="text-truncate"
-										style="max-width: 250px;"></td>
+									<td
+										th:text="${#temporals.format(booking.bookingTime, 'HH:mm, dd/MM/yyyy')}"
+										class="text-truncate" style="max-width: 250px;"></td>
 									<td class="text-truncate" style="max-width: 250px;"><span
 										th:class="'badge ' + ${booking.status.badgeClass}"
 										th:text="${booking.status.displayName}"></span></td>
-									<td>
-									<a th:href="@{/booking/show/{id}(id=${booking.id})}"
-										class="bs-tooltip edit" data-bs-toggle="tooltip"
-										data-bs-placement="top"> <svg
-												xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-												viewBox="0 0 24 24" fill="none" stroke="currentColor"
-												stroke-width="2" stroke-linecap="round"
-												stroke-linejoin="round" class="feather feather-eye br-6 mb-1">
+									<td
+										class="table-controls d-flex justify-content-center align-items-center pt-2">
+										<li><a th:href="@{/booking/show/{id}(id=${booking.id})}"
+											class="bs-tooltip edit" data-bs-toggle="tooltip"
+											data-bs-placement="top"> <svg
+													xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+													viewBox="0 0 24 24" fill="none" stroke="currentColor"
+													stroke-width="2" stroke-linecap="round"
+													stroke-linejoin="round"
+													class="feather feather-eye br-6 mb-1">
 												<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
 												<circle cx="12" cy="12" r="3"></circle></svg>
-									</a> 
+										</a></li>
 									</td>
 								</tr>
 							</tbody>
@@ -123,7 +126,7 @@
 								"stripeClasses" : [],
 								"lengthMenu" : [ 7, 10, 20, 50 ],
 								"pageLength" : 10,
-								"ordering": false
+								"ordering" : false
 							});
 		</script>
 	</div>
