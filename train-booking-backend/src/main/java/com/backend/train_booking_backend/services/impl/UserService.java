@@ -36,7 +36,6 @@ public class UserService implements IUserService {
 	@Transactional
 	public AppUser addUser(AppUser user) {
 		try {
-
 			return userRepo.save(user);
 		} catch (Exception e) {
 			throw new RuntimeException("Đã xảy ra lỗi khi thêm người dùng.", e);

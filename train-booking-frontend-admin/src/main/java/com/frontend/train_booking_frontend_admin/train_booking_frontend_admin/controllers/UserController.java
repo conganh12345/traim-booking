@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.User;
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.enums.ERole;
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.enums.TrainStatus;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.UserService;
 
 import jakarta.validation.Valid;
@@ -40,7 +42,9 @@ public class UserController {
 
 	@GetMapping("/create")
 	public String create(Model model) {
-		model.addAttribute("page", "user").addAttribute("user", new User());
+		model.addAttribute("page", "user")
+			.addAttribute("user", new User())
+			.addAttribute("userRoles", ERole.values());
 
 		return "user/create";
 	}
@@ -65,7 +69,9 @@ public class UserController {
 	public String edit(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
 		User user = userService.getUserById(id);
 
-		model.addAttribute("page", "user").addAttribute("user", user);
+		model.addAttribute("page", "user")
+			.addAttribute("user", user)
+			.addAttribute("userRoles", ERole.values());
 
 		return "user/edit";
 	}

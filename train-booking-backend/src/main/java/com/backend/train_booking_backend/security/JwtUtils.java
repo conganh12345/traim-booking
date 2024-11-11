@@ -19,7 +19,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Service
 public class JwtUtils {
 	private final String SECRET_KEY = "your_secret_key"; // Khóa bí mật
-    private final long EXPIRATION_TIME = 40000; // 1 ngày
+    private final long EXPIRATION_TIME = 15000000; // 1 ngày
 
     @Autowired
     private UserRepository userRepository;
