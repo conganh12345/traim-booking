@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.backend.train_booking_backend.models.AppUser;
+import com.backend.train_booking_backend.models.Train;
 import com.backend.train_booking_backend.services.IUserService;
 
 import jakarta.validation.ValidationException;
@@ -53,6 +54,15 @@ public class UserController {
 	@GetMapping("/profile/id/{id}")
 	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
 	public ResponseEntity<AppUser> getUser(@PathVariable Integer id) {
+		AppUser user = userService.getUser(id);
+		if (user == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(user, HttpStatus.OK);
+	}
+	
+	@GetMapping("/admin/id/{id}")
+	public ResponseEntity<AppUser> getUserById(@PathVariable Integer id) {
 		AppUser user = userService.getUser(id);
 		if (user == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

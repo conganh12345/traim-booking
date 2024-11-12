@@ -67,19 +67,25 @@
 							            </div>
 							        </div>
 							    </div>
-							    
+							     <input type="hidden" 
+				                    th:field="*{password}"
+				                    id="password"
+				                    class="form-control" 
+				                    placeholder="Mật khẩu"
+				                    th:classappend="${#fields.hasErrors('password') ? 'is-invalid' : ''}"
+				                >
 							    <div class="row">
 							        <div class="col-md-6">
 							            <div class="form-group mb-4">
-							                <label for="password">Mật khẩu <strong class="text-danger">*</strong></label> 
+							               <label for="password">CMND/CCCD <strong class="text-danger">*</strong></label> 
 							                <input type="text" 
-							                    th:field="*{password}"
+							                    th:field="*{identifyCard}"
 							                    id="password"
 							                    class="form-control" 
 							                    placeholder="Mật khẩu"
-							                    th:classappend="${#fields.hasErrors('password') ? 'is-invalid' : ''}"
+							                    th:classappend="${#fields.hasErrors('identifyCard') ? 'is-invalid' : ''}"
 							                >
-							                <span th:if="${#fields.hasErrors('password')}" class="text-danger" th:errors="*{password}"></span>
+							                <span th:if="${#fields.hasErrors('identifyCard')}" class="text-danger" th:errors="*{identifyCard}"></span>
 							            </div>
 							        </div>
 							        <div class="col-md-6">
@@ -97,22 +103,17 @@
 							        </div>
 							    </div>
 							    
-							     <div class="row">
-							        <div class="col-md-6">
-							            <div class="form-group mb-4">
-							                <label for="password">CMND/CCCD <strong class="text-danger">*</strong></label> 
-							                <input type="text" 
-							                    th:field="*{identifyCard}"
-							                    id="password"
-							                    class="form-control" 
-							                    placeholder="Mật khẩu"
-							                    th:classappend="${#fields.hasErrors('identifyCard') ? 'is-invalid' : ''}"
-							                >
-							                <span th:if="${#fields.hasErrors('identifyCard')}" class="text-danger" th:errors="*{identifyCard}"></span>
-							            </div>
-							        </div>
-							        
-							    </div>
+							     <div class="form-group mb-4">
+					               <label for="status">Trạng thái <strong
+									class="text-danger">*</strong></label> <select th:field="*{role}"
+									id="status" class="form-control"
+									th:classappend="${#fields.hasErrors('role') ? 'is-invalid' : ''}">
+									<option value="">Chọn trạng thái</option>
+									<option th:each="role : ${userRoles}"
+										th:value="${role}" th:text="${role.displayName}"></option>
+								</select> <span th:if="${#fields.hasErrors('role')}"
+									class="text-danger" th:errors="*{role}"></span>
+					            </div>
 							    
 							    <div class="form-group mb-4">
 							        <label for="address">Địa chỉ <strong class="text-danger">*</strong></label> 

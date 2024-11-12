@@ -18,8 +18,9 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 @Service
 public class JwtUtils {
-	private final String SECRET_KEY = "train-booking"; // Khóa bí mật
-    private final long EXPIRATION_TIME = 40000; // 1 ngày
+    // Khóa bí mật
+    private final String SECRET_KEY = "train-booking"; 
+    private final long EXPIRATION_TIME = 15000000;
 
     @Autowired
     private UserRepository userRepository;

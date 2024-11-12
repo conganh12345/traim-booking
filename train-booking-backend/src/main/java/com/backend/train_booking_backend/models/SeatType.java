@@ -27,7 +27,7 @@ public class SeatType {
 	@Column
 	private double price;
 
-	@OneToMany(mappedBy = "seattype")
+	@OneToMany(mappedBy = "seatType")
 	@JsonIgnore
 	private List<Seat> seat = new ArrayList<>();
 

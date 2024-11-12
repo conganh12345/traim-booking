@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.backend.train_booking_backend.models.Ticket;
+import com.backend.train_booking_backend.repositories.SeatRepository;
 import com.backend.train_booking_backend.repositories.TicketRepository;
 import com.backend.train_booking_backend.services.ITicketService;
 
@@ -15,6 +16,9 @@ import com.backend.train_booking_backend.services.ITicketService;
 public class TicketService implements ITicketService {
 	@Autowired
 	private TicketRepository ticketRepo;
+	
+	@Autowired
+	private SeatRepository seatRepo;
 
 	@Override
 	public List<Ticket> getAllTickets() {
@@ -48,21 +52,34 @@ public class TicketService implements ITicketService {
 		}
 	}
 
-
-
 	@Override
 	@Transactional
-	public boolean deleteTicket(Integer id) {
-	    try {
+	public int deleteTicket(Integer id) {
+		try {
 	        if (ticketRepo.existsById(id)) {
-	        	ticketRepo.deleteById(id);
-	            return true;
+	            int seatCount = seatRepo.countByTicketId(id); 
+
+	            if (seatCount > 0) {
+	                System.out.println("Không thể xóa vé với ID " + id + " vì vẫn còn ghế liên kết.");
+	                return 0; 
+	            }
+
+	            ticketRepo.deleteById(id);
+
+	            if (!ticketRepo.existsById(id)) {
+	                System.out.println("Đã xóa vé với ID " + id);
+	                return 1;  
+	            } else {
+	                System.out.println("Không thể xóa vé với ID " + id);
+	                return 0; 
+	            }
 	        } else {
-	            System.out.println("Ticket with ID " + id + " not found.");
-	            return false;
+	            System.out.println("Vé với ID " + id + " không tồn tại.");
+	            return 2;  
 	        }
 	    } catch (Exception e) {
-	        throw new RuntimeException("Đã xảy ra lỗi khi xóa tàu.", e);
+	        e.printStackTrace();
+	        return 0; 
 	    }
 	}
 }

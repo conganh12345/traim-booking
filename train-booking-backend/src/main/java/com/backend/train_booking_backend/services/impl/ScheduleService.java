@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.backend.train_booking_backend.models.Schedule;
+import com.backend.train_booking_backend.repositories.BookingRepository;
 import com.backend.train_booking_backend.repositories.ScheduleRepository;
 import com.backend.train_booking_backend.services.IScheduleService;
 
@@ -15,6 +16,9 @@ import com.backend.train_booking_backend.services.IScheduleService;
 public class ScheduleService implements IScheduleService {
 	@Autowired
 	private ScheduleRepository scheduleRepo;
+	
+	@Autowired
+	private BookingRepository bookingRepo;
 
 	@Override
 	public List<Schedule> getAllSchedules() {
@@ -51,17 +55,32 @@ public class ScheduleService implements IScheduleService {
 
 	@Override
 	@Transactional
-	public boolean deleteSchedule(Integer id) {
-	    try {
+	public int deleteSchedule(Integer id) {
+		try {
 	        if (scheduleRepo.existsById(id)) {
-	        	scheduleRepo.deleteById(id);
-	            return true;
+	            int seatCount = bookingRepo.countByScheduleId(id); 
+
+	            if (seatCount > 0) {
+	                System.out.println("Không thể xóa chuyến đi với ID " + id + " vì vẫn còn đặt vé liên kết.");
+	                return 0; 
+	            }
+
+	            scheduleRepo.deleteById(id);
+
+	            if (!scheduleRepo.existsById(id)) {
+	                System.out.println("Đã xóa chuyến đi với ID " + id);
+	                return 1;  
+	            } else {
+	                System.out.println("Không thể xóa chuyến đi với ID " + id);
+	                return 0; 
+	            }
 	        } else {
-	            System.out.println("Schedule with ID " + id + " not found.");
-	            return false;
+	            System.out.println("Chuyến đi với ID " + id + " không tồn tại.");
+	            return 2;  
 	        }
 	    } catch (Exception e) {
-	        throw new RuntimeException("Đã xảy ra lỗi khi xóa chuyến đi.", e);
+	        e.printStackTrace();
+	        return 0; 
 	    }
 	}
 }

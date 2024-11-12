@@ -13,5 +13,5 @@ public interface ISeatTypeService {
 
 	SeatType updateSeatType(Integer id, SeatType seattype);
 
-	boolean deleteSeatType(Integer id);
+	int deleteSeatType(Integer id);
 }

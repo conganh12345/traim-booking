@@ -71,7 +71,7 @@ public class BookingService implements IBookingService {
 	                System.out.println("Đã xóa booking với ID " + id);
 	                return 1;  
 	            } else {
-	                System.out.println("Không thể xóa booking với ID " + id);
+	                System.out.println("Không thể xóa booking với ID " + id + " vì vẫn còn vé liên kết.");
 	                return 0; 
 	            }
 	        } else {

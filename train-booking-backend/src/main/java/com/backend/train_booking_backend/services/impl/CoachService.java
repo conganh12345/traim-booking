@@ -57,26 +57,26 @@ public class CoachService implements ICoachService {
 	@Override
 	@Transactional
 	public int deleteCoach(Integer id) {
-	    try {
+		try {
 	        if (coachRepo.existsById(id)) {
 	            int seatCount = seatRepo.countByCoachId(id); 
 
 	            if (seatCount > 0) {
-	                System.out.println("Không thể xóa coach với ID " + id + " vì vẫn còn ghế liên kết.");
+	                System.out.println("Không thể xóa toa với ID " + id + " vì vẫn còn đặt vé liên kết.");
 	                return 0; 
 	            }
 
 	            coachRepo.deleteById(id);
 
 	            if (!coachRepo.existsById(id)) {
-	                System.out.println("Đã xóa coach với ID " + id);
+	                System.out.println("Đã xóa toa với ID " + id);
 	                return 1;  
 	            } else {
-	                System.out.println("Không thể xóa coach với ID " + id);
+	                System.out.println("Không thể xóa toa với ID " + id);
 	                return 0; 
 	            }
 	        } else {
-	            System.out.println("Coach với ID " + id + " không tồn tại.");
+	            System.out.println("Toa với ID " + id + " không tồn tại.");
 	            return 2;  
 	        }
 	    } catch (Exception e) {

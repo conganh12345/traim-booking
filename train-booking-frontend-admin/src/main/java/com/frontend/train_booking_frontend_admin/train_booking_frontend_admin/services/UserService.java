@@ -38,7 +38,6 @@ public class UserService {
 		this.jwtToken = (String)session.getAttribute("token");
 		this.headers = new HttpHeaders();
 		this.headers.set("Authorization", "Bearer " + jwtToken);
-		
 	}
 
 	public List<User> getAllUsers() {
@@ -69,9 +68,13 @@ public class UserService {
     }
 
 	public User getUserById(Integer id) {
-		RestTemplate restTemplate = new RestTemplate();
 		try {
-			return restTemplate.getForObject(apiUrl + "api/user/id/" + id, User.class);
+			setJwtToken();
+			String url = apiUrl + "api/admin/id/" + id;
+	        
+	        HttpEntity<Void> entity = new HttpEntity<>(headers);
+	        
+	        return restTemplate.exchange(url, HttpMethod.GET, entity, User.class).getBody();
 		} catch (ResourceAccessException e) {
 			e.printStackTrace();
 			return null;
@@ -79,26 +82,37 @@ public class UserService {
 	}
 
 	public boolean updateUser(User user) {
-		RestTemplate restTemplate = new RestTemplate();
-		try {
-			restTemplate.put(apiUrl + "api/user/" + user.getId(), user);
-			return true;
-		} catch (ResourceAccessException e) {
-			e.printStackTrace();
-			return false;
-		}
+	    try {
+	        setJwtToken();
+	        
+	        String url = apiUrl + "api/admin/" + user.getId();
+	        
+	        HttpEntity<User> entity = new HttpEntity<>(user, headers);
+	        
+	        restTemplate.exchange(url, HttpMethod.PUT, entity, Void.class);
+	        return true;
+	    } catch (ResourceAccessException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
 	}
 
+
 	public boolean deleteUser(Integer id) {
-		RestTemplate restTemplate = new RestTemplate();
-		try {
-			restTemplate.delete(apiUrl + "api/user/" + id);
-			return true;
-		} catch (ResourceAccessException e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
+	    try {
+	        setJwtToken();
+	        
+	        String url = apiUrl + "api/admin/" + id;
+	        
+	        HttpEntity<Void> entity = new HttpEntity<>(headers);
+	        
+	        restTemplate.exchange(url, HttpMethod.DELETE, entity, Void.class);
+	        return true;
+	    } catch (ResourceAccessException e) {
+	        e.printStackTrace();
+	        return false;
+	    	}
+	    }
 	
 	
 	public User userProfile() {
