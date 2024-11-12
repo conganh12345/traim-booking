@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -40,6 +41,7 @@ public class RouteController {
 	}
 
 	@GetMapping
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<List<Route>> getAllRoute() {
 		List<Route> route = routeService.getAllRoutes();
 		if (route.isEmpty()) {
@@ -49,6 +51,7 @@ public class RouteController {
 	}
 
 	@GetMapping("/id/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<Route> getRoute(@PathVariable Integer id) {
 		Route route = routeService.getRoute(id);
 		if (route == null) {
@@ -58,12 +61,14 @@ public class RouteController {
 	}
 
 	@PostMapping
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<Route> addRoute(@RequestBody Route route) {
 		Route createdRoute = routeService.addRoute(route);
 		return new ResponseEntity<>(createdRoute, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<Route> updateRoute(@RequestBody Route route, @PathVariable Integer id) {
 		Route updatedRoute = routeService.updateRoute(id, route);
 		if (updatedRoute == null) {
@@ -73,6 +78,7 @@ public class RouteController {
 	}
 
 	@DeleteMapping("/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<String> deleteRoute(@PathVariable Integer id) {
 		switch (routeService.deleteRoute(id)) {
 			case 2:

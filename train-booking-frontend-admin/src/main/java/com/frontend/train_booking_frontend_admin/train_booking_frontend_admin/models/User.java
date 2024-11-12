@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotNull;
 
 public class User 
 {
@@ -34,6 +35,7 @@ public class User
     @Size(min = 6, message = "CMND/CCCD phải có ít nhất 6 ký tự")
 	private String identifyCard;
     
+    @NotNull(message = "Trạng thái không được để trống")
     private ERole role;
 
     public String getFullName() {

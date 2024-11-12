@@ -3,7 +3,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/base-layout.html}">
 <head>
-<title>Danh sách Ghế</title>
+<title>Danh sách loại ghế</title>
 
 <div layout:fragment="headerFiles">
 	<link rel="stylesheet" type="text/css"
@@ -13,7 +13,7 @@
 	<link rel="stylesheet" type="text/css"
 		href="/plugins/table/datatable/extensions/fixed-columns/fixed-columns.datatables.min.css">
 	<link rel="stylesheet" type="text/css"
-		href="/css/plugins/light/	table/datatable/dt-global_style.css">
+		href="/css/plugins/light/table/datatable/dt-global_style.css">
 	<link rel="stylesheet" type="text/css"
 		href="/css/plugins/dark/table/datatable/dt-global_style.css">
 	<link rel="stylesheet" type="text/css"
@@ -29,9 +29,9 @@
 		<div class="page-meta">
 			<nav class="breadcrumb-style-one" aria-label="breadcrumb">
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="#">ghế</a></li>
+					<li class="breadcrumb-item"><a href="#">Loại ghế</a></li>
 					<li class="breadcrumb-item active" aria-current="page">Quản lý
-						ghế</li>
+						loại ghế</li>
 				</ol>
 			</nav>
 		</div>
@@ -43,7 +43,7 @@
 					<div class="widget-header">
 						<div class="row">
 							<div class="col-xl-12 col-md-12 col-sm-12 col-12">
-								<h4>Quản lý ghế</h4>
+								<h4>Quản lý loại ghế</h4>
 							</div>
 						</div>
 					</div>
@@ -56,47 +56,50 @@
 							<thead>
 								<tr>
 									<th style="width: 5%">STT</th>
-									<th>Loại ghế</th>
-									<th>Vị trí ghế</th>
+									<th>Tên loại ghế </th>
+									<th>Giá ghé</th>
 									<th>Trạng thái</th>
 									<th class="no-content" style="width: 5%">Thao tác</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:if="${#lists.isEmpty(seattypes)}">
-									<td colspan="5" class="text-center">Không có ghế nào</td>
-								</tr>
 								<tr th:each="seattype, stat : ${seattypes}">
 									<td th:text="${stat.count}"></td>
-									<td th:text="${seattype.seatTypeName}"></td>
-									<td th:text="${seattype.seatPosition}"></td>
-									<td th:text="${seattype.status}" class="text-truncate"
+									<td th:text="${seattype.seatName}"></td>
+									<td th:text="${seattype.price}" class="text-truncate"
 										style="max-width: 250px;"></td>
-									<td><a th:href="@{/seattype/edit/{id}(id=${seattype.id})}"
-										class="bs-tooltip edit" data-bs-toggle="tooltip"
-										data-bs-placement="top"> <svg
-												xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-												viewBox="0 0 24 24" fill="none" stroke="currentColor"
-												stroke-width="2" stroke-linecap="round"
-												stroke-linejoin="round"
-												class="feather feather-edit-2 p-1 br-6 mb-1">
+									<td class="text-truncate" style="max-width: 250px;"><span
+										th:class="'badge ' + ${seattype.status.badgeClass}"
+										th:text="${seattype.status.displayName}"></span></td>
+									<td
+										class="table-controls d-flex justify-content-center align-items-center pt-2">
+										<li><a th:href="@{/seattype/edit/{id}(id=${seattype.id})}"
+											class="bs-tooltip edit" data-bs-toggle="tooltip"
+											data-bs-placement="top"> <svg
+													xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+													viewBox="0 0 24 24" fill="none" stroke="currentColor"
+													stroke-width="2" stroke-linecap="round"
+													stroke-linejoin="round"
+													class="feather feather-edit-2 p-1 br-6 mb-1">
 								                <path
-													d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z">
+														d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z">
 								                </path>
 								            </svg>
-									</a> <a href="#" class="bs-tooltip delete"
-										th:data-seattype-id="${seattype.id}" data-bs-toggle="tooltip"
-										data-bs-placement="top"> <svg
-												xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-												viewBox="0 0 24 24" fill="none" stroke="currentColor"
-												stroke-width="2" stroke-linecap="round"
-												stroke-linejoin="round"
-												class="feather feather-trash p-1 br-6 mb-1">
+										</a></li>
+										<li><a href="#" class="bs-tooltip delete"
+											th:data-seattype-id="${seattype.id}" data-bs-toggle="tooltip"
+											data-bs-placement="top"> <svg
+													xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+													viewBox="0 0 24 24" fill="none" stroke="currentColor"
+													stroke-width="2" stroke-linecap="round"
+													stroke-linejoin="round"
+													class="feather feather-trash p-1 br-6 mb-1">
 										        <polyline points="3 6 5 6 21 6"></polyline>
 										        <path
-													d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+														d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
 										    </svg>
-									</a></td>
+										</a></li>
+									</td>
 								</tr>
 							</tbody>
 						</table>
@@ -136,7 +139,7 @@
 								"stripeClasses" : [],
 								"lengthMenu" : [ 7, 10, 20, 50 ],
 								"pageLength" : 10,
-								"ordering": false
+								"ordering" : false
 							});
 		</script>
 
@@ -158,18 +161,20 @@
 						success : function(response) {
 
 							Snackbar.show({
-								text : 'Xóa ghế thành công',
+								text : 'Xóa loại ghế thành công',
 								textColor : '#ddf5f0',
 								backgroundColor : '#00ab55',
 								actionText : 'Bỏ qua',
 								actionTextColor : '#3b3f5c'
 							});
 
-							location.reload();
+							setTimeout(function() {
+								location.reload();
+							}, 1000);
 						},
 						error : function() {
 							Snackbar.show({
-								text : 'Xóa ghế thất bại',
+								text : 'Xóa loại ghế thất bại',
 								textColor : '#fbeced',
 								backgroundColor : '#e7515a',
 								actionText : 'Bỏ qua',

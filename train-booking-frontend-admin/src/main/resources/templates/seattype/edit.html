@@ -3,7 +3,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/base-layout.html}">
 <head>
-<title>Chỉnh sửa ghế</title>
+<title>Chỉnh sửa loại ghế</title>
 </head>
 <body>
 	<div layout:fragment="content">
@@ -11,64 +11,60 @@
 		<div class="page-meta">
 			<nav class="breadcrumb-style-one" aria-label="breadcrumb">
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="#">Toa</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a
-						th:href="@{/coach/index}">Quản lý toa</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a
-						th:href="@{/coach/show/{id}(id=${coachId})}"> Chi tiết toa</a></li>
-					<li class="breadcrumb-item active" aria-current="page">Chỉnh
-						sửa ghế</li>
+					<li class="breadcrumb-item"><a href="#">loại ghế</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a th:href="@{/seattype/index}">Quản lý loại ghế</a></li>
+					<li class="breadcrumb-item active" aria-current="page">Chỉnh sửa loại ghế</li>
 				</ol>
 			</nav>
 		</div>
 		<!-- /BREADCRUMB -->
-
+		
 		<div class="layout-top-spacing col-12">
-			<a th:href="@{/coach/show/{id}(id=${coachId})}" class="btn"> Trở
-				lại </a>
+		<a th:href="@{/seattype/index}" class="btn">
+		    Trở lại
+		</a>
+				
 		</div>
-
+		
 		<div class="row layout-top-spacing">
-			<div id="seattype-management" class="col-lg-12 layout-spacing">
-				<div class="statbox widget box box-shadow">
-					<div class="widget-header">
-						<div class="row">
-							<div class="col-xl-12 col-md-12 col-sm-12 col-12">
-								<h4>Chỉnh sửa</h4>
-							</div>
-						</div>
-					</div>
-					<div class="widget-content widget-content-area">
-						<div class="col-12">
-							<form th:action="@{/seattype/update/{id}(id=${seattype.id})}"
-								th:object="${seattype}" id="general-settings" method="POST">
-
-								<input type="hidden" th:value="${coachId}" id="coachId"
-									name="coachId" />
-
-								<div class="row">
+		    <div id="seattype-management" class="col-lg-12 layout-spacing">
+		        <div class="statbox widget box box-shadow">
+		                <div class="widget-header">
+		                    <div class="row">
+		                        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+		                            <h4>Chỉnh sửa</h4>
+		                        </div>
+		                    </div>
+		                </div>
+		            <div class="widget-content widget-content-area">
+		               <div class="col-12">
+						    <form th:action="@{/seattype/update/{id}(id=${seattype.id})}" th:object="${seattype}" id="general-settings" method="POST">
+							    <div class="row">
 									<div class="col-md-6">
 										<div class="form-group mb-4">
-											<label for="seatTypeName">Tên ghế<strong
+											<label for="seattype">Tên loại ghế<strong
 												class="text-danger">*</strong></label> <input type="text"
-												th:field="*{seatTypeName}" id="seatTypeName"
-												class="form-control" placeholder="Tên ghế" />
+												th:field="*{seatName}" id="seatName" class="form-control"
+												placeholder="Tên người dùng"
+												th:classappend="${#fields.hasErrors('seatName') ? 'is-invalid' : ''}">
+											<span th:if="${#fields.hasErrors('seatName')}"
+												class="text-danger" th:errors="*{seatName}"></span>
 										</div>
 									</div>
-								</div>
-
-								<div class="row">
+									
 									<div class="col-md-6">
 										<div class="form-group mb-4">
-											<label for="seatPosition">Vị trí ghế<strong
-												class="text-danger">*</strong></label> <input type="number"
-												th:field="*{seatPosition}" id="seatPosition"
-												class="form-control" placeholder="Vị trí ghế" />
+											<label for="price">Giá<strong class="text-danger">*</strong></label>
+											<input type="number" th:field="*{price}" id="price"
+												class="form-control" placeholder="Nhập giá" step="0.01"
+												th:classappend="${#fields.hasErrors('price') ? 'is-invalid' : ''}">
+											<span th:if="${#fields.hasErrors('price')}"
+												class="text-danger" th:errors="*{price}"></span>
 										</div>
 									</div>
 								</div>
-
-								<div class="row">
+											    
+							     <div class="row">
 									<div class="col-md-6">
 										<div class="form-group mb-4">
 											<label for="status">Trạng thái <strong
@@ -76,26 +72,29 @@
 												id="status" class="form-control"
 												th:classappend="${#fields.hasErrors('status') ? 'is-invalid' : ''}">
 												<option value="">Chọn trạng thái</option>
-												<option th:each="status : ${seattypeStatuses}"
-													th:value="${status}" th:text="${status.displayName}"></option>
+												<option th:each="status : ${seattypeStatus}" th:value="${status}"
+													th:text="${status.displayName}"></option>
 											</select> <span th:if="${#fields.hasErrors('status')}"
 												class="text-danger" th:errors="*{status}"></span>
 										</div>
 									</div>
 								</div>
-
-
-								<button type="submit" class="btn btn-primary">Hoàn tất</button>
+														    
+							    <button type="submit" class="btn btn-primary">Hoàn tất</button>						
 							</form>
+
 						</div>
-					</div>
-				</div>
-			</div>
+		            </div>
+		        </div>
+		    </div>
 		</div>
 	</div>
+	
 	<!--  BEGIN CUSTOM SCRIPTS FILE  -->
-	<div layout:fragment="footerFiles"></div>
-	<!--  END CUSTOM SCRIPTS FILE  -->
+	 <div layout:fragment="footerFiles">
+		
+	</div>
+	 <!--  END CUSTOM SCRIPTS FILE  -->
 </body>
 
 </html>

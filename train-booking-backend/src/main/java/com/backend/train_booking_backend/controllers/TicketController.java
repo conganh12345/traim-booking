@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -41,6 +42,7 @@ public class TicketController {
 	}
 
 	@GetMapping
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<List<Ticket>> getAllTicket() {
 		List<Ticket> tickets = ticketService.getAllTickets();
 		if (tickets.isEmpty()) {
@@ -50,6 +52,7 @@ public class TicketController {
 	}
 
 	@GetMapping("/id/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<Ticket> getTicket(@PathVariable Integer id) {
 		Ticket ticket = ticketService.getTicket(id);
 		if (ticket == null) {
@@ -59,12 +62,14 @@ public class TicketController {
 	}
 
 	@PostMapping
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<Ticket> addTicket(@RequestBody Ticket ticket) {
 		Ticket createdTicket = ticketService.addTicket(ticket);
 		return new ResponseEntity<>(createdTicket, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<Ticket> updateTicket(@RequestBody Ticket ticket, @PathVariable Integer id) {
 		Ticket updatedTicket = ticketService.updateTicket(id, ticket);
 		if (updatedTicket == null) {
@@ -74,6 +79,7 @@ public class TicketController {
 	}
 
 	@DeleteMapping("/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<String> deleteTicket(@PathVariable Integer id) {
 		switch (ticketService.deleteTicket(id)) {
 			case 2:

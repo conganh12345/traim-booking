@@ -51,6 +51,7 @@ public class BookingController {
 	}
 
 	@GetMapping("/id/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<Booking> getBooking(@PathVariable Integer id) {
 		Booking booking = bookingService.getBooking(id);
 		if (booking == null) {
@@ -60,12 +61,14 @@ public class BookingController {
 	}
 
 	@PostMapping
+	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')") 
 	public ResponseEntity<Booking> addBooking(@RequestBody Booking booking) {
 		Booking createdBooking = bookingService.addBooking(booking);
 		return new ResponseEntity<>(createdBooking, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")
+	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')") 
 	public ResponseEntity<Booking> updateBooking(@RequestBody Booking booking, @PathVariable Integer id) {
 		Booking updatedBooking = bookingService.updateBooking(id, booking);
 		if (updatedBooking == null) {
@@ -75,6 +78,7 @@ public class BookingController {
 	}
 
 	@DeleteMapping("/{id}")
+	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')") 
 	public ResponseEntity<String> deleteBooking(@PathVariable Integer id) {
 		switch (bookingService.deleteBooking(id)) {
 			case 2:

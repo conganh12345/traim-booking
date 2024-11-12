@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -40,6 +41,7 @@ public class SeatController {
 	}
 
 	@GetMapping
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<List<Seat>> getAllSeat() {
 		List<Seat> seat = seatService.getAllSeats();
 		if (seat.isEmpty()) {
@@ -49,6 +51,7 @@ public class SeatController {
 	}
 
 	@GetMapping("/id/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<Seat> getSeat(@PathVariable Integer id) {
 		Seat seat = seatService.getSeat(id);
 		if (seat == null) {
@@ -58,12 +61,14 @@ public class SeatController {
 	}
 
 	@PostMapping
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<Seat> addSeat(@RequestBody Seat seat) {
 		Seat createdSeat = seatService.addSeat(seat);
 		return new ResponseEntity<>(createdSeat, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<Seat> updateSeat(@RequestBody Seat seat, @PathVariable Integer id) {
 		Seat updatedSeat = seatService.updateSeat(id, seat);
 		if (updatedSeat == null) {
@@ -73,6 +78,7 @@ public class SeatController {
 	}
 
 	@DeleteMapping("/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<String> deleteSeat(@PathVariable Integer id) {
 		switch (seatService.deleteSeat(id)) {
 			case 2:

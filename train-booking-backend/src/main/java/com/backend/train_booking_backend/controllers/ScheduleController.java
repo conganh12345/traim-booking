@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -40,6 +41,7 @@ public class ScheduleController {
 	}
 
 	@GetMapping
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<List<Schedule>> getAllSchedule() {
 		List<Schedule> schedule = scheduleService.getAllSchedules();
 		if (schedule.isEmpty()) {
@@ -49,6 +51,7 @@ public class ScheduleController {
 	}
 
 	@GetMapping("/id/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<Schedule> getSchedule(@PathVariable Integer id) {
 		Schedule schedule = scheduleService.getSchedule(id);
 		if (schedule == null) {
@@ -58,12 +61,14 @@ public class ScheduleController {
 	}
 
 	@PostMapping
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<Schedule> addSchedule(@RequestBody Schedule schedule) {
 		Schedule createdSchedule = scheduleService.addSchedule(schedule);
 		return new ResponseEntity<>(createdSchedule, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<Schedule> updateSchedule(@RequestBody Schedule schedule, @PathVariable Integer id) {
 		Schedule updatedSchedule = scheduleService.updateSchedule(id, schedule);
 		if (updatedSchedule == null) {
@@ -73,6 +78,7 @@ public class ScheduleController {
 	}
 
 	@DeleteMapping("/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<String> deleteSchedule(@PathVariable Integer id) {
 		switch (scheduleService.deleteSchedule(id)) {
 			case 2:

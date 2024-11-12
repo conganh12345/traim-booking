@@ -3,12 +3,16 @@ package com.backend.train_booking_backend.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.backend.train_booking_backend.models.enums.ERole;
+import com.backend.train_booking_backend.models.enums.TrainStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,6 +34,9 @@ public class Train {
 
 	@Column
 	private String description;
+	
+	@Enumerated(EnumType.STRING)
+	private TrainStatus status;
 
 	@OneToMany(mappedBy = "train")
 	@JsonIgnore
@@ -65,6 +72,14 @@ public class Train {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public TrainStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(TrainStatus status) {
+		this.status = status;
 	}
 
 	public List<Coach> getCoach() {
