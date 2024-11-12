@@ -32,16 +32,15 @@ public class SecurityConfig {
 
 	    @Bean
 	    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-	        http.csrf(AbstractHttpConfigurer::disable) // Tắt CSRF
+	        http.csrf(AbstractHttpConfigurer::disable) 
 	            .authorizeHttpRequests(auth -> auth
-	            		// Cho phép truy cập các endpoint công khai
 	                .requestMatchers("/api/auth/**").permitAll() 
 	                .requestMatchers("/api/user/**").hasAuthority("USER")
 	                .requestMatchers("/api/admin/**").hasAuthority("ADMIN")
 	                .anyRequest().authenticated()) 
 	            .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class); 
 
-	        return http.build(); // Xây dựng SecurityFilterChain
+	        return http.build(); 
 	    }
 
 	    @Bean
