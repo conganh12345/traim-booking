@@ -104,6 +104,7 @@ public class AuthController {
 
 		// Encode the password
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		user.setRole(ERole.USER);
 
 		// Save the user to the database
 		userService.save(user);

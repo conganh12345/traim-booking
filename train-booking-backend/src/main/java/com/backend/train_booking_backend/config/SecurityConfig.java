@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -18,6 +19,7 @@ import com.backend.train_booking_backend.services.impl.UserDetailsServiceImpleme
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 	 private final UserDetailsServiceImplement userDetailsServiceThuc;
 	    private final JwtRequestFilter jwtRequestFilter;
@@ -30,25 +32,15 @@ public class SecurityConfig {
 
 	    @Bean
 	    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-	        http.csrf(AbstractHttpConfigurer::disable) // Tắt CSRF
+	        http.csrf(AbstractHttpConfigurer::disable) 
 	            .authorizeHttpRequests(auth -> auth
-	            		// Cho phép truy cập các endpoint công khai
 	                .requestMatchers("/api/auth/**").permitAll() 
-//	                .requestMatchers("/api/booking/**").permitAll()
-//	                .requestMatchers("/api/coach/**").permitAll()
-//	                .requestMatchers("/api/route/**").permitAll()
-//	                .requestMatchers("/api/schedule/**").permitAll()
-//	                .requestMatchers("/api/station/**").permitAll()
-//	                .requestMatchers("/api/ticket/**").permitAll()
-//	                .requestMatchers("/api/train/**").permitAll()
-//	                .requestMatchers("/api/seattype/**").permitAll()
-//	                .requestMatchers("/api/seat/**").permitAll()
 	                .requestMatchers("/api/user/**").hasAuthority("USER")
 	                .requestMatchers("/api/admin/**").hasAuthority("ADMIN")
 	                .anyRequest().authenticated()) 
 	            .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class); 
 
-	        return http.build(); // Xây dựng SecurityFilterChain
+	        return http.build(); 
 	    }
 
 	    @Bean
