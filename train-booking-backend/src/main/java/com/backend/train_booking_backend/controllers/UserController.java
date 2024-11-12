@@ -43,6 +43,7 @@ public class UserController {
 	}
 
 	@GetMapping("/admin")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<List<AppUser>> getAllUser() {
 		List<AppUser> users = userService.getAllUsers();
 		if (users.isEmpty()) {
@@ -52,7 +53,7 @@ public class UserController {
 	}
 
 	@GetMapping("/profile/id/{id}")
-	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<AppUser> getUser(@PathVariable Integer id) {
 		AppUser user = userService.getUser(id);
 		if (user == null) {
@@ -62,6 +63,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/admin/id/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<AppUser> getUserById(@PathVariable Integer id) {
 		AppUser user = userService.getUser(id);
 		if (user == null) {
@@ -71,12 +73,14 @@ public class UserController {
 	}
 
 	@PostMapping("/admin")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<AppUser> addUser(@RequestBody AppUser user) {
 		AppUser createdUser = userService.addUser(user);
 		return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/admin/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<AppUser> updateUser(@RequestBody AppUser user, @PathVariable Integer id) {
 		AppUser updatedUser = userService.updateUser(id, user);
 		if (updatedUser == null) {
@@ -96,6 +100,7 @@ public class UserController {
 	// }
 
 	@DeleteMapping("/admin/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<String> deleteUser(@PathVariable Integer id) {
 		switch (userService.deleteUser(id)) {
 			case 2:
@@ -108,6 +113,7 @@ public class UserController {
 	}
 
 	@GetMapping("/user/findByEmail/{email}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<AppUser> findUserByEmail(@PathVariable String email) {
 		AppUser user = userService.findUserByEmail(email);
 		if (user == null) {
@@ -117,6 +123,7 @@ public class UserController {
 	}
 
 	@GetMapping("/admin/findByEmailAndPassword/{email}/{password}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<AppUser> findUserByEmailAndPassword(@PathVariable String email,
 			@PathVariable String password) {
 

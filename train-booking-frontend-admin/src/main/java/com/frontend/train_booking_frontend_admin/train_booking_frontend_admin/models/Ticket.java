@@ -20,45 +20,45 @@ public class Ticket {
 
 	@NotNull(message = "Trạng thái không được để trống")
     private TicketStatus status;
-
+	
+	@NotNull(message = "Đặt vé không được để trống")
+    private Integer bookingId;  	
+	private Booking booking;
+	
 	public Integer getId() {
 		return id;
 	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-	public String getTicketname() {
-		return ticketName;
-	}
-
-	public void setTicketname(String ticketName) {
-		this.ticketName = ticketName;
-	}
-
-	
-	public TicketStatus getStatus() {
-		return status;
-	}
-
 	public String getTicketName() {
 		return ticketName;
 	}
-
 	public void setTicketName(String ticketName) {
 		this.ticketName = ticketName;
 	}
-
 	public double getPriceTicket() {
 		return priceTicket;
 	}
-
 	public void setPriceTicket(double priceTicket) {
 		this.priceTicket = priceTicket;
 	}
-
+	public TicketStatus getStatus() {
+		return status;
+	}
 	public void setStatus(TicketStatus status) {
 		this.status = status;
+	}
+	public Integer getBookingId() {
+		return bookingId;
+	}
+	public void setBookingId(Integer bookingId) {
+		this.bookingId = bookingId;
+	}
+	public Booking getBooking() {
+		return booking;
+	}
+	public void setBooking(Booking booking) {
+		this.booking = booking;
 	}
 }

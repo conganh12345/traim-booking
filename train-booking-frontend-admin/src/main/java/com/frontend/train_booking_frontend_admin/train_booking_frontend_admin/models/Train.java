@@ -14,11 +14,7 @@ public class Train {
 	
 	@NotEmpty(message = "Tên tàu không được để trống")
     @Size(min = 3, max = 50, message = "Tên tàu phải có độ dài từ 3 đến 50 ký tự")
-    private String trainname;
-
-	@NotNull(message = "Tên tàu không được để trống")
-    @Min(value = 1, message = "Số lượng toa phải lớn hơn hoặc bằng 1")
-    private int coachcount;
+    private String trainName;
 
     @NotEmpty(message = "Mô tả không được để trống")
     @Size(max = 200, message = "Mô tả không được dài quá 200 ký tự")
@@ -26,35 +22,36 @@ public class Train {
     
 	@NotNull(message = "Trạng thái không được để trống")
 	private TrainStatus status;
-		
+
 	public Integer getId() {
 		return id;
 	}
-	public TrainStatus getStatus() {
-		return status;
-	}
-	public void setStatus(TrainStatus status) {
-		this.status = status;
-	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getTrainname() {
-		return trainname;
+
+	public String getTrainName() {
+		return trainName;
 	}
-	public void setTrainname(String trainname) {
-		this.trainname = trainname;
+
+	public void setTrainName(String trainName) {
+		this.trainName = trainName;
 	}
-	public int getCoachcount() {
-		return coachcount;
-	}
-	public void setCoachcount(int coachcount) {
-		this.coachcount = coachcount;
-	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public TrainStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(TrainStatus status) {
+		this.status = status;
 	}
 }

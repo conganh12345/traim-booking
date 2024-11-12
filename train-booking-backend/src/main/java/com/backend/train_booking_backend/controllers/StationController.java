@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -41,6 +42,7 @@ public class StationController {
 	}
 
 	@GetMapping
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<List<Station>> getAllStation() {
 		List<Station> stations = stationService.getAllStations();
 		if (stations.isEmpty()) {
@@ -50,6 +52,7 @@ public class StationController {
 	}
 
 	@GetMapping("/id/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<Station> getStation(@PathVariable Integer id) {
 		Station station = stationService.getStation(id);
 		if (station == null) {
@@ -59,6 +62,7 @@ public class StationController {
 	}
 
 	@PostMapping
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<Station> addStation(@RequestBody Station station) {
 		Station createdStation = stationService.addStation(station);
 
@@ -66,6 +70,7 @@ public class StationController {
 	}
 
 	@PutMapping("/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<Station> updateStation(@RequestBody Station station, @PathVariable Integer id) {
 		Station updatedStation = stationService.updateStation(id, station);
 		if (updatedStation == null) {
@@ -77,6 +82,7 @@ public class StationController {
 
 
 	@DeleteMapping("/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<Station> deleteStation(@PathVariable Integer id) {
 		if (stationService.deleteStation(id)) {
 			return new ResponseEntity<>(HttpStatus.OK);

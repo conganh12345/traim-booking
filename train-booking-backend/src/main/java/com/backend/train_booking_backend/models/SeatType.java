@@ -3,11 +3,15 @@ package com.backend.train_booking_backend.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.backend.train_booking_backend.models.enums.ERole;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.backend.train_booking_backend.models.enums.SeatTypeStatus;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,6 +30,9 @@ public class SeatType {
 
 	@Column
 	private double price;
+	
+	@Enumerated(EnumType.STRING)
+	private SeatTypeStatus status;
 
 	@OneToMany(mappedBy = "seatType")
 	@JsonIgnore
@@ -53,6 +60,14 @@ public class SeatType {
 
 	public void setPrice(double price) {
 		this.price = price;
+	}
+
+	public SeatTypeStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(SeatTypeStatus status) {
+		this.status = status;
 	}
 
 	public List<Seat> getSeat() {

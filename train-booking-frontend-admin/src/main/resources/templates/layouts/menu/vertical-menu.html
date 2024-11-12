@@ -96,7 +96,7 @@
 						<span>Đơn đặt vé</span>
 					</div>
 			</a></li>
-			
+
 			<li class="menu menu-heading">
 				<div class="heading">
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -108,7 +108,7 @@
 					<span>THÔNG TIN VÉ</span>
 				</div>
 			</li>
-			
+
 			<li th:class="${page == 'ticket'} ? 'menu active' : 'menu'"><a
 				th:href="@{/ticket/index}" class="dropdown-toggle">
 					<div>
@@ -179,6 +179,8 @@
 						th:href="@{/train/index}">Quản lý tàu</a></li>
 					<li th:class="${page == 'coach'} ? 'active' : ''"><a
 						th:href="@{/coach/index}">Quản lý toa</a></li>
+					<li th:class="${page == 'seattype'} ? 'active' : ''"><a
+						th:href="@{/seattype/index}">Quản lý loại ghế</a></li>
 				</ul>
 			</li>
 

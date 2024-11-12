@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -40,6 +41,7 @@ public class TrainController {
 	}
 
 	@GetMapping
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<List<Train>> getAllTrain() {
 		List<Train> trains = trainService.getAllTrains();
 		if (trains.isEmpty()) {
@@ -49,6 +51,7 @@ public class TrainController {
 	}
 
 	@GetMapping("/id/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<Train> getTrain(@PathVariable Integer id) {
 		Train train = trainService.getTrain(id);
 		if (train == null) {
@@ -58,12 +61,14 @@ public class TrainController {
 	}
 
 	@PostMapping
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<Train> addTrain(@RequestBody Train train) {
 		Train createdTrain = trainService.addTrain(train);
 		return new ResponseEntity<>(createdTrain, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<Train> updateTrain(@RequestBody Train train, @PathVariable Integer id) {
 		Train updatedTrain = trainService.updateTrain(id, train);
 		if (updatedTrain == null) {
@@ -73,6 +78,7 @@ public class TrainController {
 	}
 
 	@DeleteMapping("/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<String> deleteTrain(@PathVariable Integer id) {
 		switch (trainService.deleteTrain(id)) {
 			case 2:
