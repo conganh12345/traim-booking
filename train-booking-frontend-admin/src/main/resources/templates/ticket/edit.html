@@ -3,7 +3,18 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/base-layout.html}">
 <head>
-<title>Chỉnh sửa toa</title>
+<title>Chỉnh sửa vé</title>
+
+<div layout:fragment="headerFiles">
+
+	<link rel="stylesheet" type="text/css"
+		href="/css/plugins/light/tomSelect/custom-tomSelect.css">
+	<link rel="stylesheet" type="text/css"
+		href="/css/plugins/dark/tomSelect/custom-tomSelect.css">
+	<link rel="stylesheet" type="text/css"
+		href="/plugins/tomSelect/tom-select.default.min.css">
+</div>
+
 </head>
 <body>
 	<div layout:fragment="content">
@@ -13,9 +24,9 @@
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="#">Vé</a></li>
 					<li class="breadcrumb-item" aria-current="page"><a
-						th:href="@{/ticket/index}">Quản lý toa</a></li>
+						th:href="@{/ticket/index}">Quản lý vé</a></li>
 					<li class="breadcrumb-item active" aria-current="page">Chỉnh
-						sửa vé</li>
+						sửa vé đặt</li>
 				</ol>
 			</nav>
 		</div>
@@ -39,59 +50,70 @@
 					<div class="widget-content widget-content-area">
 						<div class="col-12">
 							<form th:action="@{/ticket/update/{id}(id=${ticket.id})}"
-							      th:object="${ticket}" 
-							      id="general-settings" 
-							      method="POST">
-							
-							   <div class="row">
-							        <div class="col-md-6">
-							            <div class="form-group mb-4">
-							                <label for="ticketname">Tên loại vé<strong class="text-danger">*</strong></label>
-							                <input type="text"
-							                       th:field="*{ticketName}" 
-							                       id="ticketname" 
-							                       class="form-control"
-							                       placeholder="Tên loại vé"
-							                       th:classappend="${#fields.hasErrors('ticketName') ? 'is-invalid' : ''}">
-							                <span th:if="${#fields.hasErrors('ticketName')}" class="text-danger" th:errors="*{ticketName}"></span>
-							            </div>
-							        </div>
-							    </div>
-							
-							    <div class="row">
-							        <div class="col-md-6">
-							            <div class="form-group mb-4">
-							                <label for="price">Giá vé<strong class="text-danger">*</strong></label>
-							                <input type="number" 
-							                       th:field="*{priceTicket}" 
-							                       id="price" 
-							                       class="form-control"
-							                       placeholder="Giá vé"
-							                       th:classappend="${#fields.hasErrors('priceTicket') ? 'is-invalid' : ''}">
-							                <span th:if="${#fields.hasErrors('priceTicket')}" class="text-danger" th:errors="*{priceTicket}"></span>
-							            </div>
-							        </div>
-							    </div>
-							
-							    <div class="row">
-							        <div class="col-md-6">
-							            <div class="form-group mb-4">
-							                <label for="status">Trạng thái <strong class="text-danger">*</strong></label>
-							                <select th:field="*{status}" id="status" class="form-control">
-							                    <option value="" disabled selected>Chọn trạng thái</option>
-							                    <option th:each="status : ${ticketStatuses}"
-							                            th:value="${status}" 
-							                            th:text="${status.displayName}" 
-							                            th:selected="${ticket.status == status}"></option>
-							                </select>
-							                <span th:if="${#fields.hasErrors('status')}" class="text-danger" th:errors="*{status}"></span>
-							            </div>
-							        </div>
-							    </div>
-							
-							    <button type="submit" class="btn btn-primary">Hoàn tất</button>
-							</form>
+								th:object="${ticket}" id="general-settings" method="POST">
 
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group mb-4">
+											<label for="bookingId">Code<strong class="text-danger">*</strong></label>
+											<select th:field="*{bookingId}" id="bookingId"
+												class="form-control">
+												<option value="" selected>Code</option>
+												<option th:each="booking : ${bookings}" th:value="${booking.id}"
+													th:text="${booking.code}"></option>
+											</select> <span th:if="${#fields.hasErrors('bookingId')}"
+												class="text-danger" th:errors="*{bookingId}"></span>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group mb-4">
+											<label for="ticketName">Tên vé <strong
+												class="text-danger">*</strong></label> <input type="text"
+												th:field="*{ticketName}" id="ticketName" class="form-control"
+												placeholder="Tên toa"
+												th:classappend="${#fields.hasErrors('ticketName') ? 'is-invalid' : ''}">
+											<span th:if="${#fields.hasErrors('ticketName')}"
+												class="text-danger" th:errors="*{ticketName}"></span>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group mb-4">
+											<label for="priceTicket">Giá vé <strong
+												class="text-danger">*</strong></label> <input type="number"
+												step="0.01" th:field="*{priceTicket}" id="priceTicket"
+												class="form-control" placeholder="Nhập giá vé"
+												th:classappend="${#fields.hasErrors('priceTicket') ? 'is-invalid' : ''}">
+											<span th:if="${#fields.hasErrors('priceTicket')}"
+												class="text-danger" th:errors="*{priceTicket}"></span>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group mb-4">
+											<label for="status">Trạng thái<strong
+												class="text-danger">*</strong></label> <select th:field="*{status}"
+												id="status" class="form-control"
+												th:classappend="${#fields.hasErrors('status') ? 'is-invalid' : ''}">
+												<option value="">Chọn trạng thái</option>
+												<option th:each="status : ${ticketStatus}"
+													th:value="${status}" th:text="${status.displayName}"></option>
+											</select> <span th:if="${#fields.hasErrors('status')}"
+												class="text-danger" th:errors="*{status}"></span>
+										</div>
+									</div>
+								</div>
+
+
+								<button type="submit" class="btn btn-primary">Hoàn tất</button>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -100,7 +122,28 @@
 	</div>
 
 	<!--  BEGIN CUSTOM SCRIPTS FILE  -->
-	<div layout:fragment="footerFiles"></div>
+	<div layout:fragment="footerFiles">
+		<script src="/plugins/tomSelect/tom-select.base.js"></script>
+		<script src="/plugins/tomSelect/custom-tom-select.js"></script>
+
+		<script type="text/javascript">
+			new TomSelect("#trainId", {
+				create : true,
+				sortField : {
+					field : "text",
+					direction : "asc"
+				}
+			});
+
+			new TomSelect("#status", {
+				create : true,
+				sortField : {
+					field : "text",
+					direction : "asc"
+				}
+			});
+		</script>
+	</div>
 	<!--  END CUSTOM SCRIPTS FILE  -->
 </body>
 

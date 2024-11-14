@@ -3,7 +3,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/base-layout.html}">
 <head>
-<title>Danh sách chuyến đi</title>
+<title>Danh sách lịch trình</title>
 
 <div layout:fragment="headerFiles">
 	<link rel="stylesheet" type="text/css"
@@ -29,9 +29,9 @@
 		<div class="page-meta">
 			<nav class="breadcrumb-style-one" aria-label="breadcrumb">
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="#">Chuyến đi</a></li>
+					<li class="breadcrumb-item"><a href="#">Lịch trình</a></li>
 					<li class="breadcrumb-item active" aria-current="page">Quản lý
-						chuyến đi</li>
+						lịch trình</li>
 				</ol>
 			</nav>
 		</div>
@@ -43,44 +43,39 @@
 					<div class="widget-header">
 						<div class="row">
 							<div class="col-xl-12 col-md-12 col-sm-12 col-12">
-								<h4>Quản lý toa</h4>
+								<h4>Quản lý lịch trình</h4>
 							</div>
 						</div>
 					</div>
 					<div class="widget-content widget-content-area">
-						<table id="schedule-table" class="table style-3 dt-table-hover"
+						<div class="layout-top-spacing ps-3 pe-3 col-12 mb-3">
+							<a th:href="@{/route/create}" class="btn btn-primary">Thêm
+								mới</a>
+						</div>
+						<table id="route-table" class="table style-3 dt-table-hover"
 							style="width: 100%">
 							<thead>
 								<tr>
 									<th style="width: 5%">STT</th>
-									<th>Loại Tàu</th>
-									<th>Chuyến đi</th>
-									<th>Ngày khởi hành</th>
-									<th>Ngày đến dự kiến</th>
-									<th>Ga đi</th>
-									<th>Ga đến</th>									
+									<th>Tên tàu</th>
+									<th>Tên lịch trình</th>
+									<th>Nơi đi</th>
+									<th>Nơi đến</th>
 									<th class="no-content" style="width: 5%">Thao tác</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:each="schedule, stat : ${schedules}">
+								<tr th:each="route, stat : ${routes}">
 									<td th:text="${stat.count}"></td>
 									<td
-										th:text="${schedule.train != null ? schedule.train.trainName : ''}"></td>
-									<td th:text="${schedule.scheduleName}"></td>
-									<td
-										th:text="${#temporals.format(schedule.departureDate, 'yyyy-MM-dd HH:mm')}"></td>
-									<td
-										th:text="${#temporals.format(schedule.estimateArrivalDate, 'yyyy-MM-dd HH:mm')}"></td>
-									<td th:text="${schedule.departureStation}"></td>						
-									<td th:text="${schedule.destinationStation}" class="text-truncate"
+										th:text="${route.train != null ? route.train.trainName : ''}"></td>
+									<td th:text="${route.routeName}"></td>
+									<td th:text="${route.departureLocation}"></td>
+									<td th:text="${route.destinationLocation}" class="text-truncate"
 										style="max-width: 250px;"></td>
-
 									<td
 										class="table-controls d-flex justify-content-center align-items-center pt-2">
-
-										<li><a
-											th:href="@{/schedule/edit/{id}(id=${schedule.id})}"
+										<li><a th:href="@{/route/edit/{id}(id=${route.id})}"
 											class="bs-tooltip edit" data-bs-toggle="tooltip"
 											data-bs-placement="top"> <svg
 													xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -94,7 +89,7 @@
 								            </svg>
 										</a></li>
 										<li><a href="#" class="bs-tooltip delete"
-											th:data-schedule-id="${schedule.id}" data-bs-toggle="tooltip"
+											th:data-route-id="${route.id}" data-bs-toggle="tooltip"
 											data-bs-placement="top"> <svg
 													xmlns="http://www.w3.org/2000/svg" width="24" height="24"
 													viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -125,7 +120,7 @@
 		<script
 			src="/plugins/table/datatable/extensions/fixed-columns/fixed-columns.datatables.min.js"></script>
 		<script>
-			$('#schedule-table')
+			$('#route-table')
 					.DataTable(
 							{
 								"dom" : "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>"
@@ -153,22 +148,22 @@
 
 		<script>
 			$(document).ready(function() {
-				let scheduleIdToDelete;
+				let routeIdToDelete;
 
 				$('.delete').on('click', function(e) {
 					e.preventDefault();
-					scheduleIdToDelete = $(this).data('schedule-id');
+					routeIdToDelete = $(this).data('route-id');
 					$('#deleteModal').modal('show');
 				});
 
 				$('#confirmDelete').on('click', function() {
 					$.ajax({
-						url : `/schedule/delete/${scheduleIdToDelete}`,
+						url : `/route/delete/${routeIdToDelete}`,
 						type : 'DELETE',
 						success : function(response) {
 
 							Snackbar.show({
-								text : 'Xóa chuyến đi thành công',
+								text : 'Xóa lịch trình thành công',
 								textColor : '#ddf5f0',
 								backgroundColor : '#00ab55',
 								actionText : 'Bỏ qua',
@@ -181,7 +176,7 @@
 						},
 						error : function() {
 							Snackbar.show({
-								text : 'Xóa chuyến đi thất bại',
+								text : 'Xóa lịch trình thất bại',
 								textColor : '#fbeced',
 								backgroundColor : '#e7515a',
 								actionText : 'Bỏ qua',

@@ -21,7 +21,7 @@ public class Coach {
 	@NotNull(message = "Trạng thái không được để trống")
 	private CoachStatus status;  
 	 
-	@NotNull(message = "Toa không được để trống")
+	@NotNull(message = "Tàu không được để trống")
     private Integer trainId;  	
 	private Train train;
 	

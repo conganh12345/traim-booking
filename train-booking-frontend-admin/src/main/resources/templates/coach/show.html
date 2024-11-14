@@ -61,16 +61,16 @@
 										<tr>
 											<th>Loại Tàu</th>
 											<th>Tên toa</th>
-											<th>Số lượng ghế</th>
+											<th>Mô tả</th>
 											<th>Trạng thái</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr>
 											<td
-												th:text="${coach.train != null ? coach.train.trainname : ''}"></td>
+												th:text="${coach.train != null ? coach.train.trainName : ''}"></td>
 											<td th:text="${coach.coachName}"></td>
-											<td th:text="${coach.seatCount}"></td>
+											<td th:text="${coach.description}"></td>
 											<td class="text-truncate" style="max-width: 250px;"><span
 												th:class="'badge ' + ${coach.status.badgeClass}"
 												th:text="${coach.status.displayName}"></span></td>
@@ -179,13 +179,14 @@
 															<tr th:each="seat : ${seattypes}"
 																th:if="${!#lists.isEmpty(seattypes)}">
 																<td th:text="${seat.id}"></td>
-																<td th:text="${seat.seatTypeName}"></td>
+																<td th:text="${seat.seatName}"></td>
 																<td><span
 																	th:class="'badge ' + ${seat.status.badgeClass}"
 																	th:text="${seat.status.displayName}"></span></td>
 																<td class="text-center">
 																	<div class="action-btns">
-																		<a th:href="@{/seattype/edit/{id}(id=${seat.id}, coachId=${coach.id})}"
+																		<a
+																			th:href="@{/seattype/edit/{id}(id=${seat.id}, coachId=${coach.id})}"
 																			class="action-btn btn-edit btn-edit-phone bs-tooltip me-2"
 																			data-bs-toggle="tooltip" data-bs-placement="top">
 																			<svg xmlns="http://www.w3.org/2000/svg" width="24"
@@ -234,55 +235,55 @@
 			</div>
 		</div>
 	</div>
-		<!--  BEGIN CUSTOM SCRIPTS FILE  -->
-		<div layout:fragment="footerFiles">
-			<script src="/plugins/tomSelect/tom-select.base.js"></script>
-			<script src="/plugins/tomSelect/custom-tom-select.js"></script>
+	<!--  BEGIN CUSTOM SCRIPTS FILE  -->
+	<div layout:fragment="footerFiles">
+		<script src="/plugins/tomSelect/tom-select.base.js"></script>
+		<script src="/plugins/tomSelect/custom-tom-select.js"></script>
 
-			<script>
-				$(document).ready(function() {
-					let seatIdToDelete;
+		<script>
+			$(document).ready(function() {
+				let seatIdToDelete;
+				console.log("test", 111);
+
+				$('.btn-delete').on('click', function(e) {
 					console.log("test", 111);
-
-					$('.btn-delete').on('click', function(e) {
-						console.log("test", 111);
-						e.preventDefault();
-						seatIdToDelete = $(this).data('seat-id');
-						$('#deleteModal').modal('show');
-					});
-
-					$('#confirmDelete').on('click', function() {
-						$.ajax({
-							url : `/seattype/delete/${seatIdToDelete}`,
-							type : 'DELETE',
-							success : function(response) {
-
-								Snackbar.show({
-									text : 'Xóa ghế thành công',
-									textColor : '#ddf5f0',
-									backgroundColor : '#00ab55',
-									actionText : 'Bỏ qua',
-									actionTextColor : '#3b3f5c'
-								});
-
-								location.reload();
-							},
-							error : function() {
-								Snackbar.show({
-									text : 'Xóa ghế thất bại',
-									textColor : '#fbeced',
-									backgroundColor : '#e7515a',
-									actionText : 'Bỏ qua',
-									actionTextColor : '#3b3f5c'
-								});
-							}
-						});
-						$('#deleteModal').modal('hide');
-					});
+					e.preventDefault();
+					seatIdToDelete = $(this).data('seat-id');
+					$('#deleteModal').modal('show');
 				});
-			</script>
 
-		</div>
+				$('#confirmDelete').on('click', function() {
+					$.ajax({
+						url : `/seattype/delete/${seatIdToDelete}`,
+						type : 'DELETE',
+						success : function(response) {
+
+							Snackbar.show({
+								text : 'Xóa ghế thành công',
+								textColor : '#ddf5f0',
+								backgroundColor : '#00ab55',
+								actionText : 'Bỏ qua',
+								actionTextColor : '#3b3f5c'
+							});
+
+							location.reload();
+						},
+						error : function() {
+							Snackbar.show({
+								text : 'Xóa ghế thất bại',
+								textColor : '#fbeced',
+								backgroundColor : '#e7515a',
+								actionText : 'Bỏ qua',
+								actionTextColor : '#3b3f5c'
+							});
+						}
+					});
+					$('#deleteModal').modal('hide');
+				});
+			});
+		</script>
+
+	</div>
 	</div>
 	<!--  END CUSTOM SCRIPTS FILE  -->
 </body>

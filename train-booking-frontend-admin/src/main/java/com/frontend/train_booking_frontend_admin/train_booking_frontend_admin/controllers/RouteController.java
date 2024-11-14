@@ -15,99 +15,99 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Station;
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Train;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Route;
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Schedule;
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.TrainService;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.RouteService;
-import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.StationService;
 
 import jakarta.validation.Valid;
 
 @Controller
-@RequestMapping("/station")
-public class StationController {
+@RequestMapping("/route")
+public class RouteController {
+	@Autowired
+	private RouteService routeService;
 	
 	@Autowired
-	private StationService stationService;	
-	
-	@Autowired
-	private RouteService routeService;	
+	private TrainService trainService;	
 
 	@GetMapping("/index")
 	public String index(Model model) {
-		List<Station> stations = stationService.getAllStations();
-		if(stations == null) {
+		List<Route> routes = routeService.getAllRoutes();
+		if(routes == null) {
 			return "auth/signIn";
 		}
 
-		model.addAttribute("page", "station").addAttribute("stations", stations);
+		model.addAttribute("page", "route").addAttribute("routes", routes);
 
-		return "station/index";
+		return "route/index";
 	}
 
 	@GetMapping("/create")
 	public String create(Model model) {
-	    List<Route> routes = routeService.getAllRoutes();
+	    List<Train> trains = trainService.getAllTrains();
 	    
-	    model.addAttribute("page", "station")
-	         .addAttribute("routes", routes)
-	         .addAttribute("station", new Station());
+	    model.addAttribute("page", "route")
+	         .addAttribute("trains", trains)
+	         .addAttribute("route", new Route());
 
-	    return "station/create";
+	    return "route/create";
 	}
 
 	@PostMapping("/create")
-	public String create(@Valid @ModelAttribute("station") Station station, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+	public String create(@Valid @ModelAttribute("route") Route route, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
 		if (result.hasErrors()) {
-			model.addAttribute("page", "station");
+			model.addAttribute("page", "route");
 			
-	        return "station/create"; 
+	        return "route/create"; 
 	    }
-		Route route = routeService.getRouteById(station.getRouteId());
+		Train train = trainService.getTrainById(route.getTrainId());
 		
-		station.setRoute(route);
-		if (stationService.addStation(station)) {
+		route.setTrain(train);
+		if (routeService.addRoute(route)) {
 			redirectAttributes.addFlashAttribute("success", "Thêm mới lịch trình thành công!");
 		} else {
 			redirectAttributes.addFlashAttribute("error", "Thêm mới lịch trình thất bại!");
 		}
-		return "redirect:/station/index";
+		return "redirect:/route/index";
 	}
 
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
-		Station station = stationService.getStationById(id);
-	    List<Route> routes = routeService.getAllRoutes();
+	    Route route = routeService.getRouteById(id);
+	    List<Train> trains = trainService.getAllTrains();
 
-	    model.addAttribute("page", "station")
-	         .addAttribute("station", station)
-	         .addAttribute("routes", routes);
+	    model.addAttribute("page", "route")
+	         .addAttribute("route", route)
+	         .addAttribute("trains", trains);
 
-	    return "station/edit";
+	    return "route/edit";
 	}
 
 	@PostMapping("/update/{id}")
-	public String update(@PathVariable Integer id,@Valid @ModelAttribute("station") Station station, BindingResult result, RedirectAttributes redirectAttributes, Model model) {
-		station.setId(id);
+	public String update(@PathVariable Integer id,@Valid @ModelAttribute("route") Route route, BindingResult result, RedirectAttributes redirectAttributes, Model model) {
+		route.setId(id);
 		if (result.hasErrors()) {
-			model.addAttribute("page", "station");
+			model.addAttribute("page", "route");
 			
-	        return "station/edit"; 
+	        return "route/edit"; 
 	    }
 		
-		Route route = routeService.getRouteById(station.getRouteId());
+		Train train = trainService.getTrainById(route.getTrainId());
 		
-		station.setRoute(route);
-		if (stationService.updateStation(station)) {
+		route.setTrain(train);
+		if (routeService.updateRoute(route)) {
 			redirectAttributes.addFlashAttribute("success", "Cập nhật lịch trình thành công!");
 		} else {
 			redirectAttributes.addFlashAttribute("error", "Cập nhật lịch trình thất bại!");
 		}
-		return "redirect:/station/index";
+		return "redirect:/route/index";
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> deleteStation(@PathVariable Integer id) {
-		if (stationService.deleteStation(id)) {
+	public ResponseEntity<?> deleteRoute(@PathVariable Integer id) {
+		if (routeService.deleteRoute(id)) {
 			return ResponseEntity.ok().build();
 		} else {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Không thể xóa lịch trình.");

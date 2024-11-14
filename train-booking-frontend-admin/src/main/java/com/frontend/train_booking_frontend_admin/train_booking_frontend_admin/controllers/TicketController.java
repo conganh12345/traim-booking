@@ -15,23 +15,29 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Station;
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Booking;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Ticket;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.enums.TicketStatus;
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.BookingService;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.TicketService;
 
 import jakarta.validation.Valid;
-
 
 @Controller
 @RequestMapping("/ticket")
 public class TicketController {
 	@Autowired
 	private TicketService ticketService;
+	
+	@Autowired
+	private BookingService bookingService;	
 
 	@GetMapping("/index")
 	public String index(Model model) {
 		List<Ticket> tickets = ticketService.getAllTickets();
+		if(tickets == null) {
+			return "auth/signIn";
+		}
 
 		model.addAttribute("page", "ticket").addAttribute("tickets", tickets);
 
@@ -40,21 +46,26 @@ public class TicketController {
 
 	@GetMapping("/create")
 	public String create(Model model) {
+		List<Booking> bookings = bookingService.getAllBookings();
+		
 		model.addAttribute("page", "ticket")
+			.addAttribute("bookings", bookings)
 			.addAttribute("ticket", new Ticket())
-			.addAttribute("ticketStatuses", TicketStatus.values());
+			.addAttribute("ticketStatus", TicketStatus.values());
 
 		return "ticket/create";
 	}
 
 	@PostMapping("/create")
-	public String create(@Valid @ModelAttribute("ticket") Ticket ticket, BindingResult result, Model model,
-			RedirectAttributes redirectAttributes) {
+	public String create(@Valid @ModelAttribute("ticket") Ticket ticket, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
 		if (result.hasErrors()) {
 			model.addAttribute("page", "ticket");
 			
 	        return "ticket/create"; 
 	    }
+		Booking booking = bookingService.getBookingById(ticket.getBookingId());
+		
+		ticket.setBooking(booking);
 		if (ticketService.addTicket(ticket)) {
 			redirectAttributes.addFlashAttribute("success", "Thêm mới vé thành công!");
 		} else {
@@ -66,23 +77,28 @@ public class TicketController {
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
 		Ticket ticket = ticketService.getTicketById(id);
+		List<Booking> bookings = bookingService.getAllBookings();
 
 		model.addAttribute("page", "ticket")
 			.addAttribute("ticket", ticket)
-			.addAttribute("ticketStatuses", TicketStatus.values());
+			.addAttribute("bookings", bookings)
+			.addAttribute("ticketStatus", TicketStatus.values());
 
 		return "ticket/edit";
 	}
 
 	@PostMapping("/update/{id}")
-	public String update(@PathVariable Integer id,@Valid @ModelAttribute("ticket") Ticket ticket, BindingResult result,
-			RedirectAttributes redirectAttributes, Model model) {
+	public String update(@PathVariable Integer id,@Valid @ModelAttribute("ticket") Ticket ticket, BindingResult result, RedirectAttributes redirectAttributes, Model model) {
 		ticket.setId(id);
 		if (result.hasErrors()) {
 			model.addAttribute("page", "ticket");
 			
 	        return "ticket/edit"; 
 	    }
+		
+		Booking booking = bookingService.getBookingById(ticket.getBookingId());
+		
+		ticket.setBooking(booking);
 		if (ticketService.updateTicket(ticket)) {
 			redirectAttributes.addFlashAttribute("success", "Cập nhật vé thành công!");
 		} else {
@@ -92,7 +108,7 @@ public class TicketController {
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> deleteticket(@PathVariable Integer id) {
+	public ResponseEntity<?> deleteTicket(@PathVariable Integer id) {
 		if (ticketService.deleteTicket(id)) {
 			return ResponseEntity.ok().build();
 		} else {

@@ -16,12 +16,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
-import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Coach;
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Route;
 
 import jakarta.servlet.http.HttpSession;
 
 @Service
-public class CoachService {
+public class RouteService {
 	@Value("${api.base.url}")
 	private String apiUrl;
 	
@@ -40,40 +40,40 @@ public class CoachService {
 		this.headers.set("Authorization", "Bearer " + jwtToken);
 	}
 
-	public List<Coach> getAllCoachs() {
+	public List<Route> getAllRoutes() {
 		try {
 			setJwtToken();
-			String url = apiUrl + "api/coach";
-			HttpEntity<Coach> entity = new HttpEntity<>(headers);
-			Coach[] coachs = restTemplate.exchange(url, HttpMethod.GET, entity, Coach[].class).getBody();
+			String url = apiUrl + "api/route";
+			HttpEntity<Route> entity = new HttpEntity<>(headers);
+			Route[] routes = restTemplate.exchange(url, HttpMethod.GET, entity, Route[].class).getBody();
 
-			return Arrays.asList(coachs);
+			return Arrays.asList(routes);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 	
-	public Coach getCoachById(Integer id) {
+	public Route getRouteById(Integer id) {
 		try {
 			setJwtToken();
-			String url = apiUrl + "api/coach/id/" + id;
+			String url = apiUrl + "api/route/id/" + id;
 	        
 	        HttpEntity<Void> entity = new HttpEntity<>(headers);
 	        
-	        return restTemplate.exchange(url, HttpMethod.GET, entity, Coach.class).getBody();
+	        return restTemplate.exchange(url, HttpMethod.GET, entity, Route.class).getBody();
 		} catch (ResourceAccessException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 
-	public boolean addCoach(Coach coach) {
+	public boolean addRoute(Route route) {
         try {
             setJwtToken();
-            String url = apiUrl + "api/coach";
-            HttpEntity<Coach> entity = new HttpEntity<>(coach, headers);
-            restTemplate.postForObject(url, entity, Coach.class);
+            String url = apiUrl + "api/route";
+            HttpEntity<Route> entity = new HttpEntity<>(route, headers);
+            restTemplate.postForObject(url, entity, Route.class);
             return true;
         } catch (ResourceAccessException | HttpClientErrorException e) {
             e.printStackTrace();
@@ -81,13 +81,13 @@ public class CoachService {
         }
     }
 
-	public boolean updateCoach(Coach coach) {
+	public boolean updateRoute(Route route) {
 	    try {
 	        setJwtToken();
 	        
-	        String url = apiUrl + "api/coach/" + coach.getId();
+	        String url = apiUrl + "api/route/" + route.getId();
 	        
-	        HttpEntity<Coach> entity = new HttpEntity<>(coach, headers);
+	        HttpEntity<Route> entity = new HttpEntity<>(route, headers);
 	        
 	        restTemplate.exchange(url, HttpMethod.PUT, entity, Void.class);
 	        return true;
@@ -98,11 +98,11 @@ public class CoachService {
 	}
 
 
-	public boolean deleteCoach(Integer id) {
+	public boolean deleteRoute(Integer id) {
 	    try {
 	        setJwtToken();
 	        
-	        String url = apiUrl + "api/coach/" + id;
+	        String url = apiUrl + "api/route/" + id;
 	        
 	        HttpEntity<Void> entity = new HttpEntity<>(headers);
 	        

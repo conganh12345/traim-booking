@@ -54,23 +54,31 @@
 							<thead>
 								<tr>
 									<th style="width: 5%">STT</th>
-									<th>Tên vé</th>
-									<th>Trạm khởi hành</th>
-									<th>Trạm đích</th>
+									<th>Tên người dùng</th>
+									<th>Tên chuyến đi</th>
+									<th>Giá</th>
+									<th>Code</th>
 									<th>Thời gian đặt vé</th>
 									<th>Trạng thái</th>
-									<th class="no-content">Thao tác</th>
+									<th class="no-content" style="width: 5%">Thao tác</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr th:each="booking, stat : ${bookings}">
 									<td th:text="${stat.count}"></td>
-									<td th:text="${booking.fullName}"></td>
-									<td th:text="${booking.depatureStation}"></td>
-									<td th:text="${booking.destinationStation}"></td>
+									
+									<td
+										th:text="${booking.user != null ? booking.user.fullName : ''}"></td>
+									<td
+										th:text="${booking.schedule != null ? booking.schedule.scheduleName : ''}"></td>
+										
+									<td th:text="${booking.totalPrice}"></td>
+									<td th:text="${booking.code}"></td>
+									
 									<td
 										th:text="${#temporals.format(booking.bookingTime, 'HH:mm, dd/MM/yyyy')}"
 										class="text-truncate" style="max-width: 250px;"></td>
+		
 									<td class="text-truncate" style="max-width: 250px;"><span
 										th:class="'badge ' + ${booking.status.badgeClass}"
 										th:text="${booking.status.displayName}"></span></td>
