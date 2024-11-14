@@ -81,6 +81,5 @@ public class Schedule {
 	}
 	public void setTrain(Train train) {
 		this.train = train;
-	}
-	
+	}	
 }

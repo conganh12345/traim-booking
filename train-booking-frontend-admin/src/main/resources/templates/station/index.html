@@ -13,7 +13,7 @@
 	<link rel="stylesheet" type="text/css"
 		href="/plugins/table/datatable/extensions/fixed-columns/fixed-columns.datatables.min.css">
 	<link rel="stylesheet" type="text/css"
-		href="/css/plugins/light/table/datatable/dt-global_style.css">
+		href="/css/plugins/light/	table/datatable/dt-global_style.css">
 	<link rel="stylesheet" type="text/css"
 		href="/css/plugins/dark/table/datatable/dt-global_style.css">
 	<link rel="stylesheet" type="text/css"
@@ -25,7 +25,6 @@
 </head>
 <body>
 	<div layout:fragment="content">
-
 		<!-- BREADCRUMB -->
 		<div class="page-meta">
 			<nav class="breadcrumb-style-one" aria-label="breadcrumb">
@@ -58,44 +57,47 @@
 							<thead>
 								<tr>
 									<th style="width: 5%">STT</th>
-									<th>Tên nhà ga</th>
-									<th>Địa chỉ</th>
+									<th>Tên lịch trình</th>
+									<th>Tên ga đi qua</th>
 									<th class="no-content" style="width: 5%">Thao tác</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr th:each="station, stat : ${stations}">
 									<td th:text="${stat.count}"></td>
-									<td th:text="${station.stationname}"></td>
-									<td th:text="${station.address}"></td>
+									<td
+										th:text="${station.route != null ? station.route.routeName : ''}"></td>
+									<td th:text="${station.stationName}" class="text-truncate"
+										style="max-width: 250px;"></td>
 									<td
 										class="table-controls d-flex justify-content-center align-items-center pt-2">
 										<li><a th:href="@{/station/edit/{id}(id=${station.id})}"
-										class="bs-tooltip edit" data-bs-toggle="tooltip"
-										data-bs-placement="top"> <svg
-												xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-												viewBox="0 0 24 24" fill="none" stroke="currentColor"
-												stroke-width="2" stroke-linecap="round"
-												stroke-linejoin="round"
-												class="feather feather-edit-2 p-1 br-6 mb-1">
+											class="bs-tooltip edit" data-bs-toggle="tooltip"
+											data-bs-placement="top"> <svg
+													xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+													viewBox="0 0 24 24" fill="none" stroke="currentColor"
+													stroke-width="2" stroke-linecap="round"
+													stroke-linejoin="round"
+													class="feather feather-edit-2 p-1 br-6 mb-1">
 								                <path
-													d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z">
+														d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z">
 								                </path>
 								            </svg>
-									</a></li>
-										<li> <a href="#" class="bs-tooltip delete"
-										th:data-station-id="${station.id}" data-bs-toggle="tooltip"
-										data-bs-placement="top"> <svg
-												xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-												viewBox="0 0 24 24" fill="none" stroke="currentColor"
-												stroke-width="2" stroke-linecap="round"
-												stroke-linejoin="round"
-												class="feather feather-trash p-1 br-6 mb-1">
+										</a></li>
+										<li><a href="#" class="bs-tooltip delete"
+											th:data-station-id="${station.id}" data-bs-toggle="tooltip"
+											data-bs-placement="top"> <svg
+													xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+													viewBox="0 0 24 24" fill="none" stroke="currentColor"
+													stroke-width="2" stroke-linecap="round"
+													stroke-linejoin="round"
+													class="feather feather-trash p-1 br-6 mb-1">
 										        <polyline points="3 6 5 6 21 6"></polyline>
 										        <path
-													d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+														d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
 										    </svg>
-									</a></li></td>
+										</a></li>
+									</td>
 								</tr>
 							</tbody>
 						</table>
@@ -104,6 +106,7 @@
 			</div>
 		</div>
 	</div>
+
 
 	<!--  BEGIN CUSTOM SCRIPTS FILE  -->
 	<div layout:fragment="footerFiles">
@@ -134,9 +137,10 @@
 								"stripeClasses" : [],
 								"lengthMenu" : [ 7, 10, 20, 50 ],
 								"pageLength" : 10,
-								"ordering": false
+								"ordering" : false
 							});
 		</script>
+
 
 		<script>
 			$(document).ready(function() {
@@ -144,7 +148,6 @@
 
 				$('.delete').on('click', function(e) {
 					e.preventDefault();
-					
 					stationIdToDelete = $(this).data('station-id');
 					$('#deleteModal').modal('show');
 				});
@@ -181,6 +184,7 @@
 				});
 			});
 		</script>
+
 	</div>
 	<!--  END CUSTOM SCRIPTS FILE  -->
 </body>

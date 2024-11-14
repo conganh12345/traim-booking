@@ -3,7 +3,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/base-layout.html}">
 <head>
-<title>Danh sách vé</title>
+<title>Danh sách Vé</title>
 
 <div layout:fragment="headerFiles">
 	<link rel="stylesheet" type="text/css"
@@ -13,7 +13,7 @@
 	<link rel="stylesheet" type="text/css"
 		href="/plugins/table/datatable/extensions/fixed-columns/fixed-columns.datatables.min.css">
 	<link rel="stylesheet" type="text/css"
-		href="/css/plugins/light/table/datatable/dt-global_style.css">
+		href="/css/plugins/light/	table/datatable/dt-global_style.css">
 	<link rel="stylesheet" type="text/css"
 		href="/css/plugins/dark/table/datatable/dt-global_style.css">
 	<link rel="stylesheet" type="text/css"
@@ -57,6 +57,7 @@
 							<thead>
 								<tr>
 									<th style="width: 5%">STT</th>
+									<th>Code đặt vé</th>
 									<th>Tên vé</th>
 									<th>Giá vé</th>
 									<th>Trạng thái</th>
@@ -66,40 +67,43 @@
 							<tbody>
 								<tr th:each="ticket, stat : ${tickets}">
 									<td th:text="${stat.count}"></td>
+									<td
+										th:text="${ticket.booking != null ? ticket.booking.code : ''}"></td>
 									<td th:text="${ticket.ticketName}"></td>
-									<td th:text="${ticket.priceTicket}"></td>
+									<td th:text="${ticket.priceTicket}" class="text-truncate"
+										style="max-width: 250px;"></td>
 									<td class="text-truncate" style="max-width: 250px;"><span
 										th:class="'badge ' + ${ticket.status.badgeClass}"
 										th:text="${ticket.status.displayName}"></span></td>
-
 									<td
 										class="table-controls d-flex justify-content-center align-items-center pt-2">
 										<li><a th:href="@{/ticket/edit/{id}(id=${ticket.id})}"
-										class="bs-tooltip edit" data-bs-toggle="tooltip"
-										data-bs-placement="top"> <svg
-												xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-												viewBox="0 0 24 24" fill="none" stroke="currentColor"
-												stroke-width="2" stroke-linecap="round"
-												stroke-linejoin="round"
-												class="feather feather-edit-2 p-1 br-6 mb-1">
+											class="bs-tooltip edit" data-bs-toggle="tooltip"
+											data-bs-placement="top"> <svg
+													xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+													viewBox="0 0 24 24" fill="none" stroke="currentColor"
+													stroke-width="2" stroke-linecap="round"
+													stroke-linejoin="round"
+													class="feather feather-edit-2 p-1 br-6 mb-1">
 								                <path
-													d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z">
+														d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z">
 								                </path>
 								            </svg>
-									</a> </li>
+										</a></li>
 										<li><a href="#" class="bs-tooltip delete"
-										th:data-ticket-id="${ticket.id}" data-bs-toggle="tooltip"
-										data-bs-placement="top"> <svg
-												xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-												viewBox="0 0 24 24" fill="none" stroke="currentColor"
-												stroke-width="2" stroke-linecap="round"
-												stroke-linejoin="round"
-												class="feather feather-trash p-1 br-6 mb-1">
+											th:data-ticket-id="${ticket.id}" data-bs-toggle="tooltip"
+											data-bs-placement="top"> <svg
+													xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+													viewBox="0 0 24 24" fill="none" stroke="currentColor"
+													stroke-width="2" stroke-linecap="round"
+													stroke-linejoin="round"
+													class="feather feather-trash p-1 br-6 mb-1">
 										        <polyline points="3 6 5 6 21 6"></polyline>
 										        <path
-													d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+														d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
 										    </svg>
-									</a></li></td>
+										</a></li>
+									</td>
 								</tr>
 							</tbody>
 						</table>
@@ -139,7 +143,7 @@
 								"stripeClasses" : [],
 								"lengthMenu" : [ 7, 10, 20, 50 ],
 								"pageLength" : 10,
-								"ordering": false
+								"ordering" : false
 							});
 		</script>
 

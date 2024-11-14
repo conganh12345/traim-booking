@@ -58,7 +58,6 @@
 								<tr>
 									<th style="width: 5%">STT</th>
 									<th>Tên tàu</th>
-									<th>Số lượng toa</th>
 									<th>Mô tả</th>
 									<th>Trạng thái</th>
 									<th class="no-content" style="width: 5%">Thao tác</th>
@@ -67,8 +66,7 @@
 							<tbody>
 								<tr th:each="train, stat : ${trains}">
 									<td th:text="${stat.count}"></td>
-									<td th:text="${train.trainname}"></td>
-									<td th:text="${train.coachcount}"></td>
+									<td th:text="${train.trainName}"></td>
 									<td th:text="${train.description}" class="text-truncate"
 										style="max-width: 250px;"></td>
 									<td class="text-truncate" style="max-width: 250px;"><span

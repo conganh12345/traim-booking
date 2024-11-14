@@ -26,13 +26,12 @@ public class Booking {
     private BookingStatus status;
 	
 	@NotNull(message = "Người dùng không được để trống")
-    private Integer trainId;  	
-	private Train train;
+    private Integer userId;  	
+	private User user;
 	
 	@NotNull(message = "Chuyến đi không được để trống")
     private Integer scheduleId;  	
 	private Schedule schedule;
-	
 	public Integer getId() {
 		return id;
 	}
@@ -63,17 +62,17 @@ public class Booking {
 	public void setStatus(BookingStatus status) {
 		this.status = status;
 	}
-	public Integer getTrainId() {
-		return trainId;
+	public Integer getUserId() {
+		return userId;
 	}
-	public void setTrainId(Integer trainId) {
-		this.trainId = trainId;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
-	public Train getTrain() {
-		return train;
+	public User getUser() {
+		return user;
 	}
-	public void setTrain(Train train) {
-		this.train = train;
+	public void setUser(User user) {
+		this.user = user;
 	}
 	public Integer getScheduleId() {
 		return scheduleId;

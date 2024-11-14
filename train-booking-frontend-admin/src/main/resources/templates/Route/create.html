@@ -3,7 +3,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/base-layout.html}">
 <head>
-<title>Chỉnh sửa toa</title>
+<title>Thêm mới</title>
 
 <div layout:fragment="headerFiles">
 
@@ -13,6 +13,7 @@
 		href="/css/plugins/dark/tomSelect/custom-tomSelect.css">
 	<link rel="stylesheet" type="text/css"
 		href="/plugins/tomSelect/tom-select.default.min.css">
+
 </div>
 
 </head>
@@ -22,49 +23,47 @@
 		<div class="page-meta">
 			<nav class="breadcrumb-style-one" aria-label="breadcrumb">
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="#">Tàu</a></li>
+					<li class="breadcrumb-item"><a href="#">Chuyến đi</a></li>
 					<li class="breadcrumb-item" aria-current="page"><a
-						th:href="@{/coach/index}">Quản lý toa</a></li>
-					<li class="breadcrumb-item active" aria-current="page">Chỉnh
-						sửa tàu</li>
+						th:href="@{/route/index}">Quản lý chuyến đi</a></li>
+					<li class="breadcrumb-item active" aria-current="page">Thêm
+						mới chuyến đi</li>
 				</ol>
 			</nav>
 		</div>
 		<!-- /BREADCRUMB -->
 
 		<div class="layout-top-spacing col-12">
-			<a th:href="@{/coach/index}" class="btn"> Trở lại </a>
+			<a th:href="@{/route/index}" class="btn"> Trở lại </a>
 
 		</div>
 
 		<div class="row layout-top-spacing">
-			<div id="coach-management" class="col-lg-12 layout-spacing">
+			<div id="route-management" class="col-lg-12 layout-spacing">
 				<div class="statbox widget box box-shadow">
 					<div class="widget-header">
 						<div class="row">
 							<div class="col-xl-12 col-md-12 col-sm-12 col-12">
-								<h4>Chỉnh sửa</h4>
+								<h4>Thêm mới</h4>
 							</div>
 						</div>
 					</div>
 					<div class="widget-content widget-content-area">
 						<div class="col-12">
-							<form th:action="@{/coach/update/{id}(id=${coach.id})}"
-								th:object="${coach}" id="general-settings" method="POST">
-
+							<form th:action="@{/route/create}" th:object="${route}"
+								id="general-settings" method="POST">
+								
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group mb-4">
 											<label for="trainId">Chọn tàu <strong
 												class="text-danger">*</strong></label> <select th:field="*{trainId}"
 												id="trainId" class="form-control">
-												<option value="">Chọn</option>
+												<option value="" selected>Chọn</option>
 												<option th:each="train : ${trains}" th:value="${train.id}"
-													th:text="${train.trainName}"
-													th:selected="${train.id == coach.trainId}"></option>
+													th:text="${train.trainName}"></option>
 											</select> <span th:if="${#fields.hasErrors('trainId')}"
 												class="text-danger" th:errors="*{trainId}"></span>
-
 										</div>
 									</div>
 								</div>
@@ -72,13 +71,13 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group mb-4">
-											<label for="coachName">Tên toa <strong
+											<label for="routeName">Tên toa <strong
 												class="text-danger">*</strong></label> <input type="text"
-												th:field="*{coachName}" id="coachName" class="form-control"
+												th:field="*{routeName}" id="routeName" class="form-control"
 												placeholder="Tên toa"
-												th:classappend="${#fields.hasErrors('coachName') ? 'is-invalid' : ''}">
-											<span th:if="${#fields.hasErrors('coachName')}"
-												class="text-danger" th:errors="*{coachName}"></span>
+												th:classappend="${#fields.hasErrors('routeName') ? 'is-invalid' : ''}">
+											<span th:if="${#fields.hasErrors('routeName')}"
+												class="text-danger" th:errors="*{routeName}"></span>
 										</div>
 									</div>
 								</div>
@@ -86,36 +85,34 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group mb-4">
-											<label for="description">Mô tả <strong
+											<label for="departureLocation">Nơi đi<strong
 												class="text-danger">*</strong></label>
-											<textarea th:field="*{description}" id="description"
+											<textarea th:field="*{departureLocation}" id="departureLocation"
 												class="form-control" placeholder="Mô tả"
-												th:classappend="${#fields.hasErrors('description') ? 'is-invalid' : ''}"></textarea>
-											<span th:if="${#fields.hasErrors('description')}"
-												class="text-danger" th:errors="*{description}"></span>
-										</div>
-									</div>
-								</div>								
-
-								<div class="row">
-									<div class="col-md-6">
-										<div class="form-group mb-4">
-											<label for="status">Trạng thái <strong
-												class="text-danger">*</strong></label> <select th:field="*{status}"
-												id="status" class="form-control"
-												th:classappend="${#fields.hasErrors('status') ? 'is-invalid' : ''}">
-												<option value="">Chọn</option>
-												<option th:each="status : ${coachStatus}"
-													th:value="${status}" th:text="${status.displayName}"></option>
-											</select> <span th:if="${#fields.hasErrors('status')}"
-												class="text-danger" th:errors="*{status}"></span>
+												th:classappend="${#fields.hasErrors('departureLocation') ? 'is-invalid' : ''}"></textarea>
+											<span th:if="${#fields.hasErrors('departureLocation')}"
+												class="text-danger" th:errors="*{departureLocation}"></span>
 										</div>
 									</div>
 								</div>
 
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group mb-4">
+											<label for="destinationLocation">Nơi đi<strong
+												class="text-danger">*</strong></label>
+											<textarea th:field="*{destinationLocation}" id="destinationLocation"
+												class="form-control" placeholder="Mô tả"
+												th:classappend="${#fields.hasErrors('destinationLocation') ? 'is-invalid' : ''}"></textarea>
+											<span th:if="${#fields.hasErrors('departureLocation')}"
+												class="text-danger" th:errors="*{destinationLocation}"></span>
+										</div>
+									</div>
+								</div>
 
 								<button type="submit" class="btn btn-primary">Hoàn tất</button>
 							</form>
+
 						</div>
 					</div>
 				</div>

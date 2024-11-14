@@ -16,8 +16,6 @@ public class Train {
     @Size(min = 3, max = 50, message = "Tên tàu phải có độ dài từ 3 đến 50 ký tự")
     private String trainName;
 
-    @NotEmpty(message = "Mô tả không được để trống")
-    @Size(max = 200, message = "Mô tả không được dài quá 200 ký tự")
     private String description;
     
 	@NotNull(message = "Trạng thái không được để trống")
@@ -26,7 +24,7 @@ public class Train {
 	public Integer getId() {
 		return id;
 	}
-
+			
 	public void setId(Integer id) {
 		this.id = id;
 	}
