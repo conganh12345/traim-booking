@@ -32,6 +32,7 @@ public class Booking {
 	@NotNull(message = "Chuyến đi không được để trống")
     private Integer scheduleId;  	
 	private Schedule schedule;
+	
 	public Integer getId() {
 		return id;
 	}

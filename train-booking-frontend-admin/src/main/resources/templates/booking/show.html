@@ -92,10 +92,9 @@
 										<thead>
 											<tr>
 												<th style="width: 5%">STT</th>
-												<th>Mã sản phẩm</th>
-												<th>Tên sản phẩm</th>
-												<th>Số lượng</th>
-												<th>Tổng cộng</th>
+												<th>Mã vé</th>
+												<th>Tên vé</th>
+												<th>Giá tiền</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -121,12 +120,12 @@
 							<div class="col-xxl-12">
 								<div class="d-flex justify-content-between">
 									<p class="text-start me-1">Tổng tiền:</p>
-									<b><p th:text="${booking.totalPrice}"></p></b>
+									<b><p th:id="totalPrice1" th:data-price="${booking.totalPrice}"></p></b>
 								</div>
 								<hr>
 								<div class="d-flex justify-content-between">
 									<b><p class="text-start me-1">Tổng thanh toán:</p></b>
-									<b><p class="text-dark text-bold" th:text="${booking.totalPrice}"></p></b>
+									<b><p class="text-dark text-bold" th:id="totalPrice" th:data-price="${booking.totalPrice}"></p></b>
 								</div>
 							</div>
 						</div>
@@ -136,6 +135,43 @@
 				
 			<div class="col-xxl-4 col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-xxl-0 mt-4">
 				<div class="statbox widget box box-shadow">
+						<div class="widget-header">
+							<div class="row">
+								<div class="col-xl-12 col-md-12 col-sm-12 col-12">
+									<h4>Thông tin lịch trình: </h4>
+								</div>
+							</div>
+						</div>
+					<div class="widget-content widget-content-area blog-create-section">
+						<div class="row">
+							<div class="col-xxl-12">
+								<div class="d-flex">
+									<p class="text-start me-1">Tàu :</p>
+									<b><p class="text-dark text-bold" th:text="${booking.schedule != null ? booking.schedule.train.trainName : ''}"></p></b>
+								</div>
+								<div class="d-flex">
+									<p class="text-start me-1">Nơi đi :</p>
+									<b><p class="text-dark text-bold" th:text="${booking.schedule != null ? booking.schedule.departureStation : ''}"></p></b>
+								</div>
+								<div class="d-flex">
+									<p class="text-start me-1">Nơi đến :</p>
+									<b><p class="text-dark text-bold" th:text="${booking.schedule != null ? booking.schedule.destinationStation : ''}"></p></b>
+								</div>
+								<div class="d-flex">
+									<p class="text-start me-1">Thời gian đi :</p>
+										<b><p class="text-dark text-bold" th:text="${#temporals.format(booking.schedule.departureDate, 'HH:mm, dd/MM/yyyy')}"></p></b>
+								</div>
+								<div class="d-flex">
+									<p class="text-start me-1">Thời gian đến :</p>
+										<b><p class="text-dark text-bold" th:text="${#temporals.format(booking.schedule.estimateArrivalDate, 'HH:mm, dd/MM/yyyy')}"></p></b>
+								</div>
+							
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="statbox widget box box-shadow mt-3">
 					<div class="widget-header">
 						<div class="row">
 							<div class="col-xl-12 col-md-12 col-sm-12 col-12">
@@ -156,7 +192,7 @@
 							</div>
 							<div class="d-flex">
 								<p class="text-start me-1">Số điện thoại :</p>
-								<b><p class="text-dark text-bold" th:text="${booking.user != null ? booking.user.phone_number : ''}"></p></b>
+								<b><p class="text-dark text-bold" th:text="${booking.user != null ? booking.user.phoneNumber : ''}"></p></b>
 							</div>
 							<div class="d-flex">
 								<p class="text-start me-1">Địa chỉ :</p>
@@ -197,6 +233,18 @@
 				"pageLength": 10,
 				"ordering": false
 			});
+		</script>
+		
+		<script>
+		 	$(document).ready(function() {
+		        var priceElement = $("#totalPrice");
+		        var priceElement1 = $("#totalPrice1");
+		        var price = parseInt(priceElement.data("price"));
+		        
+		        var formattedPrice = price.toLocaleString('vi-VN') + " VNĐ";
+		        priceElement.text(formattedPrice);
+		        priceElement1.text(formattedPrice);
+		    });
 		</script>
 	</div>
 	 <!--  END CUSTOM SCRIPTS FILE  -->
