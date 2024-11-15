@@ -111,23 +111,6 @@
 								        </div>
 								    </div>
 								</div>
-	
-								
-								<div class="row">
-								    <div class="col-md-6">
-								        <div class="form-group mb-4">
-								            <label for="departureDate">Ngày khởi hành<strong class="text-danger">*</strong></label>
-								            <input th:field="*{departureDate}" id="departureDate"
-								                   class="form-control" placeholder="Chọn ngày và giờ"
-								                   th:classappend="${#fields.hasErrors('departureDate') ? 'is-invalid' : ''}"
-								                   type="datetime-local"
-								                   th:value="${#dates.format(departureDate, 'yyyy-MM-dd HH:mm')}">
-								            <span th:if="${#fields.hasErrors('departureDate')}" class="text-danger"
-								                  th:errors="*{departureDate}"></span>
-								        </div>
-								    </div>
-								</div>
-
 								
 								<div class="row">
 								    <div class="col-md-6">
@@ -137,7 +120,7 @@
 								                   class="form-control" placeholder="Chọn ngày và giờ"
 								                   th:classappend="${#fields.hasErrors('estimateArrivalDate') ? 'is-invalid' : ''}"
 								                   type="datetime-local"
-								                   th:value="${#dates.format(estimateArrivalDate, 'yyyy-MM-dd'T'HH:mm')}">
+								                   th:value="${#dates.format(estimateArrivalDate, 'yyyy-MM-dd HH:mm')}">
 								            <span th:if="${#fields.hasErrors('estimateArrivalDate')}" class="text-danger"
 								                  th:errors="*{estimateArrivalDate}"></span>
 								        </div>

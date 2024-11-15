@@ -22,13 +22,14 @@ public class Schedule {
     @Size(min = 3, max = 100, message = "Ga đến phải có độ dài từ 3 đến 100 ký tự")
     private String destinationStation;
 	
-	@NotEmpty(message = "Ngày khởi hành không được để trống")
-    @Future(message = "Ngày khởi hành phải là một ngày trong tương lai")
-    private LocalDateTime departureDate;
-	
-	@NotEmpty(message = "Ngày đến dự kiến không được để trống")
-    @Future(message = "Ngày đến dự kiến phải là một ngày trong tương lai")
-    private LocalDateTime estimateArrivalDate;
+	@NotNull(message = "Ngày khởi hành không được để trống")
+	@Future(message = "Ngày khởi hành phải là một ngày trong tương lai")
+	private LocalDateTime departureDate;
+
+	@NotNull(message = "Ngày đến dự kiến không được để trống")
+	@Future(message = "Ngày đến dự kiến phải là một ngày trong tương lai")
+	private LocalDateTime estimateArrivalDate;
+
 
 	@NotNull(message = "Mã tàu không được để trống")
     private Integer trainId;  	
