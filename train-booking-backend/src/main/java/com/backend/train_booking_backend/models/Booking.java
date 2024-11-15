@@ -40,7 +40,6 @@ public class Booking {
 	private BookingStatus status;
 
 	@OneToMany(mappedBy = "booking")
-	@JsonIgnore
 	private List<Ticket> tickets = new ArrayList<>();
 
 	@ManyToOne

@@ -62,7 +62,9 @@
 		<div class="d-flex justify-content-between mt-4 mb-2">
 			<div>
 				<div class="d-flex align-items-start">
-					<h5 class="text-bold">CHI TIẾT ĐƠN ĐẶT VÉ</h5>
+					<h5 class="text-bold">CHI TIẾT ĐƠN ĐẶT VÉ
+						<span class="badge badge-dark" th:text="${booking.code}"></span>
+					</h5>
 				</div>
 				<p class="text-primary" th:text="${#temporals.format(booking.bookingTime, 'HH:mm, dd/MM/yyyy')}"></p>
 			</div>
@@ -80,7 +82,7 @@
 					<div class="widget-header">
 						<div class="row">
 							<div class="col-xl-12 col-md-12 col-sm-12 col-12">
-								<h4>Thông tin sản phẩm</h4>
+								<h4>Thông tin vé</h4>
 							</div>
 						</div>
 					</div>
@@ -98,7 +100,14 @@
 											</tr>
 										</thead>
 										<tbody>
-											
+											<tr th:each="ticket : ${booking.tickets}">
+												<td th:text="${ticket.id}"></td>
+												<td>
+													<span class="badge badge-light-dark">TK-0001</span>
+												</td>
+												<td th:text="${ticket.ticketName}"></td>
+												<td th:text="${ticket.priceTicket}"></td>
+											</tr>
 										</tbody>
 									</table>
 								</div>

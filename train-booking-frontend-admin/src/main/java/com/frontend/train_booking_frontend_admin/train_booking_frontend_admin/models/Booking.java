@@ -1,6 +1,8 @@
 package com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List; 
 
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.enums.BookingStatus;
 
@@ -32,6 +34,8 @@ public class Booking {
 	@NotNull(message = "Chuyến đi không được để trống")
     private Integer scheduleId;  	
 	private Schedule schedule;
+	
+	private List<Ticket> tickets = new ArrayList<>();
 	
 	public Integer getId() {
 		return id;
@@ -86,6 +90,12 @@ public class Booking {
 	}
 	public void setSchedule(Schedule schedule) {
 		this.schedule = schedule;
+	}
+	public List<Ticket> getTickets() {
+		return tickets;
+	}
+	public void setTickets(List<Ticket> tickets) {
+		this.tickets = tickets;
 	}
 	
 }
