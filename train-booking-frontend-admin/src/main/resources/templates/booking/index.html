@@ -54,10 +54,10 @@
 							<thead>
 								<tr>
 									<th style="width: 5%">STT</th>
+									<th>Mã đặt vé</th>
 									<th>Tên người dùng</th>
 									<th>Tên chuyến đi</th>
 									<th>Giá</th>
-									<th>Code</th>
 									<th>Thời gian đặt vé</th>
 									<th>Trạng thái</th>
 									<th class="no-content" style="width: 5%">Thao tác</th>
@@ -66,6 +66,7 @@
 							<tbody>
 								<tr th:each="booking, stat : ${bookings}">
 									<td th:text="${stat.count}"></td>
+									<td th:text="${booking.code}"></td>
 									
 									<td
 										th:text="${booking.user != null ? booking.user.fullName : ''}"></td>
@@ -73,7 +74,6 @@
 										th:text="${booking.schedule != null ? booking.schedule.scheduleName : ''}"></td>
 										
 									<td th:text="${booking.totalPrice}"></td>
-									<td th:text="${booking.code}"></td>
 									
 									<td
 										th:text="${#temporals.format(booking.bookingTime, 'HH:mm, dd/MM/yyyy')}"
