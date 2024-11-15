@@ -30,12 +30,11 @@ public class ScheduleController {
 	private ScheduleService scheduleService;
 	@Autowired
 	private TrainService trainService;
-	
 
 	@GetMapping("/index")
 	public String index(Model model) {
 		List<Schedule> schedules = scheduleService.getAllSchedules();
-		if(schedules == null) {
+		if (schedules == null) {
 			return "auth/signIn";
 		}
 
@@ -46,58 +45,66 @@ public class ScheduleController {
 
 	@GetMapping("/create")
 	public String create(Model model) {
-	    List<Train> trains = trainService.getAllTrains();
-	    
-	    model.addAttribute("page", "schedule")
-	         .addAttribute("trains", trains)
-	         .addAttribute("schedule", new Schedule());
+		List<Train> trains = trainService.getAllTrains();
 
-	    return "schedule/create";
+		model.addAttribute("page", "schedule").addAttribute("trains", trains).addAttribute("schedule", new Schedule());
+
+		return "schedule/create";
 	}
 
-
 	@PostMapping("/create")
-	public String create(@Valid @ModelAttribute("schedule") Schedule schedule, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+	public String create(@Valid @ModelAttribute("schedule") Schedule schedule, BindingResult result, Model model,
+			RedirectAttributes redirectAttributes) {
 		if (result.hasErrors()) {
-			model.addAttribute("page", "schedule");
-			
-	        return "schedule/create"; 
-	    }
+			List<Train> trains = trainService.getAllTrains();
+			model.addAttribute("page", "schedule")
+				 .addAttribute("trains", trains);
+
+			return "schedule/create";
+		}
+
+		if (schedule.getDepartureDate().isAfter(schedule.getEstimateArrivalDate())) {
+			result.rejectValue("estimateArrivalDate", "error.estimateArrivalDate", "Ngày đến phải sau ngày khởi hành");
+			List<Train> trains = trainService.getAllTrains();
+			model.addAttribute("page", "schedule")
+				 .addAttribute("trains", trains);
+			return "schedule/create";
+		}
+
 		Train train = trainService.getTrainById(schedule.getTrainId());
-		
 		schedule.setTrain(train);
+
 		if (scheduleService.addSchedule(schedule)) {
 			redirectAttributes.addFlashAttribute("success", "Thêm mới toa thành công!");
 		} else {
 			redirectAttributes.addFlashAttribute("error", "Thêm mới toa thất bại!");
 		}
+
 		return "redirect:/schedule/index";
 	}
 
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
-	    Schedule schedule = scheduleService.getScheduleById(id);
-	    List<Train> trains = trainService.getAllTrains();
+		Schedule schedule = scheduleService.getScheduleById(id);
+		List<Train> trains = trainService.getAllTrains();
 
-	    model.addAttribute("page", "schedule")
-	         .addAttribute("schedule", schedule)
-	         .addAttribute("trains", trains);
+		model.addAttribute("page", "schedule").addAttribute("schedule", schedule).addAttribute("trains", trains);
 
-	    return "schedule/edit";
+		return "schedule/edit";
 	}
 
-
 	@PostMapping("/update/{id}")
-	public String update(@PathVariable Integer id,@Valid @ModelAttribute("schedule") Schedule schedule, BindingResult result, RedirectAttributes redirectAttributes, Model model) {
+	public String update(@PathVariable Integer id, @Valid @ModelAttribute("schedule") Schedule schedule,
+			BindingResult result, RedirectAttributes redirectAttributes, Model model) {
 		schedule.setId(id);
 		if (result.hasErrors()) {
 			model.addAttribute("page", "schedule");
-			
-	        return "schedule/edit"; 
-	    }
-		
+
+			return "schedule/edit";
+		}
+
 		Train train = trainService.getTrainById(schedule.getTrainId());
-		
+
 		schedule.setTrain(train);
 		if (scheduleService.updateSchedule(schedule)) {
 			redirectAttributes.addFlashAttribute("success", "Cập nhật toa thành công!");
