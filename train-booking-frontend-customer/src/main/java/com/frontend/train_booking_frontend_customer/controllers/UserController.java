@@ -6,7 +6,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.io.Console;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +23,16 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.frontend.train_booking_frontend_customer.models.User;
 import com.frontend.train_booking_frontend_customer.services.IUserService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/user")
 public class UserController {
 	@Autowired
 	private IUserService userService;
 
+	@Autowired
+	private HttpSession session;
 //	@GetMapping("/index")
 //	public String index(Model model) {
 //		List<User> users = userService.getAllUsers();
@@ -84,8 +92,21 @@ public class UserController {
 		}
 		model.addAttribute("page", "user")
 			.addAttribute("userLogin",user);
+		
+		watchSession();
 
 		return "user/profile";
+	}
+	
+	public void watchSession() {
+		Map<String, Object> sessionInfo = new HashMap<>();
+		Enumeration<String> attributeNames = session.getAttributeNames();
+		while (attributeNames.hasMoreElements()) {
+			String attributeName = attributeNames.nextElement();
+			sessionInfo.put(attributeName, session.getAttribute(attributeName));
+		}
+		
+		System.out.println("sesion: " + sessionInfo);
 	}
 	
 	
