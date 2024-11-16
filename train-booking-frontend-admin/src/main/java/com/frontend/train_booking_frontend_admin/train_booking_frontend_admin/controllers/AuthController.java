@@ -69,7 +69,7 @@ public class AuthController {
 		}
 	}
 	
-	@PostMapping("/logout")
+	@GetMapping("/logout")
 	public String logout() {
 		// HUy session
 		session.invalidate();

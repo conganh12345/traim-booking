@@ -154,7 +154,6 @@ public class UserService {
 			}
 		}
 	}
-
 //	public User getUserByEmailPassword(String email, String password) {
 //		RestTemplate restTemplate = new RestTemplate();
 //		try {
