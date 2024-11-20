@@ -13,10 +13,6 @@ public class Seat {
 	@NotEmpty(message = "Tên ghế không được để trống")
     @Size(min = 3, max = 50, message = "Tên ghế phải có độ dài từ 3 đến 50 ký tự")
     private String seatName;
-    
-	@NotNull(message = "Vé không được để trống")
-    private Integer ticketId;  	
-	private Ticket ticket;
 	
 	@NotNull(message = "Loại ghế không được để trống")
     private Integer seattypeId;  	
@@ -37,18 +33,6 @@ public class Seat {
 	}
 	public void setSeatName(String seatName) {
 		this.seatName = seatName;
-	}
-	public Integer getTicketId() {
-		return ticketId;
-	}
-	public void setTicketId(Integer ticketId) {
-		this.ticketId = ticketId;
-	}
-	public Ticket getTicket() {
-		return ticket;
-	}
-	public void setTicket(Ticket ticket) {
-		this.ticket = ticket;
 	}
 	public Integer getSeattypeId() {
 		return seattypeId;

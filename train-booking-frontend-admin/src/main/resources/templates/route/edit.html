@@ -75,10 +75,10 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group mb-4">
-											<label for="routeName">Tên toa <strong
+											<label for="routeName">Tên lịch trình <strong
 												class="text-danger">*</strong></label> <input type="text"
 												th:field="*{routeName}" id="routeName" class="form-control"
-												placeholder="Tên toa"
+												placeholder="Tên lịch trình"
 												th:classappend="${#fields.hasErrors('routeName') ? 'is-invalid' : ''}">
 											<span th:if="${#fields.hasErrors('routeName')}"
 												class="text-danger" th:errors="*{routeName}"></span>
@@ -92,7 +92,7 @@
 											<label for="departureLocation">Nơi đi<strong
 												class="text-danger">*</strong></label>
 											<textarea th:field="*{departureLocation}" id="departureLocation"
-												class="form-control" placeholder="Mô tả"
+												class="form-control" placeholder="Nơi đi"
 												th:classappend="${#fields.hasErrors('departureLocation') ? 'is-invalid' : ''}"></textarea>
 											<span th:if="${#fields.hasErrors('departureLocation')}"
 												class="text-danger" th:errors="*{departureLocation}"></span>
@@ -103,10 +103,10 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group mb-4">
-											<label for="destinationLocation">Nơi đi<strong
+											<label for="destinationLocation">Nơi đến<strong
 												class="text-danger">*</strong></label>
 											<textarea th:field="*{destinationLocation}" id="destinationLocation"
-												class="form-control" placeholder="Mô tả"
+												class="form-control" placeholder="Nơi đến"
 												th:classappend="${#fields.hasErrors('destinationLocation') ? 'is-invalid' : ''}"></textarea>
 											<span th:if="${#fields.hasErrors('departureLocation')}"
 												class="text-danger" th:errors="*{destinationLocation}"></span>

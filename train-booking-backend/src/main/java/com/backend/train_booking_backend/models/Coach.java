@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.backend.train_booking_backend.models.enums.CoachStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -40,8 +41,8 @@ public class Coach {
 	private Train train;
 
 	@OneToMany(mappedBy = "coach")
-	@JsonIgnore
-	private List<Seat> seat = new ArrayList<>();
+	 @JsonManagedReference
+	private List<Seat> seats = new ArrayList<>();
 
 	public Integer getId() {
 		return id;
@@ -83,11 +84,12 @@ public class Coach {
 		this.train = train;
 	}
 
-	public List<Seat> getSeat() {
-		return seat;
+	public List<Seat> getSeats() {
+		return seats;
 	}
 
-	public void setSeat(List<Seat> seat) {
-		this.seat = seat;
+	public void setSeats(List<Seat> seats) {
+		this.seats = seats;
 	}
+	
 }

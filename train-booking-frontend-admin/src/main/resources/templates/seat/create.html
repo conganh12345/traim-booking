@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/base-layout.html}">
+<head>
+<title>Thêm mới</title>
+
+<div layout:fragment="headerFiles">
+
+	<link rel="stylesheet" type="text/css"
+		href="/css/plugins/light/tomSelect/custom-tomSelect.css">
+	<link rel="stylesheet" type="text/css"
+		href="/css/plugins/dark/tomSelect/custom-tomSelect.css">
+	<link rel="stylesheet" type="text/css"
+		href="/plugins/tomSelect/tom-select.default.min.css">
+<style>
+	 .ts-control{
+            padding: 12px;
+       }
+</style>
+</div>
+</head>
+<body>
+	<div layout:fragment="content">
+		<!-- BREADCRUMB -->
+		<div class="page-meta">
+			<nav class="breadcrumb-style-one" aria-label="breadcrumb">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="#">Toa</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a
+						th:href="@{/coach/index}">Quản lý toa</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a th:href="@{/coach/show/{id}(id=${coachId})}"> Chi
+						tiết toa</a></li>
+					<li class="breadcrumb-item active" aria-current="page">
+						Thêm mới ghế</li>
+				</ol>
+			</nav>
+		</div>
+		<!-- /BREADCRUMB -->
+
+		<div class="layout-top-spacing col-12">
+			 <a th:href="@{/coach/show/{id}(id=${coachId})}" class="btn"> Trở lại </a>
+
+		</div>
+
+		<div class="row layout-top-spacing">
+			<div id="seat-management" class="col-lg-12 layout-spacing">
+				<div class="statbox widget box box-shadow">
+					<div class="widget-header">
+						<div class="row">
+							<div class="col-xl-12 col-md-12 col-sm-12 col-12">
+								<h4>Thêm mới</h4>
+							</div>
+						</div>
+					</div>
+					<div class="widget-content widget-content-area">
+						<div class="col-12">
+							<form th:action="@{/seat/create}" th:object="${seat}"
+								id="general-settings" method="POST">
+								 <input type="hidden" th:value="${coachId}" id="coachId" name="coachId" />
+									<div class="col-md-6">
+										<div class="form-group mb-4">
+											<label for="seat">Tên ghế<strong
+												class="text-danger">*</strong></label> <input type="text"
+												th:field="*{seatName}" id="seatName" class="form-control"
+												placeholder="Tên ghế"
+												th:classappend="${#fields.hasErrors('seatName') ? 'is-invalid' : ''}">
+											<span th:if="${#fields.hasErrors('seatName')}"
+												class="text-danger" th:errors="*{seatName}"></span>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group mb-4">
+											<label for="seattypeId">Chọn loại ghế <strong
+												class="text-danger">*</strong></label> <select th:field="*{seattypeId}"
+												id="seattypeId" class="form-control">
+												<option value="" selected>Chọn</option>
+												<option th:each="seatType : ${seatTypes}" th:value="${seatType.id}"
+													th:text="${seatType.seatName}"></option>
+											</select> <span th:if="${#fields.hasErrors('seattypeId')}"
+												class="text-danger" th:errors="*{seattypeId}"></span>
+										</div>
+									</div>
+
+								<button type="submit" class="btn btn-primary">Hoàn tất</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--  BEGIN CUSTOM SCRIPTS FILE  -->
+	<div layout:fragment="footerFiles">
+		<script src="/plugins/tomSelect/tom-select.base.js"></script>
+		<script src="/plugins/tomSelect/custom-tom-select.js"></script>
+
+		<script type="text/javascript">
+			new TomSelect("#seattypeId", {
+				create : true,
+				sortField : {
+					field : "text",
+					direction : "asc"
+				}
+			});
+
+		</script>
+	</div>
+	<!--  END CUSTOM SCRIPTS FILE  -->
+</body>
+
+</html>
+
+
+

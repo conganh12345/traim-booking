@@ -118,11 +118,9 @@ public class CoachController {
 	@GetMapping("/show/{id}")
 	public String show(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
 		Coach coach = coachService.getCoachById(id);
-		List<SeatType> seats = seatService.getAllSeatTypes();
 
 		model.addAttribute("page", "coach")
-			.addAttribute("coach", coach)
-			.addAttribute("seats", seats);
+			.addAttribute("coach", coach);
 
 		return "coach/show";
 	}

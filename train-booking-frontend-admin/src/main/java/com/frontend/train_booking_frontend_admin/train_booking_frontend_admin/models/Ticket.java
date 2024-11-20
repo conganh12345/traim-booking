@@ -25,6 +25,10 @@ public class Ticket {
     private Integer bookingId;  	
 	private Booking booking;
 	
+	@NotNull(message = "Ghế không được để trống")
+    private Integer seatId;  	
+	private Seat seat;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -60,5 +64,17 @@ public class Ticket {
 	}
 	public void setBooking(Booking booking) {
 		this.booking = booking;
+	}
+	public Integer getSeatId() {
+		return seatId;
+	}
+	public void setSeatId(Integer seatId) {
+		this.seatId = seatId;
+	}
+	public Seat getSeat() {
+		return seat;
+	}
+	public void setSeat(Seat seat) {
+		this.seat = seat;
 	}
 }

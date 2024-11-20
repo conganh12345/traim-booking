@@ -38,8 +38,8 @@ public class Ticket {
 	@JsonIgnore
 	private Booking booking;
 
-	@OneToOne(mappedBy = "ticket")
-	@JsonIgnore
+	@OneToOne
+	@JoinColumn(name = "seat_id")
     private Seat seat;
 
 

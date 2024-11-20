@@ -67,7 +67,8 @@
 	<!--  END LOADER -->
 
 	<!--  BEGIN NAVBAR  -->
-	<div th:replace="layouts/navbar/style-vertical-menu"></div>
+	<div th:replace="~{layouts/navbar/style-vertical-menu}"></div>
+
 	<!--  END NAVBAR  -->
 
 	<!--  BEGIN MAIN CONTAINER  -->
@@ -77,7 +78,7 @@
 		<div class="search-overlay"></div>
 
 		<!--  BEGIN SIDEBAR  -->
-		<div th:replace="layouts/menu/vertical-menu"></div>
+		<div th:replace="~{layouts/menu/vertical-menu}"></div>
 		<!--  END SIDEBAR  -->
 
 		<!--  BEGIN CONTENT AREA  -->
@@ -87,7 +88,7 @@
 			</div>
 
 			<!--  BEGIN FOOTER  -->
-			<div th:replace="layouts/layout-footer"></div>
+			<div th:replace="~{layouts/layout-footer}"></div>
 			<!--  END FOOTER  -->
 		</div>
 		<!--  END CONTENT AREA  -->

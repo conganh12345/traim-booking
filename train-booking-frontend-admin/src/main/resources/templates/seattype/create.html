@@ -40,13 +40,12 @@
 						<div class="col-12">
 							<form th:action="@{/seattype/create}" th:object="${seattype}"
 								id="general-settings" method="POST">
-								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group mb-4">
 											<label for="seattype">Tên loại ghế<strong
 												class="text-danger">*</strong></label> <input type="text"
 												th:field="*{seatName}" id="seatName" class="form-control"
-												placeholder="Tên người dùng"
+												placeholder="Tên loại ghế"
 												th:classappend="${#fields.hasErrors('seatName') ? 'is-invalid' : ''}">
 											<span th:if="${#fields.hasErrors('seatName')}"
 												class="text-danger" th:errors="*{seatName}"></span>
@@ -63,11 +62,7 @@
 												class="text-danger" th:errors="*{price}"></span>
 										</div>
 									</div>
-								</div>
-
-
-
-								<div class="row">
+									
 									<div class="col-md-6">
 										<div class="form-group mb-4">
 											<label for="status">Trạng thái <strong
@@ -81,7 +76,8 @@
 												class="text-danger" th:errors="*{status}"></span>
 										</div>
 									</div>
-								</div>
+
+
 
 								<button type="submit" class="btn btn-primary">Hoàn tất</button>
 							</form>

@@ -1,6 +1,7 @@
 package com.backend.train_booking_backend.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,12 +24,13 @@ public class Seat {
 	@Column
 	private String seatName;
 
-	@OneToOne
-	@JoinColumn(name = "ticket_id")
+	@OneToOne(mappedBy = "seat")
+	@JsonIgnore
 	private Ticket ticket;
 
 	@ManyToOne
     @JoinColumn(name="coach_id")
+	@JsonBackReference
     private Coach coach;
 
 	@ManyToOne
@@ -51,14 +53,6 @@ public class Seat {
 		this.seatName = seatName;
 	}
 
-	public Ticket getTicket() {
-		return ticket;
-	}
-
-	public void setTicket(Ticket ticket) {
-		this.ticket = ticket;
-	}
-
 	public Coach getCoach() {
 		return coach;
 	}
@@ -73,6 +67,14 @@ public class Seat {
 
 	public void setSeatType(SeatType seatType) {
 		this.seatType = seatType;
+	}
+
+	public Ticket getTicket() {
+		return ticket;
+	}
+
+	public void setTicket(Ticket ticket) {
+		this.ticket = ticket;
 	}
 
 }

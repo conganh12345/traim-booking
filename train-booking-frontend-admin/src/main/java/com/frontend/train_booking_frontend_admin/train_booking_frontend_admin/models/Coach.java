@@ -1,6 +1,9 @@
 package com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.enums.CoachStatus;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
@@ -24,6 +27,8 @@ public class Coach {
 	@NotNull(message = "Tàu không được để trống")
     private Integer trainId;  	
 	private Train train;
+	
+	private List<Seat> seats = new ArrayList<>();
 	
 	public Integer getId() {
 		return id;
@@ -60,6 +65,11 @@ public class Coach {
 	}
 	public void setTrain(Train train) {
 		this.train = train;
+	}
+	public List<Seat> getSeats() {
+		return seats;
+	}
+	public void setSeats(List<Seat> seats) {
+		this.seats = seats;
 	} 
-
 }

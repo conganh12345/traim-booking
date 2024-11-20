@@ -156,7 +156,7 @@
 												style="padding: 20px;">
 												<div class="row">
 													<div class="col-xl-12 col-md-12 col-sm-12 col-12">
-														<a th:href="@{/seattype/create(coachId=${coach.id})}"
+														<a th:href="@{/seat/create(coachId=${coach.id})}"
 															class="btn btn-block btn-outline-secondary mt-2 mb-2 me-4">
 															Thêm mới ghế </a>
 													</div>
@@ -167,26 +167,21 @@
 															<tr>
 																<th width="10%">ID</th>
 																<th>Tên ghế</th>
-																<th>Trạng thái</th>
 																<th width="20%" class="text-center">Thao tác</th>
 															</tr>
 														</thead>
 														<tbody>
-															<tr th:if="${#lists.isEmpty(seattypes)}">
+															<tr th:if="${#lists.isEmpty(coach.seats)}">
 																<td colspan="4" class="text-center">Không có ghế
 																	nào trong toa này.</td>
 															</tr>
-															<tr th:each="seat : ${seattypes}"
-																th:if="${!#lists.isEmpty(seattypes)}">
+															<tr th:each="seat : ${coach.seats}">
 																<td th:text="${seat.id}"></td>
 																<td th:text="${seat.seatName}"></td>
-																<td><span
-																	th:class="'badge ' + ${seat.status.badgeClass}"
-																	th:text="${seat.status.displayName}"></span></td>
 																<td class="text-center">
 																	<div class="action-btns">
 																		<a
-																			th:href="@{/seattype/edit/{id}(id=${seat.id}, coachId=${coach.id})}"
+																			th:href="@{/seat/edit/{id}(id=${seat.id}, coachId=${coach.id})}"
 																			class="action-btn btn-edit btn-edit-phone bs-tooltip me-2"
 																			data-bs-toggle="tooltip" data-bs-placement="top">
 																			<svg xmlns="http://www.w3.org/2000/svg" width="24"
@@ -243,10 +238,8 @@
 		<script>
 			$(document).ready(function() {
 				let seatIdToDelete;
-				console.log("test", 111);
 
 				$('.btn-delete').on('click', function(e) {
-					console.log("test", 111);
 					e.preventDefault();
 					seatIdToDelete = $(this).data('seat-id');
 					$('#deleteModal').modal('show');
@@ -254,7 +247,7 @@
 
 				$('#confirmDelete').on('click', function() {
 					$.ajax({
-						url : `/seattype/delete/${seatIdToDelete}`,
+						url : `/seat/delete/${seatIdToDelete}`,
 						type : 'DELETE',
 						success : function(response) {
 
@@ -266,7 +259,9 @@
 								actionTextColor : '#3b3f5c'
 							});
 
-							location.reload();
+							setTimeout(function() {
+								location.reload();
+							}, 1000);
 						},
 						error : function() {
 							Snackbar.show({
