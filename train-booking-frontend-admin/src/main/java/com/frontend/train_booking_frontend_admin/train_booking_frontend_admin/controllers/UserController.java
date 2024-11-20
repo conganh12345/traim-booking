@@ -112,50 +112,35 @@ public class UserController {
 		return "/user/profile";
 	}
 	
-	@GetMapping("/user-account-setting")
-	public String profile() {
-		return "/user/user-account-setting";
-	}
-
-//	@GetMapping("/base-layout")
-//    public String showBaseLayout() {
-//        return "redirect:/dashboard/index";
-//    }
-//    
-//    @GetMapping("/login")
-//    public String login() {
-//    	return "user/signIn";
-//    }
-
-//    @PostMapping("/check-login")
-//    public ResponseEntity<String> handleLogin(@RequestParam String email, @RequestParam String password) {
-//    	User user = userService.getUserByEmailPassword(email, password);
-//        if (user != null) {
-//            return ResponseEntity.ok("Login successful!"); 
-//        } else {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invalid email or password.");
-//        }
-//    }
-//    
-//    @PostMapping("/check-email-exist")
-//    public ResponseEntity<String> checkEmailExist(@RequestParam String email) {
-//        User user = userService.getUserByEmail(email);
-//        if (user != null) {
-//            return ResponseEntity.ok("Email exists");
-//        } else {
-//            return null;
-//        }
-//    }
+//	@GetMapping("/user-account-setting")
+//	public String userAcocuntSetting(Model model) {
+//		User user = userService.userProfile();
+//		if(user == null) {
+//			return "/auth/signIn";
+//		}
+//		
+//		model.addAttribute("userLogin", user);
+//		
+//		return "/user/user-account-setting";
+//	}
+//	
+//	@PostMapping("/updateProfile/{id}")
+//	public String updateProfile(@PathVariable Integer id, @Valid @ModelAttribute("user") User user, BindingResult result,
+//	                     RedirectAttributes redirectAttributes, Model model) {
+//	    if (result.hasErrors()) {
+//	        model.addAttribute("page", "user");
+//	        return "user/user-account-setting"; // Trở lại trang chỉnh sửa nếu có lỗi
+//	    }
 //
-//    @GetMapping("/signup")
-//    public String signup() {
-//    	return "user/signup";
-//    }
-//    
-//    @PostMapping("/register")
-//    public String register(@ModelAttribute User user) {
-//    	userService.signUp(user);
-//    	
-//    	return "user/signIn";
-//    }
+//	    user.setId(id);  // Đảm bảo rằng ID của người dùng được set đúng
+//	    if (userService.updateUser(user)) {
+//	        redirectAttributes.addFlashAttribute("success", "Cập nhật người dùng thành công!");
+//	    } else {
+//	        redirectAttributes.addFlashAttribute("error", "Cập nhật người dùng thất bại!");
+//	    }
+//
+//	    return "redirect:/user/profile";  // Sau khi cập nhật, chuyển hướng lại trang hồ sơ
+//	}
+
+
 }

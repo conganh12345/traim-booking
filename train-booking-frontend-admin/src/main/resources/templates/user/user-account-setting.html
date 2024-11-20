@@ -1,37 +1,39 @@
 <!DOCTYPE html>
-	
+
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layouts/base-layout.html}"> 
+	layout:decorate="~{layouts/base-layout.html}">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>Account Settings | CORK - Multipurpose Bootstrap Dashboard Template </title>
-    <<link rel="icon" type="image/x-icon" href="../image/favicon.ico"/>
-    
-	<div layout:fragment="headerFiles">
-		<link href="/css/assets/light/users/account-setting.css" 
-		rel="stylesheet" type="text/css" />	
-		<link href="/plugins/filepond/filepond.min.css" 
-		rel="stylesheet" type="text/css" />	
-		<link href="/plugins/filepond/FilePondPluginImagePreview.min.css"
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+<title>Account Settings | CORK - Multipurpose Bootstrap
+	Dashboard Template</title> <
+<link rel="icon" type="image/x-icon" href="../image/favicon.ico" />
+
+<div layout:fragment="headerFiles">
+	<link href="/css/assets/light/users/account-setting.css"
+		rel="stylesheet" type="text/css" />
+	<link href="/plugins/filepond/filepond.min.css" rel="stylesheet"
+		type="text/css" />
+	<link href="/plugins/filepond/FilePondPluginImagePreview.min.css"
 		rel="stylesheet">
-		<link href="/plugins/sweetalerts2/sweetalerts2.css"
+	<link href="/plugins/sweetalerts2/sweetalerts2.css" rel="stylesheet">
+	<link href="/css/plugins/light/filepond/custom-filepond.css"
 		rel="stylesheet">
-		<link href="/css/plugins/light/filepond/custom-filepond.css"
+	<link href="/css/assets/light/components/tabs.css" rel="stylesheet"
+		type="text/css" />
+	<link href="/css/assets/light/elements/alert.css" rel="stylesheet"
+		type="text/css" />
+	<link
+		href="/css/plugins/light/notification/snackbar/custom-snackbar.css"
 		rel="stylesheet">
-		<link href="/css/assets/light/components/tabs.css" 
-		rel="stylesheet" type="text/css" />	
-		<link href="/css/assets/light/elements/alert.css" 
-		rel="stylesheet" type="text/css" />	
-		<link href="/css/plugins/light/notification/snackbar/custom-snackbar.css"
-		rel="stylesheet">
-		<link href="/css/assets/light/forms/switches.css" 
-		rel="stylesheet" type="text/css" />	
-		<link href="/css/assets/light/components/list-group.css" 
-		rel="stylesheet" type="text/css" />	
-	</div>
+	<link href="/css/assets/light/forms/switches.css" rel="stylesheet"
+		type="text/css" />
+	<link href="/css/assets/light/components/list-group.css"
+		rel="stylesheet" type="text/css" />
+</div>
 
 
 </head>
@@ -48,9 +50,10 @@
 					<div class="page-meta">
 						<nav class="breadcrumb-style-one" aria-label="breadcrumb">
 							<ol class="breadcrumb">
-								<li class="breadcrumb-item"><a href="#">Users</a></li>
-								<li class="breadcrumb-item active" aria-current="page">Account
-									Settings</li>
+								<li class="breadcrumb-item"><a th:href="@{/user/profile}">Hồ
+										sơ</a></li>
+								<li class="breadcrumb-item active" aria-current="page">Cài
+									đặt người dùng</li>
 							</ol>
 						</nav>
 					</div>
@@ -59,100 +62,88 @@
 					<div class="account-settings-container layout-top-spacing">
 
 						<div class="account-content">
-							<div class="row mb-3">
-								<div class="col-md-12">
-									<h2>Settings</h2>
-								</div>
-							</div>
 
-							<div class="tab-content" id="animateLineContent-4">
+							<a th:href="@{/user/profile}" class="btn"> Trở lại </a>
+
+							<div class="tab-content mt-5" id="animateLineContent-4">
 								<div class="tab-pane fade show active"
 									id="animated-underline-home" role="tabpanel"
 									aria-labelledby="animated-underline-home-tab">
 									<div class="row">
 										<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
-											<form class="section general-info">
+											<form class="section general-info"
+												th:action="@{/user/updateProfile/{id}(id=${userLogin.id})}"
+												method="POST">
 												<div class="info">
-													<h6 class="">General Information</h6>
+													<h6 class="">Thông tin hồ sơ</h6>
 													<div class="row">
 														<div class="col-lg-11 mx-auto">
 															<div class="row">
-																<div class="col-xl-2 col-lg-12 col-md-4">
-																	<div class="profile-image  mt-4 pe-md-4">
-
-																		<!-- // The classic file input element we'll enhance
-                                                                        // to a file pond, we moved the configuration
-                                                                        // properties to JavaScript -->
-
-																		<div class="img-uploader-content">
-																			<input type="file" class="filepond" name="filepond"
-																				accept="image/png, image/jpeg, image/gif" />
-																		</div>
-
+																<!-- Họ và tên -->
+																<div class="col-md-6">
+																	<div class="form-group">
+																		<label for="fullName">Họ và tên</label> <input
+																			type="text" class="form-control mb-3" id="fullName"
+																			placeholder="Full Name"
+																			th:field="*{fullName}"
+																			th:value="${userLogin != null ? userLogin.fullName : 'Name error'}">
 																	</div>
 																</div>
-																<div class="col-xl-10 col-lg-12 col-md-8 mt-md-0 mt-4">
-																	<div class="form">
-																		<div class="row">
-																			<div class="col-md-6">
-																				<div class="form-group">
-																					<label for="fullName">Full Name</label> <input
-																						type="text" class="form-control mb-3"
-																						id="fullName" placeholder="Full Name"
-																						value="Jimmy Turner">
-																				</div>
-																			</div>
 
-																			<div class="col-md-6">
-																				<div class="form-group">
-																					<label for="address">Address</label> <input
-																						type="text" class="form-control mb-3" id="address"
-																						placeholder="Address" value="New York">
-																				</div>
-																			</div>
-																			<div class="col-md-6">
-																				<div class="form-group">
-																					<label for="phone">Phone</label> <input type="text"
-																						class="form-control mb-3" id="phone"
-																						placeholder="Write your phone number here"
-																						value="+1 (530) 555-12121">
-																				</div>
-																			</div>
-																			<div class="col-md-6">
-																				<div class="form-group">
-																					<label for="email">Email</label> <input type="text"
-																						class="form-control mb-3" id="email"
-																						placeholder="Write your email here"
-																						value="Jimmy@gmail.com">
-																				</div>
-																			</div>
-																			<div class="col-md-6">
-																				<div class="form-group">
-																					<label for="identicyCard">Identify card</label> <input
-																						type="text" class="form-control mb-3"
-																						id="identifyCard" placeholder="Identify card"
-																						value="066203019816">
-																				</div>
-																			</div>
-																			<div class="col-md-6">
-																				<div class="form-group">
-																					<label for="password">New password</label> <input
-																						type="text" class="form-control mb-3"
-																						id="password"
-																						placeholder="Enter your new password"
-																						value="Abc123@#">
-																				</div>
-																			</div>
+																<!-- Địa chỉ -->
+																<div class="col-md-6">
+																	<div class="form-group">
+																		<label for="address">Địa chỉ</label> <input
+																			type="text" class="form-control mb-3" id="address"
+																			placeholder="Address"
+																			th:value="${userLogin != null ? userLogin.address : 'No address available'}">
+																	</div>
+																</div>
 
+																<!-- Số điện thoại -->
+																<div class="col-md-6">
+																	<div class="form-group">
+																		<label for="phone">Số điện thoại</label> <input
+																			type="text" class="form-control mb-3" id="phone"
+																			placeholder="Write your phone number here"
+																			th:value="${userLogin != null ? userLogin.phoneNumber : 'No phone number available'}">
+																	</div>
+																</div>
 
-																			<div class="col-md-12 mt-1">
-																				<div class="form-group text-end">
-																					<button class="btn btn-secondary">Save</button>
-																				</div>
-																			</div>
+																<!-- Email (Readonly) -->
+																<div class="col-md-6">
+																	<div class="form-group">
+																		<label for="email">Email</label> <input type="text"
+																			class="form-control mb-3" id="email"
+																			placeholder="Write your email here"
+																			th:value="${userLogin != null ? userLogin.email : 'No email available'}"
+																			style="color: green" readonly>
+																	</div>
+																</div>
 
-																		</div>
+																<!-- Căn cước công dân -->
+																<div class="col-md-6">
+																	<div class="form-group">
+																		<label for="identicyCard">Căn cước công dân</label> <input
+																			type="text" class="form-control mb-3"
+																			id="identifyCard" placeholder="Identify card"
+																			th:value="${userLogin != null ? userLogin.identifyCard : 'No identify card available'}">
+																	</div>
+																</div>
 
+																<!-- Password mới -->
+																<div class="col-md-6">
+																	<div class="form-group">
+																		<label for="password">Password mới</label> <input
+																			type="password" class="form-control mb-3"
+																			id="password" placeholder="Enter your new password">
+																	</div>
+																</div>
+
+																<!-- Nút Lưu -->
+																<div class="col-md-12 mt-1">
+																	<div class="form-group text-end">
+																		<button type="submit" class="btn btn-secondary">Lưu</button>
 																	</div>
 																</div>
 															</div>
@@ -160,91 +151,10 @@
 													</div>
 												</div>
 											</form>
+
 										</div>
 
-										<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
-											<form id="social" class="section social">
-												<div class="info">
-													<h5 class="">Social</h5>
-													<div class="row">
 
-														<div class="col-md-11 mx-auto">
-															<div class="row">
-																<div class="col-md-6">
-																	<div class="input-group social-linkedin mb-3">
-																		<span class="input-group-text me-3" id="linkedin"><svg
-																				xmlns="http://www.w3.org/2000/svg" width="24"
-																				height="24" viewBox="0 0 24 24" fill="none"
-																				stroke="currentColor" stroke-width="2"
-																				stroke-linecap="round" stroke-linejoin="round"
-																				class="feather feather-linkedin">
-																				<path
-																					d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-																				<rect x="2" y="9" width="4" height="12"></rect>
-																				<circle cx="4" cy="4" r="2"></circle></svg></span> <input
-																			type="text" class="form-control"
-																			placeholder="Linkedin Username" aria-label="Username"
-																			aria-describedby="linkedin" value="jimmy_turner">
-																	</div>
-																</div>
-
-																<div class="col-md-6">
-																	<div class="input-group social-tweet mb-3">
-																		<span class="input-group-text me-3" id="tweet"><svg
-																				xmlns="http://www.w3.org/2000/svg" width="24"
-																				height="24" viewBox="0 0 24 24" fill="none"
-																				stroke="currentColor" stroke-width="2"
-																				stroke-linecap="round" stroke-linejoin="round"
-																				class="feather feather-twitter">
-																				<path
-																					d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></span>
-																		<input type="text" class="form-control"
-																			placeholder="Twitter Username" aria-label="Username"
-																			aria-describedby="tweet" value="@jTurner">
-																	</div>
-																</div>
-															</div>
-														</div>
-
-														<div class="col-md-11 mx-auto">
-															<div class="row">
-																<div class="col-md-6">
-																	<div class="input-group social-fb mb-3">
-																		<span class="input-group-text me-3" id="fb"><svg
-																				xmlns="http://www.w3.org/2000/svg" width="24"
-																				height="24" viewBox="0 0 24 24" fill="none"
-																				stroke="currentColor" stroke-width="2"
-																				stroke-linecap="round" stroke-linejoin="round"
-																				class="feather feather-facebook">
-																				<path
-																					d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></span>
-																		<input type="text" class="form-control"
-																			placeholder="Facebook Username" aria-label="Username"
-																			aria-describedby="fb" value="Jimmy Turner">
-																	</div>
-																</div>
-
-																<div class="col-md-6">
-																	<div class="input-group social-github mb-3">
-																		<span class="input-group-text me-3" id="github"><svg
-																				xmlns="http://www.w3.org/2000/svg" width="24"
-																				height="24" viewBox="0 0 24 24" fill="none"
-																				stroke="currentColor" stroke-width="2"
-																				stroke-linecap="round" stroke-linejoin="round"
-																				class="feather feather-github">
-																				<path
-																					d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></span>
-																		<input type="text" class="form-control"
-																			placeholder="Github Username" aria-label="Username"
-																			aria-describedby="github" value="@TurnerJimmy">
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</form>
-										</div>
 									</div>
 								</div>
 
@@ -261,18 +171,19 @@
 			<!--  END CONTENT AREA  -->
 
 		</div>
-</div>
+	</div>
 
-		<!--  BEGIN CUSTOM SCRIPTS FILE  -->
-		<script src="/plugins/filepond/filepond.min.js"></script>
-		<script src="/plugins/filepond/FilePondPluginFileValidateType.min.js"></script>
-		<script src="/plugins/filepond/FilePondPluginImageExifOrientation.min.js"></script>
-		<script src="/plugins/filepond/FilePondPluginImagePreview.min.js"></script>
-		<script src="/plugins/filepond/FilePondPluginImageCrop.min.js"></script>
-		<script src="/plugins/filepond/FilePondPluginImageResize.min.js"></script>
-		<script src="/plugins/filepond/FilePondPluginImageTransform.min.js"></script>
-		<script src="/plugins/filepond/filepondPluginFileValidateSize.min.js"></script>
-		<script src="/js/assets/users/account-settings.js"></script>
-		<!--  END CUSTOM SCRIPTS FILE  -->
+	<!--  BEGIN CUSTOM SCRIPTS FILE  -->
+	<script src="/plugins/filepond/filepond.min.js"></script>
+	<script src="/plugins/filepond/FilePondPluginFileValidateType.min.js"></script>
+	<script
+		src="/plugins/filepond/FilePondPluginImageExifOrientation.min.js"></script>
+	<script src="/plugins/filepond/FilePondPluginImagePreview.min.js"></script>
+	<script src="/plugins/filepond/FilePondPluginImageCrop.min.js"></script>
+	<script src="/plugins/filepond/FilePondPluginImageResize.min.js"></script>
+	<script src="/plugins/filepond/FilePondPluginImageTransform.min.js"></script>
+	<script src="/plugins/filepond/filepondPluginFileValidateSize.min.js"></script>
+	<script src="/js/assets/users/account-settings.js"></script>
+	<!--  END CUSTOM SCRIPTS FILE  -->
 </body>
 </html>

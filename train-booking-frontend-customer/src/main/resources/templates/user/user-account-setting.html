@@ -18,12 +18,11 @@
 			</nav>
 		</div>
 		<!-- /BREADCRUMB -->
-		
+
 		<div class="layout-top-spacing col-12">
-		<a th:href="@{/user/index}" class="btn">
+		<a th:href="@{/user/profile}" class="btn">
 		    Trở lại
 		</a>
-				
 		</div>
 		
 		<div class="row layout-top-spacing">
@@ -32,22 +31,22 @@
 		                <div class="widget-header">
 		                    <div class="row">
 		                        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-		                            <h4>Chỉnh sửa</h4>
+		                            <h4>Chỉnh sửa người dùng</h4>
 		                        </div>
 		                    </div>
 		                </div>
 		            <div class="widget-content widget-content-area">
 		               <div class="col-12">
-						    <form th:action="@{/user/update/{id}(id=${user.id})}" th:object="${user}" id="general-settings" method="POST">
+						    <form th:action="@{/user/updateProfile/{id}(id=${user.id})}" th:object="${user}" id="general-settings" method="POST">
 							    <div class="row">
 							        <div class="col-md-6">
 							            <div class="form-group mb-4">
-							                <label for="username">Tên người dùng <strong class="text-danger">*</strong></label> 
+							                <label for="fullName">Họ và tên <strong class="text-danger">*</strong></label> 
 							                <input type="text" 
 							                    th:field="*{fullName}"
-							                    id="username"
+							                    id="fullName"
 							                    class="form-control" 
-							                    placeholder="Tên người dùng"
+							                    placeholder="Họ và tên"
 							                    th:classappend="${#fields.hasErrors('fullName') ? 'is-invalid' : ''}"
 							                >
 							                <span th:if="${#fields.hasErrors('fullName')}" class="text-danger" th:errors="*{fullName}"></span>
@@ -67,17 +66,10 @@
 							            </div>
 							        </div>
 							    </div>
-							     <input type="hidden" 
-				                    th:field="*{password}"
-				                    id="password"
-				                    class="form-control" 
-				                    placeholder="Mật khẩu"
-				                    th:classappend="${#fields.hasErrors('password') ? 'is-invalid' : ''}"
-				                >
 							    <div class="row">
 							        <div class="col-md-6">
 							            <div class="form-group mb-4">
-							               <label for="identifyCard">CMND/CCCD <strong class="text-danger">*</strong></label> 
+							               <label for="identifyCard">CCCD/CMND <strong class="text-danger">*</strong></label> 
 							                <input type="text" 
 							                    th:field="*{identifyCard}"
 							                    id="identifyCard"
@@ -91,7 +83,7 @@
 							        <div class="col-md-6">
 							            <div class="form-group mb-4">
 							                <label for="phoneNumber">Số điện thoại <strong class="text-danger">*</strong></label> 
-							                <input type="number" 
+							                <input type="text" 
 							                    th:field="*{phoneNumber}"
 							                    id="phoneNumber"
 							                    class="form-control" 
@@ -102,18 +94,6 @@
 							            </div>
 							        </div>
 							    </div>
-							    
-							     <div class="form-group mb-4">
-					               <label for="status">Trạng thái <strong
-									class="text-danger">*</strong></label> <select th:field="*{role}"
-									id="status" class="form-control"
-									th:classappend="${#fields.hasErrors('role') ? 'is-invalid' : ''}">
-									<option value="">Chọn trạng thái</option>
-									<option th:each="role : ${userRoles}"
-										th:value="${role}" th:text="${role.displayName}"></option>
-								</select> <span th:if="${#fields.hasErrors('role')}"
-									class="text-danger" th:errors="*{role}"></span>
-					            </div>
 							    
 							    <div class="form-group mb-4">
 							        <label for="address">Địa chỉ <strong class="text-danger">*</strong></label> 
@@ -129,7 +109,6 @@
 							    
 							    <button type="submit" class="btn btn-primary">Hoàn tất</button>						
 							</form>
-
 						</div>
 		            </div>
 		        </div>
@@ -139,9 +118,8 @@
 	
 	<!--  BEGIN CUSTOM SCRIPTS FILE  -->
 	 <div layout:fragment="footerFiles">
-		
+		<!-- Footer files if needed -->
 	</div>
 	 <!--  END CUSTOM SCRIPTS FILE  -->
 </body>
-
 </html>

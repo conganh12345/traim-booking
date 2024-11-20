@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.backend.train_booking_backend.models.AppUser;
 import com.backend.train_booking_backend.models.Train;
+import com.backend.train_booking_backend.models.enums.ERole;
 import com.backend.train_booking_backend.services.IUserService;
 
 import jakarta.validation.ValidationException;
@@ -32,6 +34,9 @@ import jakarta.validation.ValidationException;
 public class UserController {
 	@Autowired
 	private IUserService userService;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	// Exception to return error json
 	@ExceptionHandler(ValidationException.class)
@@ -75,18 +80,40 @@ public class UserController {
 	@PostMapping("/admin")
 	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<AppUser> addUser(@RequestBody AppUser user) {
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		AppUser createdUser = userService.addUser(user);
 		return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/admin/{id}")
 	@PreAuthorize("hasAuthority('ADMIN')")
-	public ResponseEntity<AppUser> updateUser(@RequestBody AppUser user, @PathVariable Integer id) {
+	public ResponseEntity<AppUser> updateAdmin(@RequestBody AppUser user, @PathVariable Integer id) {
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		AppUser updatedUser = userService.updateUser(id, user);
 		if (updatedUser == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+	}
+	
+	@PutMapping("/user/{id}")
+	public ResponseEntity<AppUser> updateUser(@RequestBody AppUser user, @PathVariable Integer id) {
+	    if (user.getPassword() != null && !user.getPassword().isEmpty()) {
+	        user.setPassword(passwordEncoder.encode(user.getPassword()));
+	    } else {
+	        AppUser existingUser = userService.getUser(id);
+	        if (existingUser != null) {
+	            user.setPassword(existingUser.getPassword());  
+	        }
+	    }
+	    user.setRole(ERole.USER);
+	    
+	    AppUser updatedUser = userService.updateUser(id, user);
+	    if (updatedUser == null) {
+	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	    }
+	    
+	    return new ResponseEntity<>(updatedUser, HttpStatus.OK);
 	}
 
 	// @GetMapping("/{username}")
