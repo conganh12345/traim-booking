@@ -49,18 +49,21 @@
                     <div id="filterBody" class="row align-items-center">
                         <div class="col-md-4">
                         <div class="form-group mb-4">
+                        	<label for="trainId">Mã đặt vé</label>
                             <input type="text" id="code-filter" class="form-control" placeholder="Tìm theo mã đặt vé">
                            </div>
                         </div>
                         <div class="col-md-4">
                         <div class="form-group mb-4">
+                        	<label for="trainId">Tên chuyến đi</label>
                             <input type="text" id="name-filter" class="form-control" placeholder="Tìm theo tên chuyến đi">
                         </div>
                         </div>
                         <div class="col-md-4">
                         <div class="form-group mb-4">
+                        	<label for="trainId">Trạng thái</label>
                             <select id="status-filter" class="form-control">
-                                <option value="">Trạng thái</option>
+                                <option value="">Chọn</option>
                                 <option value="Hoàn thành">Hoàn thành</option>
                                 <option value="Thất bại">Thất bại</option>
                                 <option value="Đã hủy">Đã hủy</option>
@@ -176,8 +179,7 @@
 						"stripeClasses" : [],
 						"lengthMenu" : [ 7, 10, 20, 50 ],
 						"pageLength" : 10,
-						"ordering" : false,
-						"searching": false
+						"ordering" : false
 					});
 		</script>
 		
