@@ -3,7 +3,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/base-layout.html}">
 <head>
-<title>Danh sách lịch trình</title>
+<title>Danh sách hành trình</title>
 
 <div layout:fragment="headerFiles">
 	<link rel="stylesheet" type="text/css"
@@ -29,9 +29,9 @@
 		<div class="page-meta">
 			<nav class="breadcrumb-style-one" aria-label="breadcrumb">
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="#">Lịch trình</a></li>
+					<li class="breadcrumb-item"><a href="#">hành trình</a></li>
 					<li class="breadcrumb-item active" aria-current="page">Quản lý
-						lịch trình</li>
+						hành trình</li>
 				</ol>
 			</nav>
 		</div>
@@ -43,7 +43,7 @@
 					<div class="widget-header">
 						<div class="row">
 							<div class="col-xl-12 col-md-12 col-sm-12 col-12">
-								<h4>Quản lý lịch trình</h4>
+								<h4>Quản lý hành trình</h4>
 							</div>
 						</div>
 					</div>
@@ -58,7 +58,7 @@
 								<tr>
 									<th style="width: 5%">STT</th>
 									<th>Tên tàu</th>
-									<th>Tên lịch trình</th>
+									<th>Tên hành trình</th>
 									<th>Nơi đi</th>
 									<th>Nơi đến</th>
 									<th class="no-content" style="width: 5%">Thao tác</th>
@@ -67,12 +67,13 @@
 							<tbody>
 								<tr th:each="route, stat : ${routes}">
 									<td th:text="${stat.count}"></td>
-									<td
-										th:text="${route.train != null ? route.train.trainName : ''}"></td>
+									<td><span class="badge badge-light-dark"
+										th:text="${route.train != null ? route.train.trainName : ''}"></span>
+									</td>
 									<td th:text="${route.routeName}"></td>
 									<td th:text="${route.departureLocation}"></td>
-									<td th:text="${route.destinationLocation}" class="text-truncate"
-										style="max-width: 250px;"></td>
+									<td th:text="${route.destinationLocation}"
+										class="text-truncate" style="max-width: 250px;"></td>
 									<td
 										class="table-controls d-flex justify-content-center align-items-center pt-2">
 										<li><a th:href="@{/route/edit/{id}(id=${route.id})}"
@@ -163,7 +164,7 @@
 						success : function(response) {
 
 							Snackbar.show({
-								text : 'Xóa lịch trình thành công',
+								text : 'Xóa hành trình thành công',
 								textColor : '#ddf5f0',
 								backgroundColor : '#00ab55',
 								actionText : 'Bỏ qua',
@@ -176,7 +177,7 @@
 						},
 						error : function() {
 							Snackbar.show({
-								text : 'Xóa lịch trình thất bại',
+								text : 'Xóa hành trình thất bại',
 								textColor : '#fbeced',
 								backgroundColor : '#e7515a',
 								actionText : 'Bỏ qua',

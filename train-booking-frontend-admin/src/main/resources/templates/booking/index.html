@@ -37,6 +37,48 @@
 			</nav>
 		</div>
 		<!-- /BREADCRUMB -->
+		
+		    <div class="row layout-top-spacing">
+        <div class="col-xl-12 col-lg-12 col-sm-12">
+            <div class="statbox widget box box-shadow">
+                <div class="widget-header d-flex align-items-center ">
+                    <h4 class="m-0">Bộ lọc</h4>
+                </div>
+                <div class="widget-content widget-content-area">
+                <div class="col-lg-12 p-4">
+                    <div id="filterBody" class="row align-items-center">
+                        <div class="col-md-4">
+                        <div class="form-group mb-4">
+                            <input type="text" id="code-filter" class="form-control" placeholder="Tìm theo mã đặt vé">
+                           </div>
+                        </div>
+                        <div class="col-md-4">
+                        <div class="form-group mb-4">
+                            <input type="text" id="name-filter" class="form-control" placeholder="Tìm theo tên chuyến đi">
+                        </div>
+                        </div>
+                        <div class="col-md-4">
+                        <div class="form-group mb-4">
+                            <select id="status-filter" class="form-control">
+                                <option value="">Trạng thái</option>
+                                <option value="Hoàn thành">Hoàn thành</option>
+                                <option value="Thất bại">Thất bại</option>
+                                <option value="Đã hủy">Đã hủy</option>
+                                <option value="Đang chờ">Đang chờ</option>
+                            </select>
+                        </div>
+                        </div>
+              
+                         <div class="filter-header d-flex justify-content-end align-items-center">
+				            <button type="button" class="btn btn-secondary me-2" id="filter-btn">Lọc</button>
+				            <button type="button" class="btn btn-light-secondary" id="remove-filter-btn">Xoá bộ lọc</button>
+				        </div>
+                    </div>
+                </div>
+                </div>
+        </div>
+    </div>
+</div>
 
 		<div class="row layout-top-spacing">
 			<div class="col-xl-12 col-lg-12 col-sm-12">
@@ -114,28 +156,55 @@
 			src="/plugins/table/datatable/extensions/fixed-columns/fixed-columns.datatables.min.js"></script>
 		<script>
 			$('#booking-table')
-					.DataTable(
-							{
-								"dom" : "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>"
-										+ "<'table-responsive'tr>"
-										+ "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
-								"oLanguage" : {
-									"oPaginate" : {
-										"sPrevious" : '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
-										"sNext" : '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>'
-									},
-									"sEmptyTable" : "Chưa có dữ liệu",
-									"sInfo" : "Đang hiển thị trang _PAGE_ của  _PAGES_",
-									"sSearch" : '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
-									"sSearchPlaceholder" : "Tìm kiếm...",
-									"sZeroRecords" : "Không có bản ghi nào trùng khớp",
-									"sLengthMenu" : "Kết quả :  _MENU_",
-								},
-								"stripeClasses" : [],
-								"lengthMenu" : [ 7, 10, 20, 50 ],
-								"pageLength" : 10,
-								"ordering" : false
-							});
+				.DataTable(
+					{
+						"dom" : "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>"
+								+ "<'table-responsive'tr>"
+								+ "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
+						"oLanguage" : {
+							"oPaginate" : {
+								"sPrevious" : '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
+								"sNext" : '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>'
+							},
+							"sEmptyTable" : "Chưa có dữ liệu",
+							"sInfo" : "Đang hiển thị trang _PAGE_ của  _PAGES_",
+							"sSearch" : '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+							"sSearchPlaceholder" : "Tìm kiếm...",
+							"sZeroRecords" : "Không có bản ghi nào trùng khớp",
+							"sLengthMenu" : "Kết quả :  _MENU_",
+						},
+						"stripeClasses" : [],
+						"lengthMenu" : [ 7, 10, 20, 50 ],
+						"pageLength" : 10,
+						"ordering" : false,
+						"searching": false
+					});
+		</script>
+		
+		<script>
+		$('#filter-btn').on('click', function () {
+		    const code = $('#code-filter').val(); 
+		    const name = $('#name-filter').val(); 
+		    const status = $('#status-filter').val(); 
+
+		    const table = $('#booking-table').DataTable();
+
+		    table.column(1).search(code); 
+		    table.column(3).search(name); 
+		    table.column(6).search(status);
+
+		    table.draw();
+		});
+		
+		 $('#remove-filter-btn').on('click', function () {
+		     $('#code-filter').val('');
+		     $('#name-filter').val('');
+		     $('#status-filter').val('');
+
+		     table.columns().search('').draw();
+		     table.rows().show(); 
+		 });
+
 		</script>
 	</div>
 	<!--  END CUSTOM SCRIPTS FILE  -->
