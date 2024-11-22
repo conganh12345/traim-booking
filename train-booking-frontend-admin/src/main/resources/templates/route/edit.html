@@ -91,9 +91,14 @@
 										<div class="form-group mb-4">
 											<label for="departureLocation">Nơi đi<strong
 												class="text-danger">*</strong></label>
-											<textarea th:field="*{departureLocation}" id="departureLocation"
-												class="form-control" placeholder="Nơi đi"
-												th:classappend="${#fields.hasErrors('departureLocation') ? 'is-invalid' : ''}"></textarea>
+				
+											<select th:field="*{departureLocation}"
+												id="departureLocation" class="form-control"
+												th:classappend="${#fields.hasErrors('departureLocation') ? 'is-invalid' : ''}">
+												<option value="">Chọn nơi di</option>
+												<option th:each="province : ${provinces}"
+													th:value="${province}" th:text="${province.displayName}"></option>
+											</select>
 											<span th:if="${#fields.hasErrors('departureLocation')}"
 												class="text-danger" th:errors="*{departureLocation}"></span>
 										</div>
@@ -105,14 +110,18 @@
 										<div class="form-group mb-4">
 											<label for="destinationLocation">Nơi đến<strong
 												class="text-danger">*</strong></label>
-											<textarea th:field="*{destinationLocation}" id="destinationLocation"
-												class="form-control" placeholder="Nơi đến"
-												th:classappend="${#fields.hasErrors('destinationLocation') ? 'is-invalid' : ''}"></textarea>
-											<span th:if="${#fields.hasErrors('departureLocation')}"
+											<select th:field="*{destinationLocation}"
+												id="destinationLocation" class="form-control"
+												th:classappend="${#fields.hasErrors('destinationLocation') ? 'is-invalid' : ''}">
+												<option value="">Chọn nơi đến</option>
+												<option th:each="province : ${provinces}"
+													th:value="${province}" th:text="${province.displayName}"></option>
+											</select>
+											<span th:if="${#fields.hasErrors('destinationLocation')}"
 												class="text-danger" th:errors="*{destinationLocation}"></span>
 										</div>
 									</div>
-								</div>								
+								</div>							
 
 								<button type="submit" class="btn btn-primary">Hoàn tất</button>
 							</form>
@@ -129,6 +138,14 @@
 		<script src="/plugins/tomSelect/custom-tom-select.js"></script>
 
 		<script type="text/javascript">
+			new TomSelect("#departureLocation", {
+				create : true,
+				sortField : {
+					field : "text",
+					direction : "asc"
+				}
+			});
+			
 			new TomSelect("#trainId", {
 				create : true,
 				sortField : {
@@ -137,7 +154,7 @@
 				}
 			});
 
-			new TomSelect("#status", {
+			new TomSelect("#destinationLocation", {
 				create : true,
 				sortField : {
 					field : "text",

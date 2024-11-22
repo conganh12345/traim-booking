@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Route;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Schedule;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Seat;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Train;
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.RouteService;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.ScheduleService;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.TrainService;
 
@@ -29,7 +31,7 @@ public class ScheduleController {
 	@Autowired
 	private ScheduleService scheduleService;
 	@Autowired
-	private TrainService trainService;
+	private RouteService routeService;
 
 	@GetMapping("/index")
 	public String index(Model model) {
@@ -45,9 +47,11 @@ public class ScheduleController {
 
 	@GetMapping("/create")
 	public String create(Model model) {
-		List<Train> trains = trainService.getAllTrains();
+		List<Route> routes = routeService.getAllRoutes();
 
-		model.addAttribute("page", "schedule").addAttribute("trains", trains).addAttribute("schedule", new Schedule());
+		model.addAttribute("page", "schedule")
+			.addAttribute("routes", routes)
+			.addAttribute("schedule", new Schedule());
 
 		return "schedule/create";
 	}
@@ -56,23 +60,23 @@ public class ScheduleController {
 	public String create(@Valid @ModelAttribute("schedule") Schedule schedule, BindingResult result, Model model,
 			RedirectAttributes redirectAttributes) {
 		if (result.hasErrors()) {
-			List<Train> trains = trainService.getAllTrains();
+			List<Route> routes = routeService.getAllRoutes();
 			model.addAttribute("page", "schedule")
-				 .addAttribute("trains", trains);
+			 .addAttribute("routes", routes);
 
 			return "schedule/create";
 		}
 
 		if (schedule.getDepartureDate().isAfter(schedule.getEstimateArrivalDate())) {
 			result.rejectValue("estimateArrivalDate", "error.estimateArrivalDate", "Ngày đến phải sau ngày khởi hành");
-			List<Train> trains = trainService.getAllTrains();
+			List<Route> routes = routeService.getAllRoutes();
 			model.addAttribute("page", "schedule")
-				 .addAttribute("trains", trains);
+				 .addAttribute("routes", routes);
 			return "schedule/create";
 		}
 
-		Train train = trainService.getTrainById(schedule.getTrainId());
-		schedule.setTrain(train);
+		Route route = routeService.getRouteById(schedule.getRouteId());
+		schedule.setRoute(route);
 
 		if (scheduleService.addSchedule(schedule)) {
 			redirectAttributes.addFlashAttribute("success", "Thêm mới toa thành công!");
@@ -86,9 +90,9 @@ public class ScheduleController {
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
 		Schedule schedule = scheduleService.getScheduleById(id);
-		List<Train> trains = trainService.getAllTrains();
+		List<Route> routes = routeService.getAllRoutes();
 
-		model.addAttribute("page", "schedule").addAttribute("schedule", schedule).addAttribute("trains", trains);
+		model.addAttribute("page", "schedule").addAttribute("schedule", schedule).addAttribute("routes", routes);
 
 		return "schedule/edit";
 	}
@@ -103,9 +107,8 @@ public class ScheduleController {
 			return "schedule/edit";
 		}
 
-		Train train = trainService.getTrainById(schedule.getTrainId());
-
-		schedule.setTrain(train);
+		Route route = routeService.getRouteById(schedule.getRouteId());
+		schedule.setRoute(route);
 		if (scheduleService.updateSchedule(schedule)) {
 			redirectAttributes.addFlashAttribute("success", "Cập nhật toa thành công!");
 		} else {

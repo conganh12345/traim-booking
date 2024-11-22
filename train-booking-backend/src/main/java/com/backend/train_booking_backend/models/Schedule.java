@@ -31,20 +31,14 @@ public class Schedule {
 	private String scheduleName;
 
 	@Column
-	private String departureStation ;
-
-	@Column
-	private String destinationStation;
-
-	@Column
 	private LocalDateTime departureDate;
 
 	@Column
 	private LocalDateTime estimateArrivalDate;
 	
 	@ManyToOne
-    @JoinColumn(name="train_id")
-    private Train train;
+    @JoinColumn(name="route_id")
+    private Route route;
 	
 	@OneToMany(mappedBy = "schedule")
 	@JsonIgnore
@@ -66,22 +60,6 @@ public class Schedule {
 		this.scheduleName = scheduleName;
 	}
 
-	public String getDepartureStation() {
-		return departureStation;
-	}
-
-	public void setDepartureStation(String departureStation) {
-		this.departureStation = departureStation;
-	}
-
-	public String getDestinationStation() {
-		return destinationStation;
-	}
-
-	public void setDestinationStation(String destinationStation) {
-		this.destinationStation = destinationStation;
-	}
-
 	public LocalDateTime getDepartureDate() {
 		return departureDate;
 	}
@@ -97,13 +75,13 @@ public class Schedule {
 	public void setEstimateArrivalDate(LocalDateTime estimateArrivalDate) {
 		this.estimateArrivalDate = estimateArrivalDate;
 	}
-
-	public Train getTrain() {
-		return train;
+	
+	public Route getRoute() {
+		return route;
 	}
 
-	public void setTrain(Train train) {
-		this.train = train;
+	public void setRoute(Route route) {
+		this.route = route;
 	}
 
 	public List<Booking> getBooking() {

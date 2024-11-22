@@ -60,15 +60,15 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group mb-4">
-											<label for="trainId">Chọn tàu <strong
-												class="text-danger">*</strong></label> <select th:field="*{trainId}"
-												id="trainId" class="form-control">
+											<label for="routeId">Chọn hành trình <strong
+												class="text-danger">*</strong></label> <select th:field="*{routeId}"
+												id="routeId" class="form-control">
 												<option value="">Chọn</option>
-												<option th:each="train : ${trains}" th:value="${train.id}"
-													th:text="${train.trainName}"
-													th:selected="${train.id == schedule.trainId}"></option>
-											</select> <span th:if="${#fields.hasErrors('trainId')}"
-												class="text-danger" th:errors="*{trainId}"></span>
+												<option th:each="route : ${routes}" th:value="${route.id}"
+													th:text="${route.routeName}"
+													th:selected="${route.id == schedule.routeId}"></option>
+											</select> <span th:if="${#fields.hasErrors('routeId')}"
+												class="text-danger" th:errors="*{routeId}"></span>
 
 										</div>
 									</div>
@@ -135,7 +135,7 @@
 		<script src="/plugins/tomSelect/custom-tom-select.js"></script>
 
 		<script type="text/javascript">
-			new TomSelect("#trainId", {
+			new TomSelect("#routeId", {
 				create : true,
 				sortField : {
 					field : "text",

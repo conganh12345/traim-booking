@@ -57,7 +57,7 @@
 							<thead>
 								<tr>
 									<th>STT</th>
-									<th>Chuyến đi</th>
+									<th>Hành trình</th>
 									<th>Ngày khởi hành</th>
 									<th>Ngày đến dự kiến</th>
 								
@@ -71,13 +71,13 @@
 									
 									<td style="width: 25%">
 									    <p class="text-start me-1">Tên tàu: 
-									    	<span class="text-primary" th:text="${schedule.train != null ? schedule.train.trainName : ''}"></span>
+									    	<span class="text-primary" th:text="${schedule.route.train.trainName}"></span>
 									    </p>
 									    <p class="text-start me-1">Nơi đi: 
-									    	<span class="text-primary"  th:text="${schedule.departureStation}"></span>
+									    	<span class="text-primary"  th:text="${schedule.route.departureLocation.displayName}"></span>
 									    </p>
 									    <p class="text-start me-1">Nơi đến: 
-									    	<span class="text-primary" th:text="${schedule.destinationStation}"></span>
+									    	<span class="text-primary" th:text="${schedule.route.destinationLocation.displayName}"></span>
 									    </p>
 					
 									</td>

@@ -3,10 +3,14 @@ package com.backend.train_booking_backend.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.backend.train_booking_backend.models.enums.CoachStatus;
+import com.backend.train_booking_backend.models.enums.Province;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,15 +29,19 @@ public class Route {
 	@Column
 	private String routeName;
 
-	@Column
-	private String departureLocation;
-
-	@Column
-	private String destinationLocation;
+	@Enumerated(EnumType.STRING)
+	private Province departureLocation;
+	
+	@Enumerated(EnumType.STRING)
+	private Province destinationLocation;
 
 	@OneToMany(mappedBy = "route")
 	@JsonIgnore
 	private List<Station> station = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "route")
+	@JsonIgnore
+	private List<Schedule> schedule = new ArrayList<>();
 
 	@ManyToOne
 	@JoinColumn(name = "train_id")
@@ -47,19 +55,19 @@ public class Route {
 		this.id = id;
 	}
 
-	public String getDepartureLocation() {
+	public Province getDepartureLocation() {
 		return departureLocation;
 	}
 
-	public void setDepartureLocation(String departureLocation) {
+	public void setDepartureLocation(Province departureLocation) {
 		this.departureLocation = departureLocation;
 	}
 
-	public String getDestinationLocation() {
+	public Province getDestinationLocation() {
 		return destinationLocation;
 	}
 
-	public void setDestinationLocation(String destinationLocation) {
+	public void setDestinationLocation(Province destinationLocation) {
 		this.destinationLocation = destinationLocation;
 	}
 
@@ -69,6 +77,14 @@ public class Route {
 
 	public void setTrain(Train train) {
 		this.train = train;
+	}
+
+	public List<Schedule> getSchedule() {
+		return schedule;
+	}
+
+	public void setSchedule(List<Schedule> schedule) {
+		this.schedule = schedule;
 	}
 
 	public List<Station> getStation() {

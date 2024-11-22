@@ -7,5 +7,4 @@ import com.backend.train_booking_backend.models.Schedule;
 
 @Repository
 public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
-	int countByTrainId(Integer trainId);
 }

@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Train;
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.enums.CoachStatus;
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.enums.Province;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Route;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Schedule;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.TrainService;
@@ -50,7 +52,8 @@ public class RouteController {
 	    
 	    model.addAttribute("page", "route")
 	         .addAttribute("trains", trains)
-	         .addAttribute("route", new Route());
+	         .addAttribute("route", new Route())
+	         .addAttribute("provinces", Province.values());
 
 	    return "route/create";
 	}
@@ -80,7 +83,8 @@ public class RouteController {
 
 	    model.addAttribute("page", "route")
 	         .addAttribute("route", route)
-	         .addAttribute("trains", trains);
+	         .addAttribute("trains", trains)
+	         .addAttribute("provinces", Province.values());
 
 	    return "route/edit";
 	}

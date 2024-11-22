@@ -71,8 +71,8 @@
 										th:text="${route.train != null ? route.train.trainName : ''}"></span>
 									</td>
 									<td th:text="${route.routeName}"></td>
-									<td th:text="${route.departureLocation}"></td>
-									<td th:text="${route.destinationLocation}"
+									<td th:text="${route.departureLocation.displayName}"></td>
+									<td th:text="${route.destinationLocation.displayName}"
 										class="text-truncate" style="max-width: 250px;"></td>
 									<td
 										class="table-controls d-flex justify-content-center align-items-center pt-2">

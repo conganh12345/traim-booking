@@ -44,10 +44,6 @@ public class Train {
 
 	@OneToMany(mappedBy = "train")
 	@JsonIgnore
-	private List<Schedule> schedule = new ArrayList<>();
-
-	@OneToMany(mappedBy = "train")
-	@JsonIgnore
 	private List<Route> route = new ArrayList<>();
 
 	public Integer getId() {
@@ -90,13 +86,6 @@ public class Train {
 		this.coach = coach;
 	}
 
-	public List<Schedule> getSchedule() {
-		return schedule;
-	}
-
-	public void setSchedule(List<Schedule> schedule) {
-		this.schedule = schedule;
-	}
 
 	public List<Route> getRoute() {
 		return route;

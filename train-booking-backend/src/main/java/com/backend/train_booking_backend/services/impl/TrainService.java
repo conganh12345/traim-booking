@@ -63,13 +63,8 @@ public class TrainService implements ITrainService {
 	public int deleteTrain(Integer id) {
 	    try {
 	        if (trainRepo.existsById(id)) {
-	            int seatCount = scheduleRepo.countByTrainId(id); 
 	            int routeCount = routeRepo.countByTrainId(id);
 
-	            if (seatCount > 0 || routeCount > 0) { 
-	                System.out.println("Không thể xóa tàu với ID " + id + " vì vẫn còn đặt vé hoặc lịch trình liên kết.");
-	                return 0; 
-	            }
 
 	            trainRepo.deleteById(id);
 

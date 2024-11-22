@@ -1,5 +1,7 @@
 package com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models;
 
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.enums.Province;
+
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -11,13 +13,11 @@ public class Route {
     @Size(min = 3, max = 100, message = "Tên lịch trình phải có độ dài từ 3 đến 100 ký tự")
     private String routeName;
 
-	@NotEmpty(message = "Nơi đi không được để trống")
-    @Size(min = 3, max = 100, message = "Nơi đi phải có độ dài từ 3 đến 100 ký tự")
-    private String departureLocation;
+	@NotNull(message = "Nơi đi không được để trống")
+    private Province departureLocation;
     
-	@NotEmpty(message = "Nơi đến không được để trống")
-    @Size(min = 3, max = 100, message = "Nơi đến phải có độ dài từ 3 đến 100 ký tự")
-    private String destinationLocation;
+	@NotNull(message = "Nơi đến không được để trống")
+    private Province destinationLocation;
     
     @NotNull(message = "Tàu không được để trống")
     private Integer trainId;  	
@@ -35,16 +35,17 @@ public class Route {
 	public void setRouteName(String routeName) {
 		this.routeName = routeName;
 	}
-	public String getDepartureLocation() {
+	
+	public Province getDepartureLocation() {
 		return departureLocation;
 	}
-	public void setDepartureLocation(String departureLocation) {
+	public void setDepartureLocation(Province departureLocation) {
 		this.departureLocation = departureLocation;
 	}
-	public String getDestinationLocation() {
+	public Province getDestinationLocation() {
 		return destinationLocation;
 	}
-	public void setDestinationLocation(String destinationLocation) {
+	public void setDestinationLocation(Province destinationLocation) {
 		this.destinationLocation = destinationLocation;
 	}
 	public Integer getTrainId() {
