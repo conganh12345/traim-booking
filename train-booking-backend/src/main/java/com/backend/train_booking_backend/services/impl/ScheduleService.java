@@ -1,5 +1,7 @@
 package com.backend.train_booking_backend.services.impl;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.backend.train_booking_backend.models.Schedule;
+import com.backend.train_booking_backend.models.enums.Province;
 import com.backend.train_booking_backend.repositories.BookingRepository;
 import com.backend.train_booking_backend.repositories.ScheduleRepository;
 import com.backend.train_booking_backend.services.IScheduleService;
@@ -81,6 +84,16 @@ public class ScheduleService implements IScheduleService {
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	        return 0; 
+	    }
+	}
+
+	@Override
+	public List<Schedule> getSchedules(Province departureLocation, Province destinationLocation, LocalDate departureDate) {
+		try {
+	        return scheduleRepo.findSchedulesByRouteAndDate(departureLocation, destinationLocation, departureDate);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return new ArrayList<>();
 	    }
 	}
 }

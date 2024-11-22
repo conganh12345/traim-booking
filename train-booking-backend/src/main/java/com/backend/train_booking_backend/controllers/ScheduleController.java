@@ -1,11 +1,13 @@
 package com.backend.train_booking_backend.controllers;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,9 +20,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.train_booking_backend.models.Schedule;
+import com.backend.train_booking_backend.models.enums.Province;
 import com.backend.train_booking_backend.services.IScheduleService;
 
 import jakarta.validation.ValidationException;
@@ -89,4 +93,12 @@ public class ScheduleController {
 				return new ResponseEntity<>("Không thể xóa chuyến đi với ID: " + id, HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@GetMapping("/search")
+    public List<Schedule> getSchedules(
+            @RequestParam Province departureLocation,
+            @RequestParam Province destinationLocation,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate departureDate) {
+        return scheduleService.getSchedules(departureLocation, destinationLocation, departureDate);
+    }
 }

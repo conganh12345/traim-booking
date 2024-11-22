@@ -3,7 +3,6 @@ package com.backend.train_booking_backend.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.backend.train_booking_backend.models.enums.CoachStatus;
 import com.backend.train_booking_backend.models.enums.Province;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

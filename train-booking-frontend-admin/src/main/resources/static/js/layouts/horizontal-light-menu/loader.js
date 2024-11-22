@@ -78,7 +78,7 @@ window.addEventListener("load", function(){
             document.body.classList.remove('layout-dark');
             if (ifStarterKit) {
                 if (document.querySelector('.navbar-logo')) {
-                    document.querySelector('.navbar-logo').setAttribute('src', '../../src/assets/img/logo2.svg')
+                    document.querySelector('.navbar-logo').setAttribute('src', '..//images/logo2.svg')
                 }
             }
         }

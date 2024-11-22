@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.LoginRequest;
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.dtos.LoginRequest;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.User;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.UserService;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.IService.IAuthService;

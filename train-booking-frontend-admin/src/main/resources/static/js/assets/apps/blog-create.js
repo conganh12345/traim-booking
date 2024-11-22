@@ -37,7 +37,7 @@ FilePond.registerPlugin(
 // Select the file input and use 
 // create() to turn it into a pond
 window.ecommerce = FilePond.create(document.querySelector('.file-upload-multiple'));
-// ecommerce.addFiles('../src/assets/img/product-1.jpg');
+// ecommerce.addFiles('/images/product-1.jpg');
 
 /**
  * =====================

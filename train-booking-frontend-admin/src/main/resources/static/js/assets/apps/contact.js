@@ -115,7 +115,7 @@ function addContact() {
                           '</label>' +
                       '</div>' +
 
-                      '<img src="../src/assets/img/90x90.jpg">' +
+                      '<img src="/images/90x90.jpg">' +
                       '<div class="user-meta-info">' +
                           '<p class="user-name" data-name='+ $_nameValue +'>'+ $_nameValue +'</p>' +
                           '<p class="user-work" data-occupation='+ $_occupationValue +'>'+ $_occupationValue +'</p>' +

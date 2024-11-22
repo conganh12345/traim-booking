@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.backend.train_booking_backend.dtos.LoginRequest;
 import com.backend.train_booking_backend.models.AppUser;
-import com.backend.train_booking_backend.models.LoginRequest;
 import com.backend.train_booking_backend.models.enums.ERole;
 import com.backend.train_booking_backend.security.JwtUtils;
 import com.backend.train_booking_backend.services.IUserService;

@@ -96,7 +96,7 @@
 											<select th:field="*{departureLocation}"
 												id="departureLocation" class="form-control"
 												th:classappend="${#fields.hasErrors('departureLocation') ? 'is-invalid' : ''}">
-												<option value="">Chọn nơi di</option>
+												<option value="">Chọn nơi đi</option>
 												<option th:each="province : ${provinces}"
 													th:value="${province}" th:text="${province.displayName}"></option>
 											</select>
