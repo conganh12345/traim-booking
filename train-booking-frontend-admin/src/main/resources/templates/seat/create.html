@@ -71,14 +71,14 @@
 									</div>
 									<div class="col-md-6">
 										<div class="form-group mb-4">
-											<label for="seattypeId">Chọn loại ghế <strong
-												class="text-danger">*</strong></label> <select th:field="*{seattypeId}"
-												id="seattypeId" class="form-control">
+											<label for="seatTypeId">Chọn loại ghế <strong
+												class="text-danger">*</strong></label> <select th:field="*{seatTypeId}"
+												id="seatTypeId" class="form-control">
 												<option value="" selected>Chọn</option>
 												<option th:each="seatType : ${seatTypes}" th:value="${seatType.id}"
 													th:text="${seatType.seatName}"></option>
-											</select> <span th:if="${#fields.hasErrors('seattypeId')}"
-												class="text-danger" th:errors="*{seattypeId}"></span>
+											</select> <span th:if="${#fields.hasErrors('seatTypeId')}"
+												class="text-danger" th:errors="*{seatTypeId}"></span>
 										</div>
 									</div>
 
@@ -97,14 +97,13 @@
 		<script src="/plugins/tomSelect/custom-tom-select.js"></script>
 
 		<script type="text/javascript">
-			new TomSelect("#seattypeId", {
+			new TomSelect("#seatTypeId", {
 				create : true,
 				sortField : {
 					field : "text",
 					direction : "asc"
 				}
 			});
-
 		</script>
 	</div>
 	<!--  END CUSTOM SCRIPTS FILE  -->

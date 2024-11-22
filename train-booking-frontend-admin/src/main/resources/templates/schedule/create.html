@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/base-layout.html}">
+<head>
+<title>Chỉnh sửa chuyến đi</title>
+
+<div layout:fragment="headerFiles">
+
+	<link rel="stylesheet" type="text/css"
+		href="/css/plugins/light/tomSelect/custom-tomSelect.css">
+	<link rel="stylesheet" type="text/css"
+		href="/css/plugins/dark/tomSelect/custom-tomSelect.css">
+	<link rel="stylesheet" type="text/css"
+		href="/plugins/tomSelect/tom-select.default.min.css">
+		<style>
+	 .ts-control{
+            padding: 12px;
+       }
+</style>
+</div>
+
+</head>
+<body>
+	<div layout:fragment="content">
+		<!-- BREADCRUMB -->
+		<div class="page-meta">
+			<nav class="breadcrumb-style-one" aria-label="breadcrumb">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="#">Chuyến đi</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a
+						th:href="@{/schedule/index}">Quản lý chuyến đi</a></li>
+					<li class="breadcrumb-item active" aria-current="page">Thêm
+						mới chuyến đi</li>
+				</ol>
+			</nav>
+		</div>
+		<!-- /BREADCRUMB -->
+
+		<div class="layout-top-spacing col-12">
+			<a th:href="@{/schedule/index}" class="btn"> Trở lại </a>
+
+		</div>
+
+		<div class="row layout-top-spacing">
+			<div id="schedule-management" class="col-lg-12 layout-spacing">
+				<div class="statbox widget box box-shadow">
+					<div class="widget-header">
+						<div class="row">
+							<div class="col-xl-12 col-md-12 col-sm-12 col-12">
+								<h4>Thêm mới</h4>
+							</div>
+						</div>
+					</div>
+					<div class="widget-content widget-content-area">
+						<div class="col-12">
+							<form th:action="@{/schedule/create}" th:object="${schedule}"
+								id="general-settings" method="POST">
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group mb-4">
+											<label for="routeId">Chọn hành trình <strong
+												class="text-danger">*</strong></label> <select th:field="*{routeId}"
+												id="routeId" class="form-control">
+												<option value="">Chọn</option>
+												<option th:each="route : ${routes}" th:value="${route.id}"
+													th:text="${route.routeName}"
+													th:selected="${route.id == schedule.routeId}"></option>
+											</select> <span th:if="${#fields.hasErrors('routeId')}"
+												class="text-danger" th:errors="*{routeId}"></span>
+
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group mb-4">
+											<label for="scheduleName">Tên chuyến đi <strong
+												class="text-danger">*</strong></label> <input type="text"
+												th:field="*{scheduleName}" id="scheduleName" class="form-control"
+												placeholder="Tên chuyến đi"
+												th:classappend="${#fields.hasErrors('scheduleName') ? 'is-invalid' : ''}">
+											<span th:if="${#fields.hasErrors('scheduleName')}"
+												class="text-danger" th:errors="*{scheduleName}"></span>
+										</div>
+									</div>
+								</div>
+								
+								<div class="row">
+								    <div class="col-md-6">
+								        <div class="form-group mb-4">
+								            <label for="departureDate">Ngày khởi hành<strong class="text-danger">*</strong></label>
+								            <input th:field="*{departureDate}" id="departureDate"
+								                   class="form-control" placeholder="Chọn ngày và giờ"
+								                   th:classappend="${#fields.hasErrors('departureDate') ? 'is-invalid' : ''}"
+								                   type="datetime-local"
+								                   th:value="${#dates.format(departureDate, 'yyyy-MM-dd HH:mm')}">
+								            <span th:if="${#fields.hasErrors('departureDate')}" class="text-danger"
+								                  th:errors="*{departureDate}"></span>
+								        </div>
+								    </div>
+								</div>
+								
+								<div class="row">
+								    <div class="col-md-6">
+								        <div class="form-group mb-4">
+								            <label for="estimateArrivalDate">Ngày đến dự kiến<strong class="text-danger">*</strong></label>
+								            <input th:field="*{estimateArrivalDate}" id="estimateArrivalDate"
+								                   class="form-control" placeholder="Chọn ngày và giờ"
+								                   th:classappend="${#fields.hasErrors('estimateArrivalDate') ? 'is-invalid' : ''}"
+								                   type="datetime-local"
+								                   th:value="${#dates.format(estimateArrivalDate, 'yyyy-MM-dd HH:mm')}">
+								            <span th:if="${#fields.hasErrors('estimateArrivalDate')}" class="text-danger"
+								                  th:errors="*{estimateArrivalDate}"></span>
+								        </div>
+								    </div>
+								</div>
+
+
+
+								<button type="submit" class="btn btn-primary">Hoàn tất</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--  BEGIN CUSTOM SCRIPTS FILE  -->
+	<div layout:fragment="footerFiles">
+		<script src="/plugins/tomSelect/tom-select.base.js"></script>
+		<script src="/plugins/tomSelect/custom-tom-select.js"></script>
+
+		<script type="text/javascript">
+			new TomSelect("#routeId", {
+				create : true,
+				sortField : {
+					field : "text",
+					direction : "asc"
+				}
+			});
+
+			new TomSelect("#status", {
+				create : true,
+				sortField : {
+					field : "text",
+					direction : "asc"
+				}
+			});
+		</script>
+	</div>
+	<!--  END CUSTOM SCRIPTS FILE  -->
+</body>
+
+</html>

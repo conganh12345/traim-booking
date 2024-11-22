@@ -10,31 +10,33 @@
     <link href="/css/layouts/horizontal-light-menu/light/loader.css" rel="stylesheet" type="text/css" />
     <link href="/css/layouts/horizontal-light-menu/dark/loader.css" rel="stylesheet" type="text/css" />
     
-    <link href="/css/layouts/horizontal-light-menu/light/structure.css" rel="stylesheet" type="text/css" />
-    <link href="/css/layouts/horizontal-light-menu/dark/structure.css" rel="stylesheet" type="text/css" />
-    
     <script src="/js/layouts/horizontal-light-menu/loader.js"></script>
 
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
     
     <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="/plugins/notification/snackbar/snackbar.min.css" rel="stylesheet" type="text/css" />
+    
+      <link href="/css/assets/dark/main.css" rel="stylesheet" type="text/css" />
+    <link href="/css/assets/light/main.css" rel="stylesheet" type="text/css" />
+    
+        <link href="/css/assets/dark/scrollspyNav.css" rel="stylesheet" type="text/css" />
+    <link href="/css/assets/light/scrollspyNav.css" rel="stylesheet" type="text/css" />
+    
+     <link href="/css/layouts/horizontal-light-menu/light/structure.css" rel="stylesheet" type="text/css" />
+    <link href="/css/layouts/horizontal-light-menu/dark/structure.css" rel="stylesheet" type="text/css" />
     
     <link href="/css/layouts/horizontal-light-menu/light/plugins.css" rel="stylesheet" type="text/css" />
     <link href="/css/layouts/horizontal-light-menu/dark/plugins.css" rel="stylesheet" type="text/css" />
-    
-    <link href="/css/assets/dark/main.css" rel="stylesheet" type="text/css" />
-    <link href="/css/assets/light/main.css" rel="stylesheet" type="text/css" />
+   
     
     <link href="/css/assets/dark/components/modal.css" rel="stylesheet" type="text/css" />
     <link href="/css/assets/light/components/modal.css" rel="stylesheet" type="text/css" />
     
     <link href="/plugins/highlight/styles/monokai-sublime.css" rel="stylesheet" type="text/css" />
-    <link href="/plugins/notification/snackbar/snackbar.min.css" rel="stylesheet" type="text/css" />
     <link href="/plugins/waves/waves.min.css" rel="stylesheet" type="text/css" />
-    
-    <link href="/css/assets/dark/scrollspyNav.css" rel="stylesheet" type="text/css" />
-    <link href="/css/assets/light/scrollspyNav.css" rel="stylesheet" type="text/css" />
+   
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
@@ -62,7 +64,7 @@
 	<!--  END LOADER -->
 
 	<!--  BEGIN NAVBAR  -->
-	<div th:replace="layouts/navbar/style-vertical-menu"></div>
+	<div th:replace="~{layouts/navbar/style-vertical-menu}"></div>
 	<!--  END NAVBAR  -->
 
 	<!--  BEGIN MAIN CONTAINER  -->
@@ -72,7 +74,7 @@
 		<div class="search-overlay"></div>
 
 		<!--  BEGIN SIDEBAR  -->
-		 <div th:replace="layouts/menu/vertical-menu"></div>
+		<div th:replace="~{layouts/menu/vertical-menu}"></div>
 		<!--  END SIDEBAR  -->
 
 		<!--  BEGIN CONTENT AREA  -->
@@ -82,7 +84,7 @@
 			</div>
 			
 			<!--  BEGIN FOOTER  -->
-			<div th:replace="layouts/layout-footer"></div>
+			<div th:replace="~{layouts/layout-footer}"></div>
 			<!--  END FOOTER  -->
 		</div>
 		<!--  END CONTENT AREA  -->

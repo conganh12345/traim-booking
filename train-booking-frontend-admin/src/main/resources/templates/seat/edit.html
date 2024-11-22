@@ -3,7 +3,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/base-layout.html}">
 <head>
-<title>Thêm mới</title>
+<title>Chỉnh sửa</title>
 
 <div layout:fragment="headerFiles">
 
@@ -32,7 +32,7 @@
 					<li class="breadcrumb-item" aria-current="page"><a th:href="@{/coach/show/{id}(id=${coachId})}"> Chi
 						tiết toa</a></li>
 					<li class="breadcrumb-item active" aria-current="page">
-						Thêm mới ghế</li>
+						Chỉnh sửa ghế</li>
 				</ol>
 			</nav>
 		</div>
@@ -49,7 +49,7 @@
 					<div class="widget-header">
 						<div class="row">
 							<div class="col-xl-12 col-md-12 col-sm-12 col-12">
-								<h4>Thêm mới</h4>
+								<h4>Chỉnh sửa</h4>
 							</div>
 						</div>
 					</div>
@@ -71,14 +71,15 @@
 									</div>
 									<div class="col-md-6">
 										<div class="form-group mb-4">
-											<label for="seattypeId">Chọn loại ghế <strong
-												class="text-danger">*</strong></label> <select th:field="*{seattypeId}"
-												id="seattypeId" class="form-control">
-												<option value="" selected>Chọn</option>
+											<label for="seatTypeId">Chọn loại ghế <strong
+												class="text-danger">*</strong></label> <select th:field="*{seatTypeId}"
+												id="seatTypeId" class="form-control">
+												<option value="">Chọn</option>
 												<option th:each="seatType : ${seatTypes}" th:value="${seatType.id}"
-													th:text="${seatType.seatName}"></option>
-											</select> <span th:if="${#fields.hasErrors('seattypeId')}"
-												class="text-danger" th:errors="*{seattypeId}"></span>
+													th:text="${seatType.seatName}"
+													th:selected="${seat.seatType.id == seatType.id}"></option>
+											</select> <span th:if="${#fields.hasErrors('seatTypeId')}"
+												class="text-danger" th:errors="*{seatTypeId}"></span>
 										</div>
 									</div>
 
@@ -97,7 +98,7 @@
 		<script src="/plugins/tomSelect/custom-tom-select.js"></script>
 
 		<script type="text/javascript">
-			new TomSelect("#seattypeId", {
+			new TomSelect("#seatTypeId", {
 				create : true,
 				sortField : {
 					field : "text",

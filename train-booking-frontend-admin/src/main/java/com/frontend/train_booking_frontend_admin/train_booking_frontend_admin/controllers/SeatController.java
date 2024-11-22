@@ -70,8 +70,8 @@ public class SeatController {
 	        return "seat/create"; 
 	    }
 		Coach coach = coachService.getCoachById(seat.getCoachId());
-		SeatType seatType = seatTypeService.getSeatTypeById(seat.getSeattypeId());
-		seat.setSeattype(seatType);
+		SeatType seatType = seatTypeService.getSeatTypeById(seat.getSeatTypeId());
+		seat.setSeatType(seatType);
 		seat.setCoach(coach);
 		if (seatService.addSeat(seat)) {
 			redirectAttributes.addFlashAttribute("success", "Thêm mới ghế thành công!");
@@ -103,8 +103,8 @@ public class SeatController {
 	        return "seat/edit"; 
 	    }
 		Coach coach = coachService.getCoachById(seat.getCoachId());
-		SeatType seatType = seatTypeService.getSeatTypeById(seat.getSeattypeId());
-		seat.setSeattype(seatType);
+		SeatType seatType = seatTypeService.getSeatTypeById(seat.getSeatTypeId());
+		seat.setSeatType(seatType);
 		seat.setCoach(coach);
 		if (seatService.updateSeat(seat)) {
 			redirectAttributes.addFlashAttribute("success", "Cập nhật ghế thành công!");

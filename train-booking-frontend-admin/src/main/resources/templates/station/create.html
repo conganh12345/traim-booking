@@ -78,7 +78,7 @@
 											<label for="stationName">Tên ga đi qua<strong
 												class="text-danger">*</strong></label> <input type="text"
 												th:field="*{stationName}" id="stationName" class="form-control"
-												placeholder="Tên toa"
+												placeholder="Tên ga"
 												th:classappend="${#fields.hasErrors('stationName') ? 'is-invalid' : ''}">
 											<span th:if="${#fields.hasErrors('stationName')}"
 												class="text-danger" th:errors="*{stationName}"></span>

@@ -156,15 +156,15 @@
 							<div class="col-xxl-12">
 								<div class="d-flex">
 									<p class="text-start me-1">Tàu :</p>
-									<b><p class="text-dark text-bold" th:text="${booking.schedule != null ? booking.schedule.train.trainName : ''}"></p></b>
+									<b><p class="text-dark text-bold" th:text="${booking.schedule != null ? booking.schedule.route.train.trainName : ''}"></p></b>
 								</div>
 								<div class="d-flex">
 									<p class="text-start me-1">Nơi đi :</p>
-									<b><p class="text-dark text-bold" th:text="${booking.schedule != null ? booking.schedule.departureStation : ''}"></p></b>
+									<b><p class="text-dark text-bold" th:text="${booking.schedule != null ? booking.schedule.route.departureLocation.displayName : ''}"></p></b>
 								</div>
 								<div class="d-flex">
 									<p class="text-start me-1">Nơi đến :</p>
-									<b><p class="text-dark text-bold" th:text="${booking.schedule != null ? booking.schedule.destinationStation : ''}"></p></b>
+									<b><p class="text-dark text-bold" th:text="${booking.schedule != null ? booking.schedule.route.destinationLocation.displayName  : ''}"></p></b>
 								</div>
 								<div class="d-flex">
 									<p class="text-start me-1">Thời gian đi :</p>

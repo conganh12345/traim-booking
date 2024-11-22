@@ -15,8 +15,8 @@ public class Seat {
     private String seatName;
 	
 	@NotNull(message = "Loại ghế không được để trống")
-    private Integer seattypeId;  	
-	private SeatType seattype;
+    private Integer seatTypeId;  	
+	private SeatType seatType;
 	
 	@NotNull(message = "Toa không được để trống")
     private Integer coachId;  	
@@ -31,21 +31,22 @@ public class Seat {
 	public String getSeatName() {
 		return seatName;
 	}
+	public Integer getSeatTypeId() {
+		return seatTypeId;
+	}
+	public void setSeatTypeId(Integer seatTypeId) {
+		this.seatTypeId = seatTypeId;
+	}
+	public SeatType getSeatType() {
+		return seatType;
+	}
+	public void setSeatType(SeatType seatType) {
+		this.seatType = seatType;
+	}
 	public void setSeatName(String seatName) {
 		this.seatName = seatName;
 	}
-	public Integer getSeattypeId() {
-		return seattypeId;
-	}
-	public void setSeattypeId(Integer seattypeId) {
-		this.seattypeId = seattypeId;
-	}
-	public SeatType getSeattype() {
-		return seattype;
-	}
-	public void setSeattype(SeatType seattype) {
-		this.seattype = seattype;
-	}
+
 	public Integer getCoachId() {
 		return coachId;
 	}
