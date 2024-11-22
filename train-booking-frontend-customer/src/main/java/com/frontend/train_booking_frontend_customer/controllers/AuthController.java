@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.frontend.train_booking_frontend_customer.models.LoginRequest;
+import com.frontend.train_booking_frontend_customer.dtos.LoginRequest;
 import com.frontend.train_booking_frontend_customer.models.User;
 import com.frontend.train_booking_frontend_customer.models.enums.ERole;
 import com.frontend.train_booking_frontend_customer.services.IAuthService;

@@ -1,4 +1,4 @@
-package com.frontend.train_booking_frontend_customer.models;
+package com.frontend.train_booking_frontend_customer.dtos;
 
 public class LoginRequest {
 	private String email;

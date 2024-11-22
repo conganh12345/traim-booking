@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.LoginRequest;
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.dtos.LoginRequest;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.User;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.IService.IAuthService;
 

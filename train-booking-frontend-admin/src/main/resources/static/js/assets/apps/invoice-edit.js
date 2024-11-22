@@ -36,7 +36,7 @@ FilePond.create(
     files: [
         {
             // the server file reference
-            source: '../src/assets/img/cork-logo.png',
+            source: '/images/cork-logo.png',
 
             // set type to limbo to tell FilePond this is a temp file
             options: {

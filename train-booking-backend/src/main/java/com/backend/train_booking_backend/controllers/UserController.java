@@ -88,7 +88,18 @@ public class UserController {
 	@PutMapping("/admin/{id}")
 	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<AppUser> updateAdmin(@RequestBody AppUser user, @PathVariable Integer id) {
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		AppUser existingUser = userService.getUser(id);
+		
+		if (user.getPassword() != null && !user.getPassword().isEmpty()) {
+	    	if(user.getPassword() != existingUser.getPassword())
+	    		user.setPassword(passwordEncoder.encode(user.getPassword()));
+	    } else {
+	        
+	        if (existingUser != null) {
+	            user.setPassword(existingUser.getPassword());  
+	        }
+	    }
+		
 		AppUser updatedUser = userService.updateUser(id, user);
 		if (updatedUser == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -98,10 +109,12 @@ public class UserController {
 	
 	@PutMapping("/user/{id}")
 	public ResponseEntity<AppUser> updateUser(@RequestBody AppUser user, @PathVariable Integer id) {
+		AppUser existingUser = userService.getUser(id);
 	    if (user.getPassword() != null && !user.getPassword().isEmpty()) {
-	        user.setPassword(passwordEncoder.encode(user.getPassword()));
+	    	if(user.getPassword() != existingUser.getPassword())
+	    		user.setPassword(passwordEncoder.encode(user.getPassword()));
 	    } else {
-	        AppUser existingUser = userService.getUser(id);
+	        
 	        if (existingUser != null) {
 	            user.setPassword(existingUser.getPassword());  
 	        }

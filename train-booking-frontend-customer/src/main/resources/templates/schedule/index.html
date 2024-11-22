@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/base-layout.html}">
+<head>
+<title>Chuyến đi</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="middle-content container-xxl p-0">
+			<!-- BREADCRUMB -->
+			<div class="page-meta">
+				<nav class="breadcrumb-style-one" aria-label="breadcrumb">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="#">Chuyến đi</a></li>
+						<li class="breadcrumb-item active" aria-current="page">Blog</li>
+					</ol>
+				</nav>
+			</div>
+			<!-- /BREADCRUMB -->
+
+			<div class="row">
+				<!-- Kiểm tra nếu không có chuyến đi nào -->
+				<div th:if="${#lists.isEmpty(schedules)}" class="col-12 text-center">
+					<h1>Không tìm thấy chuyến đi mà bạn muốn.</h1>
+				</div>
+
+				<!-- Hiển thị chuyến đi nếu có -->
+				<div class="col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-6 mb-4" th:each="schedule, stat : ${schedules}">
+					<a th:href="@{/schedule/search/{id}(id=${schedule.id})}" class="card style-2 mb-md-0 mb-4">
+						<img src="https://cafefcdn.com/203337114487263232/2022/4/7/-1649337362864248551751.jpg"
+						class="card-img-top" alt="...">
+						<div class="card-body px-0 pb-0">
+							<h5 class="card-title mb-3" th:text="${schedule.scheduleName ?: 'Tên chuyến đi'}">Tên chuyến đi</h5>
+							<div class="media mt-4 mb-0 pt-1">
+								<img src="https://news.immigration.gov.tw/Uploads/2024/Nov/112208pM.jpg"
+									class="card-media-image me-3" alt="">
+								<div class="media-body">
+									<span class="media-heading mb-1" th:text="${schedule.route.departureLocation.displayName ?: 'Nơi đi'}">Nơi đi</span>
+									-> <span class="media-heading mb-1" th:text="${schedule.route.destinationLocation.displayName ?: 'Nơi đến'}">Nơi đến</span>
+									<p class="media-text">Khởi hành: <span th:text="${#temporals.format(schedule.departureDate, 'HH:mm, dd/MM/yyyy')}">Thời gian khởi hành</span></p>
+								</div>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END CONTENT AREA -->
+
+	<!-- BEGIN CUSTOM SCRIPTS FILE -->
+	<div layout:fragment="footerFiles"></div>
+
+	<!-- BEGIN GLOBAL MANDATORY STYLES -->
+	<script src="/js/bootstrap/bootstrap.bundle.min.js"></script>
+	<script src="/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<script src="/plugins/mousetrap/mousetrap.min.js"></script>
+	<script src="/plugins/waves/waves.min.js"></script>
+	<script src="/js/app.js"></script>
+	<!-- END GLOBAL MANDATORY STYLES -->
+
+	<!-- BEGIN PAGE LEVEL SCRIPTS -->
+	<!-- END PAGE LEVEL SCRIPTS -->
+</body>
+</html>

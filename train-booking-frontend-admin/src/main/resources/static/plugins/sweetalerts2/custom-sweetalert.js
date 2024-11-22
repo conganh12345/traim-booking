@@ -101,7 +101,7 @@ document.querySelector('.widget-content .custom-image').addEventListener('click'
     Swal.fire({
         title: 'Sweet!',
         text: 'Modal with a custom image.',
-        imageUrl: '../src/assets/img/sweet-alert.jpg',
+        imageUrl: '/images/sweet-alert.jpg',
         imageWidth: 400,
         imageHeight: 200,
         imageAlt: 'Custom image',

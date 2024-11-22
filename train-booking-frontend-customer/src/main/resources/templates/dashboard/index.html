@@ -4,79 +4,86 @@
 	layout:decorate="~{layouts/base-layout.html}">
 <head>
 <title>Trang chủ</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Link CSS -->
 <div layout:fragment="headerFiles">
-	<link rel="stylesheet" type="text/css"
-		href="/css/assets/light/apps/blog-post.css">
-	<link rel="stylesheet" type="text/css"
-		href="/css/assets/dark/apps/blog-post.css">
+	<link rel="stylesheet" href="/css/assets/light/apps/blog-post.css">
+	<link rel="stylesheet" href="/css/assets/dark/apps/blog-post.css">
+	<link rel="stylesheet"
+		href="/css/assets/dark/apps/ecommerce-create.css">
+	<link rel="stylesheet"
+		href="/css/assets/light/apps/ecommerce-create.css">
 		
-	<link rel="stylesheet" type="text/css"
-	href="/css/assets/dark/apps/ecommerce-create.css">
-	<link rel="stylesheet" type="text/css"
-	href="/css/assets/light/apps/ecommerce-create.css">
-	
+	<link rel="stylesheet" href="/plugins/flatpickr/flatpickr.css">
+	<link rel="stylesheet"
+		href="/css/plugins/dark/flatpickr/custom-flatpickr.css">
+	<link rel="stylesheet"
+		href="/css/plugins/light/flatpickr/custom-flatpickr.css">
+		
 		<link rel="stylesheet" type="text/css"
 		href="/css/plugins/light/tomSelect/custom-tomSelect.css">
 	<link rel="stylesheet" type="text/css"
 		href="/css/plugins/dark/tomSelect/custom-tomSelect.css">
 	<link rel="stylesheet" type="text/css"
 		href="/plugins/tomSelect/tom-select.default.min.css">
-		<link rel="stylesheet" type="text/css" href="/plugins/flatpickr/flatpickr.css">
-	
-		<link rel="stylesheet" type="text/css" href="/css/plugins/dark/flatpickr/custom-flatpickr.css">
-	<link rel="stylesheet" type="text/css" href="/css/plugins/light/flatpickr/custom-flatpickr.css">
-	
+		
 </div>
+
 </head>
 <body>
+	<!-- Nội dung chính -->
 	<div layout:fragment="content">
 		<div class="middle-content container-xxl p-0">
 			<div class="row layout-top-spacing">
+				<!-- Thông tin bên trái -->
+				<div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-12 mb-4">
+					<div
+						class="widget-content widget-content-area ecommerce-create-section">
+						<div
+							class="header text-center text-white mb-3 p-1 rounded border border-primary">
+							<p class="mb-0 text-primary fs-4">Hướng dẫn đặt tàu</p>
+						</div>
+						<div class="text-center mb-4">
+							<img src="/images/th4.png" alt="Ship Image"
+								class="img-fluid rounded" style="max-width: 100%;">
+						</div>
+						<div class="information-content">
+							<p>
+								<strong>Bước 1:</strong> Chọn tuyến đường và thời gian khởi hành
+								phù hợp.
+							</p>
+							<p>
+								<strong>Bước 2:</strong> Kiểm tra thông tin chi tiết về giá vé,
+								thời gian di chuyển, và các tiện ích có sẵn trên tàu.
+							</p>
+							<p>
+								<strong>Bước 3:</strong> Xác nhận số lượng người đi và các dịch
+								vụ bổ sung nếu cần (như cabin riêng, suất ăn, v.v.).
+							</p>
+							<p>
+								<strong>Bước 4:</strong> Sau khi kiểm tra lại các thông tin,
+								tiếp tục đến bước thanh toán để hoàn tất đặt vé.
+							</p>
+							<div class="text-muted mt-3">
+								<p>
+									Liên hệ tổng đài: <strong>1800-1234</strong> nếu bạn cần hỗ trợ
+									thêm.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
 
-    
-           <!-- Left Information Section -->
-			<div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-12 mb-4">
-			    <div class="widget-content widget-content-area ecommerce-create-section ">
-			        
-			          <!-- Header Section with Dark Background -->
-			      	<div class="header text-center text-white mb-3 p-1 rounded border border-primary">
-						<p class="mb-0 text-primary fs-4">Hướng dẫn đặt tàu</p>
-			        </div>
-			        <!-- Image Section -->
-			        <div class="text-center mb-4">
-			            <img src="/images/th4.png" alt="Ship Image" class="img-fluid rounded" style="max-width: 100%;">
-			        </div>
-					       
-			
-			        <div class="information-content">
-			            <p><strong>Bước 1:</strong> Chọn tuyến đường và thời gian khởi hành phù hợp.</p>
-			            <p><strong>Bước 2:</strong> Kiểm tra thông tin chi tiết về giá vé, thời gian di chuyển, và các tiện ích có sẵn trên tàu.</p>
-			            <p><strong>Bước 3:</strong> Xác nhận số lượng người đi và các dịch vụ bổ sung nếu cần (như cabin riêng, suất ăn, v.v.).</p>
-			            <p><strong>Bước 4:</strong> Sau khi kiểm tra lại các thông tin, tiếp tục đến bước thanh toán để hoàn tất đặt vé.</p>
-			            
-			            <div class="text-muted mt-3">
-			         
-			                <p>Liên hệ tổng đài: <strong>1800-1234</strong> nếu bạn cần hỗ trợ thêm.</p>
-			            </div>
-			        </div>
-			    </div>
-			</div>
-
-            
+				<!-- Phần chính giữa -->
 				<div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-4">
-
-
 					<div class="single-post-content">
-
 						<div class="featured-image">
-
-
 							<div class="post-header">
-
 								<div class="post-title">
 									<h1 class="mb-0">Đặt vé dễ dàng với Train-booking</h1>
 								</div>
-
 								<div class="post-meta-info d-flex justify-content-between">
 									<div class="media">
 										<img src="/images/profile-12.jpeg" alt="profile">
@@ -85,8 +92,6 @@
 											<p>15 May 2022</p>
 										</div>
 									</div>
-
-
 									<div class="align-self-center">
 										<button class="btn btn-success btn-icon btn-share btn-rounded">
 											<svg xmlns="http://www.w3.org/2000/svg" width="24"
@@ -94,135 +99,97 @@
 												stroke="currentColor" stroke-width="2"
 												stroke-linecap="round" stroke-linejoin="round"
 												class="feather feather-share-2">
-											<circle cx="18" cy="5" r="3"></circle>
-											<circle cx="6" cy="12" r="3"></circle>
-											<circle cx="18" cy="19" r="3"></circle>
-											<line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-											<line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                                                <circle cx="18" cy="5"
+													r="3"></circle>
+                                                <circle cx="6" cy="12"
+													r="3"></circle>
+                                                <circle cx="18" cy="19"
+													r="3"></circle>
+                                                <line x1="8.59"
+													y1="13.51" x2="15.42" y2="17.49"></line>
+                                                <line x1="15.41"
+													y1="6.51" x2="8.59" y2="10.49"></line>
+                                            </svg>
 										</button>
 									</div>
-
 								</div>
-
 							</div>
-
 						</div>
 					</div>
-
 				</div>
-				
-				  <!-- Right Form -->
-            <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-12 mb-4">
-                <div class="widget-content widget-content-area ecommerce-create-section">
-                
-               		<div class="header text-center text-white mb-3 p-1 rounded border border-primary">
-						<p class="mb-0 text-primary fs-4">Thông tin hành trình</p>
-			        </div>
-			        
-                     <form>
-                       <div class="form-group mb-4">
-							<label for="trainId">Ga đi <strong
-								class="text-danger">*</strong></label> 
-								<select 
-								
-								id="stationFrom" class="form-control">
-								<option value="" selected>Ga đi </option>
-								<option></option>
-							</select> 
-							
-						</div>
-                       <div class="form-group mb-4">
-                            <label for="trainId">Ga đến <strong
-								class="text-danger">*</strong></label> 
-								<select 
-								
-								id="stationTo" class="form-control">
-								<option value="" selected>Ga đến </option>
-								<option></option>
-							</select> 
-                        </div>
-                        
-                        <div class="form-group mb-4">
-							<label for="dateFrom">Ngày bắt đầu<strong class="text-danger">*</strong></label>
-							<input type="date"
-							   id="dateFrom"
-							   class="form-control"
-								   placeholder="Chọn ngày bắt đầu">
-						</div>
-						<div class="form-group mb-4">
-							<label for="dateTo">Ngày kết thúc<strong class="text-danger">*</strong></label>
-							<input 
-							   type="date"
-							   id="dateTo"
-							   class="form-control"
-							   placeholder="Chọn ngày kết thúc">
-						</div>
-						
-						<div class="d-flex justify-content-center">
-						    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
-						</div>
-                    </form>
-                    
-                  
-                </div>
-                
-                <div class="widget-content widget-content-area ecommerce-create-section mt-3">
-                     <div>
-			            <img src="/images/duongsat.jpeg" alt="Ship Image" class="img-fluid rounded" style="height: 130px; width: 100%">
-			        </div>
-		        </div>
-            </div>
-            
 
-            
-           <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-4">
-					<div class="single-post-content">
-					
-						 <div class="header text-center text-white p-1 rounded border border-primary">
-							    <p class="mb-0 text-primary fw-bold fs-2">QUY ĐỊNH ĐỔI, TRẢ VÉ</p>
+				<!-- Phần bên phải -->
+				<div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-12 mb-4">
+					<div
+						class="widget-content widget-content-area ecommerce-create-section">
+						<div
+							class="header text-center text-white mb-3 p-1 rounded border border-primary">
+							<p class="mb-0 text-primary fs-4">Thông tin hành trình</p>
+						</div>
+						<form th:action="@{/schedule/index}" th:object="${route}"
+							method="post" id="general-settings">
+							
+							<div class="form-group mb-4">
+								<label for="departureLocation">Nơi đi<strong
+									class="text-danger">*</strong></label> 
+								<select
+									th:field="*{departureLocation}" id="departureLocation"
+									class="form-control"
+									th:classappend="${#fields.hasErrors('departureLocation') ? 'is-invalid' : ''}">
+									<option value="">Chọn nơi đi</option>
+									<option th:each="province : ${provinces}"
+										th:value="${province}" th:text="${province.displayName}"></option>
+								</select> 
+								<span th:if="${#fields.hasErrors('departureLocation')}"
+									class="text-danger" th:errors="*{departureLocation}"></span>
 							</div>
-
-							<div class="post-content">
 							
-							<h4 class="mb-3">1. Thời gian cao điểm Tết: Mức khấu trừ đối với vé trả lại, đổi vé là 30% giá tiền in trên Thẻ lên tàu hỏa (vé).</h4>
+							<div class="form-group mb-4">
+								<label for="destination">Ga đến<strong
+									class="text-danger">*</strong></label>
+								<select
+									th:field="*{destinationLocation}" id="destinationLocation"
+									class="form-control"
+									th:classappend="${#fields.hasErrors('destinationLocation') ? 'is-invalid' : ''}">
+									<option value="">Chọn nơi đến</option>
+									<option th:each="province : ${provinces}"
+										th:value="${province}" th:text="${province.displayName}"></option>
+								</select> <span th:if="${#fields.hasErrors('destinationLocation')}"
+									class="text-danger" th:errors="*{destinationLocation}"></span>
+							</div>
 							
-							<p>- Từ ngày 21/01/2025 đến ngày 31/01/2025: đối với đoàn tàu số chẵn.</p>
-							<p>- Từ ngày 01/02/2025 đến ngày 09/02/2025: đối với đoàn tàu số lẻ.</p>
-							<p>(*) Thời gian đổi, trả vé</p>
-							<p>- Hành khách đổi, trả vé cá nhân: chậm nhất trước giờ tàu chạy là 24 giờ.</p>
-							<p class="mb-3">- Hành khách trả vé tập thể: chậm nhất trước giờ tàu chạy là 48 giờ.</p>
-										
-							<h4 class="mb-3">2. Ngoài thời gian quy định tại điểm (1.) nêu trên, mức khấu trừ phí, thời gian đổi, trả vé thực hiện như sau:</h4>
-	
-							<p>- Từ ngày 21/01/2025 đến ngày 31/01/2025: đối với đoàn tàu số chẵn.</p>
-							<p>- Từ ngày 01/02/2025 đến ngày 09/02/2025: đối với đoàn tàu số lẻ.</p>
-							<p>(*) Thời gian đổi, trả vé</p>
-							<p>- Hành khách đổi, trả vé cá nhân: chậm nhất trước giờ tàu chạy là 24 giờ.</p>
-							<p class="mb-3">- Hành khách trả vé tập thể: chậm nhất trước giờ tàu chạy là 48 giờ.</p>
-							
-							<h4 class="mb-3">3. Hình thức trả vé.</h4>
-	
-							<p>- Khi hành khách mua vé và thanh toán online qua website bán vé của Ngành Đường sắt, app bán vé hoặc các ứng dụng mua vé tàu hỏa của các đối tác thứ ba thì có thể trả vé online qua các website bán vé của Ngành Đường sắt hoặc đến trực tiếp nhà ga.</p>
-							<p>- Khi hành khách mua vé bằng các hình thức khác, muốn đổi vé, trả vé hành khách đến trực tiếp nhà ga kèm theo giấy tờ tùy thân bản chính của người đi tàu (hoặc người mua vé) cho nhân viên đường sắt. Đồng thời, thông tin trên thẻ đi tàu phải trùng khớp với giấy tờ tùy thân của hành khách.</p>
-							<p class="mb-3">Trân trọng cảm ơn!.</p>
-							
-						</div>
+							<div class="form-group mb-4">
+								<label for="dateFrom">Ngày đi<strong class="text-danger">*</strong></label>
+								<input type="date" id="dateFrom" name="dateFrom"
+									class="form-control" placeholder="Chọn ngày bắt đầu" required>
+							</div>
+							<div class="d-flex justify-content-center">
+								<button type="submit" class="btn btn-primary">Tìm kiếm</button>
+							</div>
+						</form>
+						
 						
 					</div>
-
+					
+					<div class="widget-content widget-content-area ecommerce-create-section mt-3">
+		                     <div>
+					            <img src="/images/duongsat.jpeg" alt="Ship Image" class="img-fluid rounded" style="height: 130px; width: 100%">
+					        </div>
+				        </div>
+				</div>
 			</div>
 		</div>
 	</div>
-	
-	<!--  BEGIN CUSTOM SCRIPTS FILE  -->
+
+	<!-- Scripts -->
 	<div layout:fragment="footerFiles">
 		<script src="/plugins/tomSelect/tom-select.base.js"></script>
-		<script src="/plugins/tomSelect/custom-tom-select.js"></script>
 		<script src="/plugins/flatpickr/flatpickr.js"></script>
-		<script src="/plugins/flatpickr/custom-flatpickr.js"></script>
+		<script src="/plugins/tomSelect/custom-tom-select.js"></script>
+		
 
 		<script type="text/javascript">
-			new TomSelect("#stationFrom", {
+			new TomSelect("#departureLocation", {
 				create : true,
 				sortField : {
 					field : "text",
@@ -230,30 +197,16 @@
 				}
 			});
 			
-			new TomSelect("#stationTo", {
-				create : true,
-				sortField : {
-					field : "text",
-					direction : "asc"
-				}
-			});
-			
-			flatpickr("#dateFrom", {
-				enableTime: true,
-				dateFormat: "Y-m-d H:i",
-				minDate: "today", 
-				 position: "below"
-			});
 
-			flatpickr("#dateTo", {
-				enableTime: true,
-				dateFormat: "Y-m-d H:i",
-				minDate: "today",
-				 position: "below"
+			new TomSelect("#destinationLocation", {
+				create : true,
+				sortField : {
+					field : "text",
+					direction : "asc"
+				}
 			});
 		</script>
-	</div>
-	<!--  END CUSTOM SCRIPTS FILE  -->
-</body>
 
+	</div>
+</body>
 </html>
