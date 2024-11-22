@@ -35,7 +35,6 @@ public class ScheduleController {
     public String index(@Valid @ModelAttribute("route") Route route,
     					@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateFrom,
     					BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-		System.out.println("heello");
 		if(result.hasErrors()) {
 			model.addAttribute("page", "route");
 			return "dashboard/index";
