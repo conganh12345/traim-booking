@@ -27,7 +27,7 @@
 		<div class="page-meta">
 			<nav class="breadcrumb-style-one" aria-label="breadcrumb">
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="#">Tàu</a></li>
+					<li class="breadcrumb-item"><a href="#">Chuyến đi</a></li>
 					<li class="breadcrumb-item" aria-current="page"><a
 						th:href="@{/schedule/index}">Quản lý chuyến đi</a></li>
 					<li class="breadcrumb-item active" aria-current="page">Chỉnh
@@ -77,30 +77,16 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group mb-4">
-											<label for="scheduleName">Chuyến đi <strong
+											<label for="scheduleName">Tên chuyến đi <strong
 												class="text-danger">*</strong></label> <input type="text"
 												th:field="*{scheduleName}" id="scheduleName" class="form-control"
-												placeholder="Tên toa"
+												placeholder="Tên chuyến đi"
 												th:classappend="${#fields.hasErrors('scheduleName') ? 'is-invalid' : ''}">
 											<span th:if="${#fields.hasErrors('scheduleName')}"
 												class="text-danger" th:errors="*{scheduleName}"></span>
 										</div>
 									</div>
 								</div>
-
-								<div class="row">
-									<div class="col-md-6">
-										<div class="form-group mb-4">
-											<label for="departureStation">Ga đi<strong
-												class="text-danger">*</strong></label>
-											<textarea th:field="*{departureStation}" id="departureStation"
-												class="form-control" placeholder="Mô tả"
-												th:classappend="${#fields.hasErrors('departureStation') ? 'is-invalid' : ''}"></textarea>
-											<span th:if="${#fields.hasErrors('departureStation')}"
-												class="text-danger" th:errors="*{departureStation}"></span>
-										</div>
-									</div>
-								</div>	
 								
 								<div class="row">
 								    <div class="col-md-6">

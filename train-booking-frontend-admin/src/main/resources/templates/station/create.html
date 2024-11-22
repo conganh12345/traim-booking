@@ -60,10 +60,10 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group mb-4">
-											<label for="routeId">Tên lịch trình<strong class="text-danger">*</strong></label>
+											<label for="routeId">Tên hành trình<strong class="text-danger">*</strong></label>
 											<select th:field="*{routeId}" id="routeId"
 												class="form-control">
-												<option value="" selected>Tên lịch trình</option>
+												<option value="" selected>Tên hành trình</option>
 												<option th:each="route : ${routes}" th:value="${route.id}"
 													th:text="${route.routeName}"></option>
 											</select> <span th:if="${#fields.hasErrors('routeId')}"

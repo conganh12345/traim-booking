@@ -57,7 +57,7 @@
 							<thead>
 								<tr>
 									<th style="width: 5%">STT</th>
-									<th>Loại Tàu</th>
+									<th>Tên Tàu</th>
 									<th>Tên toa</th>
 									<th>Mô tả</th>
 									<th>Trạng thái</th>
@@ -67,8 +67,10 @@
 							<tbody>
 								<tr th:each="coach, stat : ${coachs}">
 									<td th:text="${stat.count}"></td>
-									<td
-										th:text="${coach.train != null ? coach.train.trainName : ''}"></td>
+
+									<td><span class="badge badge-light-dark"
+										th:text="${coach.train != null ? coach.train.trainName : ''}"></span>
+									</td>
 									<td th:text="${coach.coachName}"></td>
 									<td th:text="${coach.description}" class="text-truncate"
 										style="max-width: 250px;"></td>

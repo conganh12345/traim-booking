@@ -27,11 +27,11 @@
 		<div class="page-meta">
 			<nav class="breadcrumb-style-one" aria-label="breadcrumb">
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="#">Chuyến đi</a></li>
+					<li class="breadcrumb-item"><a href="#">Hành trình</a></li>
 					<li class="breadcrumb-item" aria-current="page"><a
-						th:href="@{/route/index}">Quản lý chuyến đi</a></li>
+						th:href="@{/route/index}">Quản lý hành trình</a></li>
 					<li class="breadcrumb-item active" aria-current="page">Thêm
-						mới chuyến đi</li>
+						mới hành trình</li>
 				</ol>
 			</nav>
 		</div>
@@ -75,10 +75,10 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group mb-4">
-											<label for="routeName">Tên lịch trình <strong
+											<label for="routeName">Tên hành trình <strong
 												class="text-danger">*</strong></label> <input type="text"
 												th:field="*{routeName}" id="routeName" class="form-control"
-												placeholder="Tên lịch trình"
+												placeholder="Tên hành trình"
 												th:classappend="${#fields.hasErrors('routeName') ? 'is-invalid' : ''}">
 											<span th:if="${#fields.hasErrors('routeName')}"
 												class="text-danger" th:errors="*{routeName}"></span>

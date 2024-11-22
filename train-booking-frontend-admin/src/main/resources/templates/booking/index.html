@@ -32,7 +32,7 @@
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="#">Đặt vé</a></li>
 					<li class="breadcrumb-item active" aria-current="page">Quản lý
-						đặt vé</li>
+						đơn đặt vé</li>
 				</ol>
 			</nav>
 		</div>
@@ -89,7 +89,7 @@
 					<div class="widget-header">
 						<div class="row">
 							<div class="col-xl-12 col-md-12 col-sm-12 col-12">
-								<h4>Quản lý đặt vé</h4>
+								<h4>Danh sách đơn đặt vé</h4>
 							</div>
 						</div>
 					</div>
@@ -111,14 +111,27 @@
 							<tbody>
 								<tr th:each="booking, stat : ${bookings}">
 									<td th:text="${stat.count}"></td>
-									<td th:text="${booking.code}"></td>
+									<td>
+									<span class="badge badge-dark" th:text="${booking.code}"></span>
+									</td>
 									
-									<td
-										th:text="${booking.user != null ? booking.user.fullName : ''}"></td>
+									<td>
+									    <p class="text-start me-1">Tên: 
+									    	<span class="text-primary" th:text="${booking.user != null ? booking.user.fullName : ''}"></span>
+									    </p>
+									    <p class="text-start me-1">Email: 
+									    	<span class="text-primary" th:text="${booking.user != null ? booking.user.email : ''}"></span>
+									    </p>
+									    <p class="text-start me-1">Số điện thoại: 
+									    	<span class="text-primary" th:text="${booking.user != null ? booking.user.phoneNumber : ''}"></span>
+									    </p>
+					
+									</td>
+
 									<td
 										th:text="${booking.schedule != null ? booking.schedule.scheduleName : ''}"></td>
 										
-									<td th:text="${booking.totalPrice}"></td>
+									<td th:id="totalPrice" th:data-price="${booking.totalPrice}"></td>
 									
 									<td
 										th:text="${#temporals.format(booking.bookingTime, 'HH:mm, dd/MM/yyyy')}"
@@ -128,7 +141,7 @@
 										th:class="'badge ' + ${booking.status.badgeClass}"
 										th:text="${booking.status.displayName}"></span></td>
 									<td
-										class="table-controls d-flex justify-content-center align-items-center pt-2">
+										class="table-controls d-flex justify-content-center align-items-center p-5">
 										<li><a th:href="@{/booking/show/{id}(id=${booking.id})}"
 											class="bs-tooltip edit" data-bs-toggle="tooltip"
 											data-bs-placement="top"> <svg
@@ -207,6 +220,16 @@
 		     table.rows().show(); 
 		 });
 
+		</script>
+		
+		<script>
+		 	$(document).ready(function() {
+		        var priceElement = $("#totalPrice");
+		        var price = parseInt(priceElement.data("price"));
+		        
+		        var formattedPrice = price.toLocaleString('vi-VN') + " VNĐ";
+		        priceElement.text(formattedPrice);
+		    });
 		</script>
 	</div>
 	<!--  END CUSTOM SCRIPTS FILE  -->

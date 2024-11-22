@@ -32,7 +32,7 @@
 					<li class="breadcrumb-item" aria-current="page"><a
 						th:href="@{/station/index}">Quản lý nhà ga</a></li>
 					<li class="breadcrumb-item active" aria-current="page">Chỉnh
-						sửa lịch trình</li>
+						sửa hành trình</li>
 				</ol>
 			</nav>
 		</div>
@@ -61,10 +61,10 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group mb-4">
-											<label for="routeId">Tên lịch trình<strong class="text-danger">*</strong></label>
+											<label for="routeId">Tên hành trình<strong class="text-danger">*</strong></label>
 											<select th:field="*{routeId}" id="routeId"
 												class="form-control">
-												<option value="" selected>Tên lịch trình</option>
+												<option value="" selected>Tên hành trình</option>
 												<option th:each="route : ${routes}" th:value="${route.id}"
 													th:text="${route.routeName}"></option>
 											</select> <span th:if="${#fields.hasErrors('routeId')}"
@@ -79,7 +79,7 @@
 											<label for="stationName">Tên ga đi qua<strong
 												class="text-danger">*</strong></label> <input type="text"
 												th:field="*{stationName}" id="stationName" class="form-control"
-												placeholder="Tên toa"
+												placeholder="Tên ga"
 												th:classappend="${#fields.hasErrors('stationName') ? 'is-invalid' : ''}">
 											<span th:if="${#fields.hasErrors('stationName')}"
 												class="text-danger" th:errors="*{stationName}"></span>
