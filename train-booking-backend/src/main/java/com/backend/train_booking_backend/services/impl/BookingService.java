@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.backend.train_booking_backend.models.AppUser;
 import com.backend.train_booking_backend.models.Booking;
 import com.backend.train_booking_backend.repositories.BookingRepository;
 import com.backend.train_booking_backend.repositories.TicketRepository;
@@ -83,6 +84,17 @@ public class BookingService implements IBookingService {
 	        return 0; 
 	    }
 	}
+	
+	@Override
+	public Booking findByCode(String code) {
+		Booking booking = bookingRepo.findByCode(code);
+
+	    if (booking != null) {
+	        return booking;
+	    }
+	    return null; 
+	}
+
 }
 
 
