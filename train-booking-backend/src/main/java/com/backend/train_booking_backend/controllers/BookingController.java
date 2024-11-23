@@ -89,4 +89,14 @@ public class BookingController {
 				return new ResponseEntity<>("Không thể xóa đặt vé với ID: " + id, HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@GetMapping("/code/{code}")
+	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')") 
+	public ResponseEntity<Booking> getBooking(@PathVariable String code) {
+		Booking booking = bookingService.findByCode(code);
+		if (booking == null) {
+			return new ResponseEntity<>(null, HttpStatus.OK);
+		}
+		return new ResponseEntity<>(booking, HttpStatus.OK);
+	}
 }

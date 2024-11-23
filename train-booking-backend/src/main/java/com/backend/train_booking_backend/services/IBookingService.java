@@ -14,4 +14,6 @@ public interface IBookingService {
 	Booking updateBooking(Integer id, Booking booking);
 
 	int deleteBooking(Integer id);
+	
+	Booking findByCode(String code);
 }

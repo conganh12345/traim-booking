@@ -54,12 +54,7 @@
 								bảo các thông tin là chính xác.
 							</p>
 
-							<div class="text-muted mt-3">
-								<p>
-									Liên hệ tổng đài: <strong>1800-1234</strong> nếu bạn cần hỗ trợ
-									thêm hoặc có bất kỳ thắc mắc nào.
-								</p>
-							</div>
+			
 						</div>
 					</div>
 				</div>
@@ -85,33 +80,19 @@
 							</div>
 						</div>
 
-						<form>
-							<div class="form-group mb-4">
+						<form action="/booking/show" method="get">
+							<div class="form-group mb-4 mt-4">
 								<label for="coachName">Mã đặt vé <strong
 									class="text-danger">*</strong></label> <input type="text"
-									id="coachName" class="form-control" placeholder="Mã đặt chỗ">
-
+									id="coachName" name="code" class="form-control"
+									placeholder="Mã đặt chỗ">
 							</div>
-
-							<div class="form-group mb-4">
-								<label for="coachName">Email <strong class="text-danger">*</strong></label>
-								<input type="text" id="coachName" class="form-control"
-									placeholder="Email">
-
-							</div>
-
-							<div class="form-group mb-4">
-								<label for="coachName">Số điện thoại <strong
-									class="text-danger">*</strong></label> <input type="text"
-									id="coachName" class="form-control" placeholder="Số điện thoại">
-
-							</div>
-
 
 							<div class="d-flex justify-content-center">
 								<button type="submit" class="btn btn-primary">Tra cứu</button>
 							</div>
 						</form>
+
 
 
 					</div>

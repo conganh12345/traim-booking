@@ -12,13 +12,17 @@
 			<div class="page-meta">
 				<nav class="breadcrumb-style-one" aria-label="breadcrumb">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="#">Chuyến đi</a></li>
-						<li class="breadcrumb-item active" aria-current="page">Blog</li>
+						<li class="breadcrumb-item"><a th:href="@{/dashboard/index}">Tra cứu</a></li>
+						<li class="breadcrumb-item active" aria-current="page">Danh sách chuyến đi</li>
 					</ol>
 				</nav>
 			</div>
 			<!-- /BREADCRUMB -->
-
+			
+			<div class="d-flex justify-content-center align-items-center mb-3">
+				<p class="display-6 font-weight-bold text-center"> Danh sách chuyến đi </p>
+			</div>
+			<hr>
 			<div class="row">
 				<!-- Kiểm tra nếu không có chuyến đi nào -->
 				<div th:if="${#lists.isEmpty(schedules)}" class="col-12 text-center">
