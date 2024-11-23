@@ -78,9 +78,9 @@ public class UserController {
 
         user.setId(id);
         if (userService.updateUser(user)) {
-            redirectAttributes.addFlashAttribute("success", "Profile updated successfully!");
+            redirectAttributes.addFlashAttribute("success", "Cập nhật hồ sơ cá nhân thành công!");
         } else {
-            redirectAttributes.addFlashAttribute("error", "Profile update failed!");
+            redirectAttributes.addFlashAttribute("error", "Không thể cập nhật hồ sơ!");
         }
         return "redirect:/user/profile";
     }

@@ -126,7 +126,7 @@
 							class="header text-center text-white mb-3 p-1 rounded border border-primary">
 							<p class="mb-0 text-primary fs-4">Thông tin hành trình</p>
 						</div>
-						<form th:action="@{/schedule/index}" th:object="${route}"
+						<form th:action="@{/schedule/index}" th:object="${searchSchedule}"
 							method="post" id="general-settings">
 							
 							<div class="form-group mb-4">
@@ -154,15 +154,19 @@
 									<option value="">Chọn nơi đến</option>
 									<option th:each="province : ${provinces}"
 										th:value="${province}" th:text="${province.displayName}"></option>
-								</select> <span th:if="${#fields.hasErrors('destinationLocation')}"
+								</select> 
+								<span th:if="${#fields.hasErrors('destinationLocation')}"
 									class="text-danger" th:errors="*{destinationLocation}"></span>
 							</div>
 							
 							<div class="form-group mb-4">
-								<label for="dateFrom">Ngày đi<strong class="text-danger">*</strong></label>
-								<input type="date" id="dateFrom" name="dateFrom"
-									class="form-control" placeholder="Chọn ngày bắt đầu" required>
-							</div>
+						    <label for="departureDate">Ngày đi<strong class="text-danger">*</strong></label>
+						    <input type="date" th:field="*{departureDate}" id="departureDate" name="departureDate"
+						        class="form-control" placeholder="Chọn ngày bắt đầu"
+						        th:classappend="${#fields.hasErrors('departureDate') ? 'is-invalid' : ''}" required>
+						    <span th:if="${#fields.hasErrors('departureDate')}" class="text-danger" th:errors="*{departureDate}"></span>
+						</div>
+
 							<div class="d-flex justify-content-center">
 								<button type="submit" class="btn btn-primary">Tìm kiếm</button>
 							</div>
@@ -188,6 +192,15 @@
 		<script src="/plugins/tomSelect/custom-tom-select.js"></script>
 		
 
+		<script>
+			const today = new Date();
+			const tomorrow = new Date(today);
+			tomorrow.setDate(tomorrow.getDate() + 1);
+			
+			const formattedDate = tomorrow.toISOString().split('T')[0];
+			
+			document.getElementById("departureDate").setAttribute("min", formattedDate);
+		</script>
 		<script type="text/javascript">
 			new TomSelect("#departureLocation", {
 				create : true,
