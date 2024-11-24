@@ -16,4 +16,6 @@ public interface IBookingService {
 	int deleteBooking(Integer id);
 	
 	Booking findByCode(String code);
+	
+	Booking findById(int bookingId);
 }

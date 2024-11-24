@@ -94,7 +94,17 @@ public class BookingService implements IBookingService {
 	    }
 	    return null; 
 	}
+	
+	@Override
+	public Booking findById(int bookingId) {
+	    Optional<Booking> booking = bookingRepo.findById(bookingId);
+	    if (booking.isPresent()) {
+	        return booking.get();
+	    }
+	    return null;
+	}
 
+	
 }
 
 
