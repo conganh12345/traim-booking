@@ -21,6 +21,7 @@ import com.backend.train_booking_backend.services.impl.UserDetailsServiceImpleme
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
+	
 	 private final UserDetailsServiceImplement userDetailsServiceThuc;
 	    private final JwtRequestFilter jwtRequestFilter;
 
@@ -36,6 +37,7 @@ public class SecurityConfig {
 	            .authorizeHttpRequests(auth -> auth
 	                .requestMatchers("/api/auth/**").permitAll() 
 	                .requestMatchers("/api/schedule/search/**").permitAll() 
+	                .requestMatchers("/api/vnpay/**").permitAll()
 	                .requestMatchers("/api/user/**").hasAuthority("USER")
 	                .requestMatchers("/api/admin/**").hasAuthority("ADMIN")
 	                .anyRequest().authenticated()) 
