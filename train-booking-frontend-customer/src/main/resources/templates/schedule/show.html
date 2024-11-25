@@ -31,12 +31,13 @@
 .ts-control {
 	padding: 12px;
 }
-/* Cấu trúc chung của toa tàu */
 .train-layout {
 	display: flex;
 	justify-content: center;
 	gap: 20px;
 	padding: 20px 0;
+	width: 100%;
+  overflow-x: auto; 
 }
 
 .carriage {
@@ -50,10 +51,10 @@
 
 .carriage-content {
 	position: relative;
-	width: 150px;
-	height: 80px;
+	width: 100px;  
+  	height: 50px; 
 	border-radius: 10px;
-	background-color: #ADD8E6; /* Màu xanh dương nhạt cho toa */
+	background-color: #ADD8E6; 
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 	display: flex;
 	justify-content: center;
@@ -67,28 +68,27 @@
 	transition: transform 0.3s ease;
 }
 
-/* Hiệu ứng khi chọn toa */
 .carriage.selected .carriage-content {
-	background-color: #28a745; /* Màu xanh cây khi chọn toa */
-	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); /* Bóng đổ mạnh hơn */
-	transform: scale(1.1); /* Tăng kích thước toa khi chọn */
+	background-color: #28a745; 
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); 
+	transform: scale(1.1); 
 }
 
 .carriage.selected .carriage-label {
-	color: #28a745; /* Chữ màu xanh cây khi chọn toa */
+	color: #28a745; 
 }
 
-/* Ô cửa sổ */
+
 .windows {
 	display: flex;
 	justify-content: space-between;
-	gap: 5px;
-	width: 80%;
+	gap: 7px;
+	width: 70%;
 }
 
 .window {
 	width: 30px;
-	height: 40px;
+	height: 25px;
 	background: #FFF;
 	border-radius: 5px;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -103,7 +103,6 @@
 	margin-top: 5px;
 }
 
-/* Các ghế trong toa */
 .seat-display {
 	background: #f8f9fa;
 	border-radius: 10px;
@@ -127,7 +126,7 @@
 .seat {
 	width: 50px;
 	height: 50px;
-	background-color: #fff; /* Màu ghế mặc định là trắng */
+	background-color: #fff;
 	color: #000;
 	font-size: 14px;
 	display: flex;
@@ -135,20 +134,18 @@
 	align-items: center;
 	border-radius: 5px;
 	cursor: pointer;
-	border: 1px solid #999; /* Viền ghế màu xanh cây */
+	border: 1px solid #999; 
 	transition: background-color 0.3s, transform 0.2s;
 }
 
-/* Khi ghế được chọn */
 .seat.selected {
-	background-color: #007bff; /* Màu xanh dương khi chọn ghế */
-	transform: scale(1.1); /* Tăng kích thước khi chọn */
+	background-color: #007bff; 
+	transform: scale(1.1); 
 }
 
-/* Màu ghế khi hover */
 .seat:hover:not(.booked):not(.selected) {
-	background-color: #ffc107; /* Màu vàng khi hover */
-	transform: scale(1.1); /* Tăng kích thước khi hover */
+	background-color: #ffc107;
+	transform: scale(1.1); 
 }
 
 .seat.booked {
@@ -162,6 +159,37 @@
 	font-size: 16px;
 	font-weight: bold;
 }
+.seat-info {
+    display: flex;
+    justify-content: space-between; /* Đảm bảo phần tử con nằm trong cùng một dòng */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    margin-bottom: 10px;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.seat-details {
+    flex-grow: 1; /* Phần thông tin ghế sẽ chiếm phần còn lại */
+}
+
+.delete-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.delete-icon {
+    margin-left: 10px;
+    font-size: 18px;
+    color: #ff0000; /* Màu đỏ cho biểu tượng thùng rác */
+    cursor: pointer;
+}
+
+.delete-icon:hover {
+    color: #cc0000; /* Thay đổi màu khi hover */
+}
+
+
 </style>
 
 </div>
@@ -250,7 +278,7 @@
 
 
 							<div class="train-layout d-flex justify-content-center gap-3">
-								<tr th:each="coach, stat : ${coaches}">
+								<div  th:each="coach, stat : ${coaches}">
 
 									<div class="carriage" th:data-carriage="${coach.id}">
 										<div class="carriage-content">
@@ -264,9 +292,7 @@
 									</div>
 
 
-								</tr>
-
-
+								</div >
 
 							</div>
 
@@ -293,21 +319,25 @@
 
 
 				<div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-12 mb-4">
-					<div
-						class="widget-content widget-content-area ecommerce-create-section">
-						<div
-							class="header text-center text-white mb-3 p-1 rounded border border-primary">
-							<p class="mb-0 text-primary fs-4">Giỏ vé</p>
-						</div>
-
-
-						<hr>
-						<!-- Nút đặt vé -->
-						<div class="d-flex justify-content-center">
-							<button class="btn btn-primary" id="confirmBooking">Mua
-								vé</button>
-						</div>
+					<div class="widget-content widget-content-area ecommerce-create-section">
+					    <div class="header text-center text-white mb-3 p-1 rounded border border-primary">
+					        <p class="mb-0 text-primary fs-4">Giỏ vé</p>
+					    </div>
+					
+					    <hr>
+					    
+					    <!-- Đây là phần hiển thị giỏ vé -->
+					    <div id="cart-content">
+					        <p>Giỏ vé trống!</p>
+					    </div>
+					
+					    <hr>
+					
+					    <div class="d-flex justify-content-center">
+					        <button class="btn btn-primary" id="confirmBooking">Mua vé</button>
+					    </div>
 					</div>
+
 
 					<div
 						class="widget-content widget-content-area ecommerce-create-section mt-3">
@@ -433,7 +463,6 @@
 		<script src="/plugins/tomSelect/tom-select.base.js"></script>
 		<script src="/plugins/flatpickr/flatpickr.js"></script>
 		<script src="/plugins/tomSelect/custom-tom-select.js"></script>
-
 		<script>
 			const today = new Date();
 			const tomorrow = new Date(today);
@@ -444,135 +473,209 @@
 			document.getElementById("departureDate").setAttribute("min", formattedDate);
 		</script>
 
-		<script type="text/javascript">
-			new TomSelect("#departureLocation", {
-				create : true,
-				sortField : {
-					field : "text",
-					direction : "asc"
-				}
-			});
-			
-
-			new TomSelect("#destinationLocation", {
-				create : true,
-				sortField : {
-					field : "text",
-					direction : "asc"
-				}
-			});
-		</script>
-
-		<script th:inline="none">
-			const seatData = {
-			    1: [['1A', '1B', '1C', '1D', '1E', '1F', '1G'], ['2A', '2B', '2C', '2D', '2E', '2F', '2G']],
-			    2: [['3A', '3B', '3C', '3D', '3E', '3F', '3G'], ['4A', '4B', '4C', '4D', '4E', '4F', '4G']],
-			    3: [['5A', '5B', '5C', '5D', '5E', '5F', '5G'], ['6A', '6B', '6C', '6D', '6E', '6F', '6G']],
-			    4: [['7A', '7B', '7C', '7D', '7E', '7F', '7G'], ['8A', '8B', '8C', '8D', '8E', '8F', '8G']]
-			};
-
-			</script>
-
-		<script>
-		   
-		 let currentCarriage = 1;
-    
-  
-
-	    function displaySeats(carriageNumber) {
-	        const seatMap = document.getElementById('seat-map');
-	        const carriageTitle = document.getElementById('carriage-title');
-	
-	        carriageTitle.textContent = `Sơ đồ ghế: Toa ${carriageNumber}`;
-	
-	        seatMap.innerHTML = '';
-	
-	        seatData[carriageNumber].forEach(row => {
-	            const rowDiv = document.createElement('div');
-	            rowDiv.classList.add('seat-row');
-	
-	            row.forEach(seat => {
-	                const seatDiv = document.createElement('div');
-	                seatDiv.classList.add('seat', 'available'); 
-	                seatDiv.textContent = seat;
-	                
-	                seatDiv.addEventListener('click', function() {
-	                    // Kiểm tra xem ghế có phải đã được đặt không
-	                    if (seatDiv.classList.contains('booked')) return; // Nếu ghế đã đặt, không làm gì thêm
-	
-	                    // Toggle chọn ghế
-	                    seatDiv.classList.toggle('selected');
-	                    if (seatDiv.classList.contains('selected')) {
-	                        seatDiv.style.backgroundColor = '#007bff';  // Đặt màu xanh dương cho ghế khi chọn
-	                        seatDiv.style.color = 'white'; // Đổi màu chữ thành trắng khi chọn ghế
-	                    } else {
-	                        seatDiv.style.backgroundColor = '';  // Xóa màu khi bỏ chọn
-	                        seatDiv.style.color = ''; // Trả lại màu chữ mặc định
-	                    }
-	                    // Đảm bảo ghế đã chọn giữ màu
-	                   
-	                });
-	                rowDiv.appendChild(seatDiv);
-	            });
-	
-	            seatMap.appendChild(rowDiv);
+	<script type="text/javascript">
+	    function initializeTomSelect(selector) {
+	        new TomSelect(selector, {
+	            create: true,
+	            sortField: {
+	                field: "text",
+	                direction: "asc"
+	            }
 	        });
 	    }
 	
-	    // Gắn sự kiện click cho các toa
-	    document.querySelectorAll('.carriage').forEach(carriage => {
-	        carriage.addEventListener('click', function () {
-	            const carriageNumber = this.getAttribute('data-carriage');
-	            displaySeats(carriageNumber);
+	    initializeTomSelect("#departureLocation");
+	    initializeTomSelect("#destinationLocation");
+	</script>
+
+
+		<script th:inline="javascript">
+		    /*<![CDATA[*/
+		    var schedule = /*[[${schedule}]]*/ {};
+		    /*]]>*/
+		</script>
+
+		<script>
+		   
+			$(document).ready(function () {
+			    let currentCarriage = 1;
 	
-	            // Gỡ bỏ lớp 'selected' khỏi tất cả các toa
-	            document.querySelectorAll('.carriage').forEach(function(c) {
-	                c.classList.remove('selected');
-	            });
+			    function fetchSeats(carriageNumber) {
+			        $.ajax({
+			            url: `/seat/list/${carriageNumber}`,
+			            method: 'GET',
+			            success: function (data) {
+			                displaySeats(data, carriageNumber);
+			                console.log("test", data);
+			            },
+			            error: function () {
+			                alert("Không thể tải danh sách ghế. Vui lòng thử lại.");
+			            }
+			        });
+			    }
 	
-	            // Thêm lớp 'selected' vào toa được chọn
-	            carriage.classList.add('selected');
+			    function displaySeats(seats, carriageNumber) {
+			        const $seatMap = $('#seat-map');
+			        const $carriageTitle = $('#carriage-title');
 	
-	            // Cập nhật lại số toa hiện tại
-	            currentCarriage = carriageNumber;
-	        });
-	    });
+			        $carriageTitle.text(`Sơ đồ ghế: Toa ${carriageNumber}`);
+			        $seatMap.empty();
+			        const rows = [];
+			        for (let i = 0; i < seats.length; i += 7) {
+			            rows.push(seats.slice(i, i + 7));
+			        }
 	
-	    // Gắn sự kiện cho các nút điều hướng
-	    document.getElementById('prevCarriage').addEventListener('click', () => {
-	        if (currentCarriage > 1) {
-	            currentCarriage--;
-	            displaySeats(currentCarriage);
+			        rows.slice(0, 2).forEach((row, rowIndex) => {
+			            const $rowDiv = $('<div>').addClass('seat-row');
+			            row.forEach((seat, seatIndex) => {
+			                const $seatDiv = $('<div>').addClass('seat').addClass(seat.seatType.status === 'ENABLE' ? 'available' : 'booked');
+			                const seatNumber = rowIndex * 7 + seatIndex + 1;
+			                $seatDiv.text(seatNumber);
+			                $seatDiv.data('seatId', seat.id)
+			                    .data('coachId', seat.coach.id)
+			                    .data('trainId', seat.coach.train.id)
+			                    .data('seatName', seat.seatName)
+			                    .data('coachName', seat.coach.coachName)
+			                    .data('trainName', seat.coach.train.trainName)
+			                    .data('price', seat.seatType.price);
 	
-	            // Gỡ bỏ lớp 'selected' khỏi tất cả các toa
-	            document.querySelectorAll('.carriage').forEach(function(c) {
-	                c.classList.remove('selected');
-	            });
+			                if (schedule) {
+			                    $seatDiv.data('departureLocation', schedule.route.departureLocation)
+			                        .data('destinationLocation', schedule.route.destinationLocation)
+			                        .data('departureDate', schedule.departureDate)
+			                        .data('scheduleId', schedule.id);
+			                }
 	
-	            // Thêm lớp 'selected' vào toa mới
-	            document.querySelector(`.carriage[data-carriage="${currentCarriage}"]`).classList.add('selected');
-	        }
-	    });
+			                if (seat.seatType.status === 'ENABLE') {
+			                    $seatDiv.on('click', function () {
+			                        $seatDiv.toggleClass('selected');
 	
-	    document.getElementById('nextCarriage').addEventListener('click', () => {
-	        if (currentCarriage < Object.keys(seatData).length) {
-	            currentCarriage++;
-	            displaySeats(currentCarriage);
+			                        const seatData = {
+			                            seatId: $seatDiv.data('seatId'),
+			                            seatName: $seatDiv.data('seatName'),
+			                            coachId: $seatDiv.data('coachId'),
+			                            coachName: $seatDiv.data('coachName'),
+			                            trainId: $seatDiv.data('trainId'),
+			                            trainName: $seatDiv.data('trainName'),
+			                            price: $seatDiv.data('price'),
+			                            scheduleId: $seatDiv.data('scheduleId'),
+			                            departureLocation: $seatDiv.data('departureLocation'),
+			                            destinationLocation: $seatDiv.data('destinationLocation'),
+			                            departureDate: $seatDiv.data('departureDate')
+			                        };
 	
-	            // Gỡ bỏ lớp 'selected' khỏi tất cả các toa
-	            document.querySelectorAll('.carriage').forEach(function(c) {
-	                c.classList.remove('selected');
-	            });
+			                        let selectedSeats = JSON.parse(localStorage.getItem('selectedSeats')) || [];
+			                        if ($seatDiv.hasClass('selected')) {
+			                            selectedSeats.push(seatData);
+			                        } else {
+			                            selectedSeats = selectedSeats.filter(seat => seat.seatId !== $seatDiv.data('seatId'));
+			                        }
 	
-	            // Thêm lớp 'selected' vào toa mới
-	            document.querySelector(`.carriage[data-carriage="${currentCarriage}"]`).classList.add('selected');
-	        }
-	    });
-	    
-	  
-	    // Hiển thị mặc định ghế toa 1
-	    displaySeats(1);
-	    
+			                        localStorage.setItem('selectedSeats', JSON.stringify(selectedSeats));
+			                        updateCart();
+			                    });
+			                }
+	
+			                $rowDiv.append($seatDiv);
+			            });
+	
+			            $seatMap.append($rowDiv);
+			        });
+			    }
+	
+			    $('.carriage').on('click', function () {
+			        const carriageNumber = $(this).data('carriage');
+	
+			        $('.carriage').removeClass('selected');
+			        $(this).addClass('selected');
+			        fetchSeats(carriageNumber);
+			        currentCarriage = carriageNumber;
+			    });
+	
+			    $('#prevCarriage').on('click', function () {
+			        if (currentCarriage > 1) {
+			            currentCarriage--;
+			            fetchSeats(currentCarriage);
+			            $('.carriage').removeClass('selected');
+			            $(`.carriage[data-carriage="${currentCarriage}"]`).addClass('selected');
+			        }
+			    });
+	
+			    $('#nextCarriage').on('click', function () {
+			        if (currentCarriage < $('.carriage').length) {
+			            currentCarriage++;
+			            fetchSeats(currentCarriage);
+			            $('.carriage').removeClass('selected');
+			            $(`.carriage[data-carriage="${currentCarriage}"]`).addClass('selected');
+			        }
+			    });
+	
+			    fetchSeats(1);
+	
+			    function updateCart() {
+			        const $cartContent = $('#cart-content');
+			        const selectedSeats = JSON.parse(localStorage.getItem('selectedSeats')) || [];
+			        $cartContent.empty();
+			        if (selectedSeats.length === 0) {
+			            $cartContent.html('<p>Giỏ vé trống!</p>');
+			            return;
+			        }
+	
+			        let totalPrice = 0;
+			        selectedSeats.forEach(seat => {
+			            const $seatInfoDiv = $('<div>').addClass('seat-info');
+	
+			            const dateObj = new Date(seat.departureDate);
+			            const formattedDate = `${dateObj.getHours().toString().padStart(2, '0')}:${dateObj.getMinutes().toString().padStart(2, '0')} | ` +
+			                `${(dateObj.getMonth() + 1).toString().padStart(2, '0')}/${dateObj.getDate().toString().padStart(2, '0')}/` +
+			                `${dateObj.getFullYear()}`;
+	
+			            const $deleteIcon = $('<span>').addClass('delete-icon').html('🗑️').css('cursor', 'pointer');
+	
+			            $deleteIcon.on('click', function () {
+			                const updatedSeats = selectedSeats.filter(item => item.seatId !== seat.seatId);
+			                localStorage.setItem('selectedSeats', JSON.stringify(updatedSeats));
+			                updateCart();
+	
+			                const $seatDiv = $(`.seat[data-seat-id="${seat.seatId}"]`);
+			                if ($seatDiv.length) {
+			                    $seatDiv.removeClass('selected');
+			                }
+			            });
+	
+			            const $seatDetailsDiv = $('<div>').addClass('seat-details')
+			                .html(`
+			                    <p><strong>Tàu: </strong>${seat.trainName} ${seat.departureLocation} - ${seat.destinationLocation}</p>
+			                    <p><strong>Ngày đi: </strong>${formattedDate}</p>
+			                    <p><strong>NML: </strong>${seat.coachName}  Ghế: ${seat.seatId}</p>
+			                `);
+	
+			            const $deleteContainer = $('<div>').addClass('delete-container').append($deleteIcon);
+			            $seatInfoDiv.append($seatDetailsDiv).append($deleteContainer);
+			            $cartContent.append($seatInfoDiv);
+			            totalPrice += parseFloat(seat.price);
+			        });
+	
+			        const $seatCountDiv = $('<div>').addClass('seat-count').html(`<p><strong>Số ghế đã chọn: </strong>${selectedSeats.length}</p>`);
+			        $cartContent.append($seatCountDiv);
+			    }
+	
+			    window.onload = function () {
+			        localStorage.removeItem('selectedSeats');
+			        updateCart();
+			    };
+	
+			    $('#confirmBooking').on('click', function () {
+			        const selectedSeats = JSON.parse(localStorage.getItem('selectedSeats')) || [];
+			        if (selectedSeats.length === 0) {
+			            alert('Vui lòng chọn ít nhất một ghế để mua vé!');
+			            return;
+			        }
+			        localStorage.setItem('selectedSeats', JSON.stringify(selectedSeats));
+			        window.location.href = '/instruct/index';
+			    });
+			});
+
 		</script>
 
 	</div>

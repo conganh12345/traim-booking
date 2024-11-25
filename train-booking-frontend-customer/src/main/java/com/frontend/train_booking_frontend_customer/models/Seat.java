@@ -1,14 +1,25 @@
 package com.frontend.train_booking_frontend_customer.models;
 
+
 public class Seat {
 	private Integer id;
 	
 	private String seatName;
 	
 	private SeatType seatType;
+	
+	private Coach coach;
 
 	public Integer getId() {
 		return id;
+	}
+
+	public Coach getCoach() {
+		return coach;
+	}
+
+	public void setCoach(Coach coach) {
+		this.coach = coach;
 	}
 
 	public void setId(Integer id) {
