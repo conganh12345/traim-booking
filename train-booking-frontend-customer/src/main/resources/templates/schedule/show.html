@@ -496,7 +496,6 @@
 		</script>
 
 		<script>
-		   
 			$(document).ready(function () {
 			    let currentCarriage = 1;
 	
@@ -531,6 +530,8 @@
 			                const $seatDiv = $('<div>').addClass('seat').addClass(seat.seatType.status === 'ENABLE' ? 'available' : 'booked');
 			                const seatNumber = rowIndex * 7 + seatIndex + 1;
 			                $seatDiv.text(seatNumber);
+			                
+			                $seatDiv.attr('data-seat-id', seat.id);
 			                $seatDiv.data('seatId', seat.id)
 			                    .data('coachId', seat.coach.id)
 			                    .data('trainId', seat.coach.train.id)
@@ -637,7 +638,8 @@
 			                localStorage.setItem('selectedSeats', JSON.stringify(updatedSeats));
 			                updateCart();
 	
-			                const $seatDiv = $(`.seat[data-seat-id="${seat.seatId}"]`);
+			                const $seatDiv = $(`.available[data-seat-id="${seat.seatId}"]`);
+			                console.log("test", seat.seatId);
 			                if ($seatDiv.length) {
 			                    $seatDiv.removeClass('selected');
 			                }
@@ -660,10 +662,7 @@
 			        $cartContent.append($seatCountDiv);
 			    }
 	
-			    window.onload = function () {
-			        localStorage.removeItem('selectedSeats');
-			        updateCart();
-			    };
+			   
 	
 			    $('#confirmBooking').on('click', function () {
 			        const selectedSeats = JSON.parse(localStorage.getItem('selectedSeats')) || [];
@@ -675,6 +674,11 @@
 			        window.location.href = '/instruct/index';
 			    });
 			});
+			
+			 window.onload = function () {  	
+		        localStorage.removeItem('selectedSeats');
+		        updateCart();
+		    };
 
 		</script>
 
