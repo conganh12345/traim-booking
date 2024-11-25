@@ -2,6 +2,7 @@ package com.backend.train_booking_backend.services;
 
 import java.util.List;
 
+import com.backend.train_booking_backend.models.Coach;
 import com.backend.train_booking_backend.models.Seat;
 
 public interface ISeatService {
@@ -14,4 +15,6 @@ public interface ISeatService {
 	Seat updateSeat(Integer id, Seat seat);
 
 	int deleteSeat(Integer id);
+	
+	List<Seat> getSeatsByCoachId(int coachId);
 }

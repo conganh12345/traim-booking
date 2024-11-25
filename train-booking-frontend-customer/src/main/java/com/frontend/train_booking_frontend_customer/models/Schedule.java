@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class Schedule {
-private Integer id;
+	private Integer id;
 	
 	@NotEmpty(message = "Tên chuyến đi không được để trống")
     @Size(min = 3, max = 100, message = "Tên chuyến đi phải có độ dài từ 3 đến 100 ký tự")

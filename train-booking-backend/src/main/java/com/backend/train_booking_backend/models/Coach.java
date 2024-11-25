@@ -41,7 +41,7 @@ public class Coach {
 	private Train train;
 
 	@OneToMany(mappedBy = "coach")
-	 @JsonManagedReference
+	 @JsonIgnore
 	private List<Seat> seats = new ArrayList<>();
 
 	public Integer getId() {

@@ -36,6 +36,9 @@ public class SecurityConfig {
 	        http.csrf(AbstractHttpConfigurer::disable) 
 	            .authorizeHttpRequests(auth -> auth
 	                .requestMatchers("/api/auth/**").permitAll() 
+	                .requestMatchers("/api/seat/list/**").permitAll() 
+	                .requestMatchers("/api/coach/list/**").permitAll() 
+	                .requestMatchers("/api/schedule/id/**").permitAll() 
 	                .requestMatchers("/api/schedule/search/**").permitAll() 
 	                .requestMatchers("/api/vnpay/**").permitAll()
 	                .requestMatchers("/api/user/**").hasAuthority("USER")
