@@ -195,8 +195,12 @@
             chart: {
                 height: 350,
                 type: 'line',
-                zoom: { enabled: false },
-                toolbar: { show: false },
+                zoom: { enabled: true },
+				toolbar: {
+					show: true,
+					offsetX: 0,
+					offsetY: 25,
+				},
                 dropShadow: { enabled: true, top: 3, left: 3, blur: 5, opacity: 0.1 }
             },
             dataLabels: { enabled: false },
@@ -214,6 +218,22 @@
                     color: '#333'
                 }
             },
+            plotOptions: {
+				bar: {
+					columnWidth: '50%'
+				}
+			},
+			fill: {
+				opacity: [1],
+				gradient: {
+					inverseColors: false,
+					shade: 'light',
+					type: "vertical",
+					opacityFrom: 0.85,
+					opacityTo: 0.55,
+					stops: [0, 100, 100, 100]
+				}
+			},
             grid: {
                 show: true,
                 borderColor: '#e5e5e5',
