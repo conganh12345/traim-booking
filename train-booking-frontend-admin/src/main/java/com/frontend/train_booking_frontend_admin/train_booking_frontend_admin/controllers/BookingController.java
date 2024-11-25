@@ -1,6 +1,8 @@
 package com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.controllers;
 
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,4 +60,11 @@ public class BookingController {
 
 		return "booking/show";
 	}
+	
+	 @GetMapping("/statistics")
+	    public ResponseEntity<Map<String, Integer>> getBookingStatistics() {
+	        Map<String, Integer> statistics = bookingService.getBookingStatistics();
+
+	        return ResponseEntity.ok(statistics);
+	    }
 }
