@@ -30,7 +30,6 @@ public class Seat {
 
 	@ManyToOne
     @JoinColumn(name="coach_id")
-	@JsonBackReference
     private Coach coach;
 
 	@ManyToOne

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.backend.train_booking_backend.models.Coach;
 import com.backend.train_booking_backend.models.Seat;
 import com.backend.train_booking_backend.services.ISeatService;
 
@@ -88,5 +89,14 @@ public class SeatController {
 			default:
 				return new ResponseEntity<>("Không thể xóa ghế với ID: " + id, HttpStatus.BAD_REQUEST);
 		}
+	}
+	
+	@GetMapping("/list/{coachId}")
+	public ResponseEntity<List<Seat>> getSeats(@PathVariable("coachId") int coachId) {
+	    List<Seat> seats = seatService.getSeatsByCoachId(coachId);
+	    if (seats.isEmpty()) {
+	        return ResponseEntity.noContent().build(); 
+	    }
+	    return ResponseEntity.ok(seats); 
 	}
 }
