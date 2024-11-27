@@ -59,6 +59,7 @@
 									<th style="width: 5%">STT</th>
 									<th>Tên tàu</th>
 									<th>Tên hành trình</th>
+									<th>Giá</th>
 									<th>Nơi đi</th>
 									<th>Nơi đến</th>
 									<th class="no-content" style="width: 5%">Thao tác</th>
@@ -71,6 +72,7 @@
 										th:text="${route.train != null ? route.train.trainName : ''}"></span>
 									</td>
 									<td th:text="${route.routeName}"></td>
+									<td th:text="${route.price}"></td>
 									<td th:text="${route.departureLocation.displayName}"></td>
 									<td th:text="${route.destinationLocation.displayName}"
 										class="text-truncate" style="max-width: 250px;"></td>

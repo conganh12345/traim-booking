@@ -27,6 +27,9 @@ public class Route {
 
 	@Column
 	private String routeName;
+	
+	@Column
+	private Double price;
 
 	@Enumerated(EnumType.STRING)
 	private Province departureLocation;
@@ -60,6 +63,14 @@ public class Route {
 
 	public void setDepartureLocation(Province departureLocation) {
 		this.departureLocation = departureLocation;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
 	}
 
 	public Province getDestinationLocation() {

@@ -532,13 +532,15 @@
 			                $seatDiv.text(seatNumber);
 			                
 			                $seatDiv.attr('data-seat-id', seat.id);
+			                $seatDiv.attr('data-seat-price',  seat.seatType.price + schedule.route.price);
 			                $seatDiv.data('seatId', seat.id)
 			                    .data('coachId', seat.coach.id)
 			                    .data('trainId', seat.coach.train.id)
 			                    .data('seatName', seat.seatName)
 			                    .data('coachName', seat.coach.coachName)
 			                    .data('trainName', seat.coach.train.trainName)
-			                    .data('price', seat.seatType.price);
+			                    .data('price', seat.seatType.price + (schedule ? schedule.route.price : 0))
+			                	.data('seatTypeName', seat.seatType.seatName);
 	
 			                if (schedule) {
 			                    $seatDiv.data('departureLocation', schedule.route.departureLocation)
@@ -559,6 +561,7 @@
 			                            trainId: $seatDiv.data('trainId'),
 			                            trainName: $seatDiv.data('trainName'),
 			                            price: $seatDiv.data('price'),
+			                            seatTypeName: $seatDiv.data('seatTypeName'),
 			                            scheduleId: $seatDiv.data('scheduleId'),
 			                            departureLocation: $seatDiv.data('departureLocation'),
 			                            destinationLocation: $seatDiv.data('destinationLocation'),
@@ -576,6 +579,38 @@
 			                        updateCart();
 			                    });
 			                }
+			                
+			      
+
+			               //pop-up price
+			                $seatDiv.on('mouseenter', function () {
+			                    const seatPrice = $seatDiv.attr('data-seat-price');
+			                    
+			                    const $pricePopup = $('<div class="price-popup">').text(`Giá: ${formatPrice(seatPrice)} VND`);
+
+			                    
+			                    const offset = $seatDiv.offset();
+			                    const seatWidth = $seatDiv.outerWidth();
+			                    const seatHeight = $seatDiv.outerHeight();
+
+			                    $pricePopup.css({
+			                        position: 'absolute',
+			                        top: offset.top + seatHeight + 5,  
+			                        left: offset.left + seatWidth / 2 - $pricePopup.outerWidth() / 2,  
+			                        zIndex: 9999,
+			                        background: '#fff',
+			                        padding: '5px 10px',
+			                        borderRadius: '5px',
+			                        border: '1px solid #ccc',
+			                        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
+			                    });
+			       
+			                    $('body').append($pricePopup);
+			                });
+
+			                $seatDiv.on('mouseleave', function () {
+			                    $('.price-popup').remove();
+			                });
 	
 			                $rowDiv.append($seatDiv);
 			            });
@@ -679,6 +714,12 @@
 		        localStorage.removeItem('selectedSeats');
 		        updateCart();
 		    };
+		    
+		    function formatPrice(price) {
+		        price = price.toString();
+		        
+		        return price.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+		    }
 
 		</script>
 

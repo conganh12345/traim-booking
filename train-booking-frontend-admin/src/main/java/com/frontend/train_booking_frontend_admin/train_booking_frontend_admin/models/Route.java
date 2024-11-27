@@ -12,6 +12,8 @@ public class Route {
 	@NotEmpty(message = "Tên lịch trình không được để trống")
     @Size(min = 3, max = 100, message = "Tên lịch trình phải có độ dài từ 3 đến 100 ký tự")
     private String routeName;
+	
+	private double price;
 
 	@NotNull(message = "Nơi đi không được để trống")
     private Province departureLocation;
@@ -41,6 +43,12 @@ public class Route {
 	}
 	public void setDepartureLocation(Province departureLocation) {
 		this.departureLocation = departureLocation;
+	}
+	public double getPrice() {
+		return price;
+	}
+	public void setPrice(double price) {
+		this.price = price;
 	}
 	public Province getDestinationLocation() {
 		return destinationLocation;
