@@ -61,6 +61,7 @@
 									<th>Tên toa</th>
 									<th>Mô tả</th>
 									<th>Trạng thái</th>
+									<th>Danh sách ghế</th>
 									<th class="no-content" style="width: 5%">Thao tác</th>
 								</tr>
 							</thead>
@@ -77,6 +78,19 @@
 									<td class="text-truncate" style="max-width: 250px;"><span
 										th:class="'badge ' + ${coach.status.badgeClass}"
 										th:text="${coach.status.displayName}"></span></td>
+									<td><a href="#"
+										class="btn-warning p-2 rounded text-nowrap view-train-cars"
+										th:data-coach-id="${coach.id}"> Xem <svg
+												xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+												viewBox="0 0 24 24" fill="none" stroke="currentColor"
+												stroke-width="2" stroke-linecap="round"
+												stroke-linejoin="round"
+												class="feather feather-eye p-1 br-6 mb-1">
+									            <path
+													d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+									            <circle cx="12" cy="12" r="3"></circle>
+									        </svg>
+									</a></td>
 									<td
 										class="table-controls d-flex justify-content-center align-items-center pt-2">
 										<li><a th:href="@{/coach/show/{id}(id=${coach.id})}"
@@ -124,6 +138,40 @@
 				</div>
 			</div>
 		</div>
+
+
+
+		<div class="modal fade" id="trainCarsModal" tabindex="-1"
+			aria-labelledby="trainCarsModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="trainCarsModalLabel">Danh sách
+							toa</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<table id="seatTables" class="table">
+							<thead>
+								<tr>
+									<th>STT</th>
+									<th>Tên ghế</th>
+									<th>Loại ghế</th>
+								</tr>
+							</thead>
+							<tbody id="trainCarsTableBody">
+
+							</tbody>
+						</table>
+						<div class="d-flex justify-content-end mt-3">
+							<button type="button" class="btn btn-light-dark"
+								data-bs-dismiss="modal">Đóng</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 
 
@@ -158,6 +206,19 @@
 								"pageLength" : 10,
 								"ordering" : false
 							});
+		</script>
+
+		<script>
+		    $('#seatTables').DataTable({
+		        "dom": "<'table-responsive'tr>", 
+		        "oLanguage": {
+		            "sEmptyTable": "Chưa có dữ liệu",
+		            "sZeroRecords": "Không có bản ghi nào trùng khớp",
+		        },
+		        "stripeClasses": [],
+		        "paging": false, 
+		        "ordering": false 
+		    });
 		</script>
 
 
@@ -202,6 +263,54 @@
 					$('#deleteModal').modal('hide');
 				});
 			});
+		</script>
+
+		<script>
+			$(document).ready(function() {
+			    $('.view-train-cars').on('click', function(e) {
+			        e.preventDefault();
+	
+			        const coachId = $(this).data('coach-id');
+	
+			        $.ajax({
+			            url: `/coach/show-seat/${coachId}`,
+			            type: 'GET',
+			            success: function(response) {
+			                const tbody = $('#trainCarsTableBody');
+			                tbody.empty();
+			                if (response.seats && response.seats.length > 0) {
+			                    response.seats.forEach((car, index) => {
+			                        tbody.append(`
+			                            <tr>
+			                                <td>${index + 1}</td>
+			                                <td>${car.seatName}</td>
+			                                <td>${car.seatType.seatName}</td>
+			                            </tr>
+			                        `);
+			                    });
+			                } else {
+			                    tbody.append(`
+			                        <tr>
+			                            <td colspan="4" class="text-center">Không có ghế nào</td>
+			                        </tr>
+			                    `);
+			                }
+	
+			                $('#trainCarsModal').modal('show');
+			            },
+			            error: function() {
+			                Snackbar.show({
+			                    text: 'Không thể tải danh sách ghế',
+			                    textColor: '#fbeced',
+			                    backgroundColor: '#e7515a',
+			                    actionText: 'Đóng',
+			                    actionTextColor: '#3b3f5c'
+			                });
+			            }
+			        });
+			    });
+			});
+
 		</script>
 
 	</div>

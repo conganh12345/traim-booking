@@ -60,6 +60,7 @@
 									<th>Tên tàu</th>
 									<th>Mô tả</th>
 									<th>Trạng thái</th>
+									<th>Danh sách toa</th>
 									<th class="no-content" style="width: 5%">Thao tác</th>
 								</tr>
 							</thead>
@@ -67,39 +68,52 @@
 								<tr th:each="train, stat : ${trains}">
 									<td th:text="${stat.count}"></td>
 									<td th:text="${train.trainName}"></td>
+
 									<td th:text="${train.description}" class="text-truncate"
 										style="max-width: 250px;"></td>
 									<td class="text-truncate" style="max-width: 250px;"><span
 										th:class="'badge ' + ${train.status.badgeClass}"
 										th:text="${train.status.displayName}"></span></td>
+									<td>
+									    <a href="#" class="btn-warning p-2 rounded text-nowrap view-train-cars" 
+									       th:data-train-id="${train.id}">
+									        Xem 
+									        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye p-1 br-6 mb-1">
+									            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+									            <circle cx="12" cy="12" r="3"></circle>
+									        </svg>
+									    </a>
+									</td>
+
 									<td
 										class="table-controls d-flex justify-content-center align-items-center pt-2">
 										<li><a th:href="@{/train/edit/{id}(id=${train.id})}"
-										class="bs-tooltip edit" data-bs-toggle="tooltip"
-										data-bs-placement="top"> <svg
-												xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-												viewBox="0 0 24 24" fill="none" stroke="currentColor"
-												stroke-width="2" stroke-linecap="round"
-												stroke-linejoin="round"
-												class="feather feather-edit-2 p-1 br-6 mb-1">
+											class="bs-tooltip edit" data-bs-toggle="tooltip"
+											data-bs-placement="top"> <svg
+													xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+													viewBox="0 0 24 24" fill="none" stroke="currentColor"
+													stroke-width="2" stroke-linecap="round"
+													stroke-linejoin="round"
+													class="feather feather-edit-2 p-1 br-6 mb-1">
 								                <path
-													d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z">
+														d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z">
 								                </path>
 								            </svg>
-									</a> </li>
+										</a></li>
 										<li><a href="#" class="bs-tooltip delete"
-										th:data-train-id="${train.id}" data-bs-toggle="tooltip"
-										data-bs-placement="top"> <svg
-												xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-												viewBox="0 0 24 24" fill="none" stroke="currentColor"
-												stroke-width="2" stroke-linecap="round"
-												stroke-linejoin="round"
-												class="feather feather-trash p-1 br-6 mb-1">
+											th:data-train-id="${train.id}" data-bs-toggle="tooltip"
+											data-bs-placement="top"> <svg
+													xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+													viewBox="0 0 24 24" fill="none" stroke="currentColor"
+													stroke-width="2" stroke-linecap="round"
+													stroke-linejoin="round"
+													class="feather feather-trash p-1 br-6 mb-1">
 										        <polyline points="3 6 5 6 21 6"></polyline>
 										        <path
-													d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+														d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
 										    </svg>
-									</a></li></td>
+										</a></li>
+									</td>
 								</tr>
 							</tbody>
 						</table>
@@ -107,6 +121,39 @@
 				</div>
 			</div>
 		</div>
+		
+		
+
+		<div class="modal fade" id="trainCarsModal" tabindex="-1" aria-labelledby="trainCarsModalLabel" aria-hidden="true">
+		    <div class="modal-dialog modal-lg modal-dialog-centered">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <h5 class="modal-title" id="trainCarsModalLabel">Danh sách toa</h5>
+		                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		            </div>
+		            <div class="modal-body">
+		                <table id="coachTables" class="table">
+		                    <thead>
+		                        <tr>
+		                            <th>STT</th>
+		                            <th>Tên toa</th>
+		                            <th>Mô tả</th>
+		                            <th>Trạng thái</th>
+		                        </tr>
+		                    </thead>
+		                    <tbody id="trainCarsTableBody">
+		                       
+		                    </tbody>
+		                </table>
+		                <div class="d-flex justify-content-end mt-3">
+							<button type="button" class="btn btn-light-dark"
+								data-bs-dismiss="modal">Đóng</button>
+						</div>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+				
 	</div>
 
 
@@ -139,8 +186,22 @@
 								"stripeClasses" : [],
 								"lengthMenu" : [ 7, 10, 20, 50 ],
 								"pageLength" : 10,
-								"ordering": false
+								"ordering" : false
 							});
+		</script>
+
+
+		<script>
+		    $('#coachTables').DataTable({
+		        "dom": "<'table-responsive'tr>", 
+		        "oLanguage": {
+		            "sEmptyTable": "Chưa có dữ liệu",
+		            "sZeroRecords": "Không có bản ghi nào trùng khớp",
+		        },
+		        "stripeClasses": [],
+		        "paging": false, 
+		        "ordering": false 
+		    });
 		</script>
 
 
@@ -185,6 +246,56 @@
 					$('#deleteModal').modal('hide');
 				});
 			});
+		</script>
+		
+		<script>
+			$(document).ready(function() {
+			    $('.view-train-cars').on('click', function(e) {
+			        e.preventDefault();
+	
+			        const trainId = $(this).data('train-id');
+	
+			        $.ajax({
+			            url: `/train/show/${trainId}`,
+			            type: 'GET',
+			            success: function(response) {
+			                const tbody = $('#trainCarsTableBody');
+			                tbody.empty();
+	
+			                if (response.coachs && response.coachs.length > 0) {
+			                    response.coachs.forEach((car, index) => {
+			                        tbody.append(`
+			                            <tr>
+			                                <td>${index + 1}</td>
+			                                <td>${car.coachName}</td>
+			                                <td>${car.description}</td>
+			                                <td>${car.status}</td>
+			                            </tr>
+			                        `);
+			                    });
+			                } else {
+			                    tbody.append(`
+			                        <tr>
+			                            <td colspan="4" class="text-center">Không có toa nào</td>
+			                        </tr>
+			                    `);
+			                }
+	
+			                $('#trainCarsModal').modal('show');
+			            },
+			            error: function() {
+			                Snackbar.show({
+			                    text: 'Không thể tải danh sách toa',
+			                    textColor: '#fbeced',
+			                    backgroundColor: '#e7515a',
+			                    actionText: 'Đóng',
+			                    actionTextColor: '#3b3f5c'
+			                });
+			            }
+			        });
+			    });
+			});
+
 		</script>
 
 	</div>

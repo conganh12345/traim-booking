@@ -1,6 +1,8 @@
 package com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.controllers;
 
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +17,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Coach;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Train;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.enums.TrainStatus;
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.CoachService;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.TrainService;
 
 import jakarta.validation.Valid;
@@ -26,6 +31,9 @@ import jakarta.validation.Valid;
 public class TrainController {
 	@Autowired
 	private TrainService trainService;
+	
+	@Autowired
+	private CoachService coachService;
 
 	@GetMapping("/index")
 	public String index(Model model) {
@@ -90,6 +98,16 @@ public class TrainController {
 		}
 		return "redirect:/train/index";
 	}
+	
+	@GetMapping("/show/{id}")
+	public ResponseEntity<?> getTrainCoachs(@PathVariable Integer id) {
+	    List<Coach> coachs = coachService.getCoachesByTrainId(id);
+	    if (coachs == null || coachs.isEmpty()) {
+	        return ResponseEntity.ok(Map.of("coachs", List.of()));
+	    }
+	    return ResponseEntity.ok(Map.of("coachs", coachs));
+	}
+
 
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> deleteTrain(@PathVariable Integer id) {
