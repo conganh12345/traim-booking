@@ -5,9 +5,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
@@ -109,5 +111,22 @@ public class SeatService {
 	        e.printStackTrace();
 	        return false;
 	    	}
+	    }
+	
+	  public List<Seat> getSeatesByCoachId(int coachId) {
+	        String url = apiUrl + "api/seat/list/" + coachId;
+	        
+	        try {
+	            HttpEntity<Void> requestEntity = new HttpEntity<>(null);
+	            
+	            ResponseEntity<List<Seat>> response = restTemplate.exchange(
+		                url, HttpMethod.GET, requestEntity, new ParameterizedTypeReference<List<Seat>>() {});
+		        return response.getBody();
+
+	        } catch (Exception e) {
+	            System.out.println("Lỗi khi gọi API: " + e.getMessage());
+	            return List.of();
+	        }
+
 	    }
 }

@@ -1,6 +1,8 @@
 package com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.controllers;
 
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,7 @@ import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.mo
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.enums.CoachStatus;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.enums.TicketStatus;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.CoachService;
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.SeatService;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.SeatTypeService;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.TrainService;
 
@@ -37,8 +40,9 @@ public class CoachController {
 	private CoachService coachService;
 	@Autowired
 	private TrainService trainService;
+	
 	@Autowired
-	private SeatTypeService seatService;
+	private SeatService seatService;
 
 	@GetMapping("/index")
 	public String index(Model model) {
@@ -118,11 +122,24 @@ public class CoachController {
 	@GetMapping("/show/{id}")
 	public String show(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
 		Coach coach = coachService.getCoachById(id);
+		
+		List<Seat> seats = seatService.getSeatesByCoachId(coach.getId());
 
 		model.addAttribute("page", "coach")
-			.addAttribute("coach", coach);
+			.addAttribute("coach", coach)
+			.addAttribute("seats", seats);
 
 		return "coach/show";
+	}
+	
+	
+	@GetMapping("/show-seat/{id}")
+	public ResponseEntity<?> getCoachSeats(@PathVariable Integer id) {
+		List<Seat> seats = seatService.getSeatesByCoachId(id);
+	    if (seats == null || seats.isEmpty()) {
+	        return ResponseEntity.ok(Map.of("seats", List.of()));
+	    }
+	    return ResponseEntity.ok(Map.of("seats", seats));
 	}
 
 	@DeleteMapping("/delete/{id}")

@@ -55,7 +55,6 @@ public class ScheduleController {
 	}
 
 	@GetMapping("/id/{id}")
-	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<Schedule> getSchedule(@PathVariable Integer id) {
 		Schedule schedule = scheduleService.getSchedule(id);
 		if (schedule == null) {

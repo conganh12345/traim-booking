@@ -1,6 +1,11 @@
 package com.backend.train_booking_backend.services.impl;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,7 +99,40 @@ public class BookingService implements IBookingService {
 	    }
 	    return null; 
 	}
+	
+	@Override
+	public Booking findById(int bookingId) {
+	    Optional<Booking> booking = bookingRepo.findById(bookingId);
+	    if (booking.isPresent()) {
+	        return booking.get();
+	    }
+	    return null;
+	}
 
+	  public Map<String, Integer> getBookingStatistics() {
+	        Map<String, Integer> bookingStatistics = new HashMap<>();
+
+	        // Tính toán khoảng thời gian 15 ngày gần nhất
+	        LocalDate endDate = LocalDate.now(); // Ngày hiện tại
+	        LocalDate startDate = endDate.minusDays(14); // 15 ngày trước
+
+	        // Chuyển đổi LocalDate thành LocalDateTime (ở đầu ngày)
+	        LocalDateTime startDateTime = startDate.atStartOfDay();
+	        LocalDateTime endDateTime = endDate.atTime(23, 59, 59); // Cuối ngày
+
+	        // Lấy thống kê booking từ cơ sở dữ liệu
+	        List<Object[]> stats = bookingRepo.getBookingStatistics(startDateTime, endDateTime);
+
+	        // Chuyển đổi dữ liệu thành định dạng {Date: Count}
+	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	        for (Object[] stat : stats) {
+	            LocalDateTime dateTime = (LocalDateTime) stat[0];
+	            Long count = (Long) stat[1];
+	            bookingStatistics.put(dateTime.toLocalDate().format(formatter), count.intValue());
+	        }
+
+	        return bookingStatistics;
+	    }
 }
 
 

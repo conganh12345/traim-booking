@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
+import com.frontend.train_booking_frontend_customer.models.Booking;
 import com.frontend.train_booking_frontend_customer.models.Schedule;
 import com.frontend.train_booking_frontend_customer.models.enums.Province;
 import com.frontend.train_booking_frontend_customer.services.IScheduleService;
@@ -29,39 +30,35 @@ public class ScheduleService implements IScheduleService {
 	@Value("${api.base.url}")
 	private String apiUrl;
 	
-//	@Autowired
-//	private HttpSession session;
+	@Autowired
+	private HttpSession session;
 	
 	@Autowired
 	private RestTemplate restTemplate;
 	
-//	private String jwtToken;
-//	
-//	private HttpHeaders headers;
+	private String jwtToken;
+	private HttpHeaders headers;
 	
-//	public void setJwtToken() {
-//		this.jwtToken = (String) session.getAttribute("token");
-//		this.headers = new HttpHeaders();
-//		this.headers.set("Authorization", "Bearer " + jwtToken);
-//	}
+	public void setJwtToken() {
+		this.jwtToken = (String)session.getAttribute("token");
+		this.headers = new HttpHeaders();
+		this.headers.set("Authorization", "Bearer " + jwtToken);
+	}
+	
 	
 	@Override
 	public List<Schedule> GetScheduleByLocationAndTime(Province departureLocation, Province destinationLocation, LocalDate departureDate) {
 	    try {
-	        // Xây dựng URL với tham số query
 	        String url = apiUrl + "api/schedule/search?" +
 	                     "departureLocation=" + departureLocation.name() + "&" +
 	                     "destinationLocation=" + destinationLocation.name() + "&" +
 	                     "departureDate=" + departureDate.toString();
 
-	        // Tạo HttpEntity mà không cần headers
 	        HttpEntity<Void> entity = new HttpEntity<>(null);
 
-	        // Gửi yêu cầu GET với các tham số trong URL
 	        ResponseEntity<List<Schedule>> response = restTemplate.exchange(
 	                url, HttpMethod.GET, entity, new ParameterizedTypeReference<List<Schedule>>() {});
 	        
-	        // Trả về kết quả từ API
 	        return response.getBody();
 
 	    } catch (Exception e) {

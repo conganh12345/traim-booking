@@ -84,6 +84,18 @@ public class BookingService {
 	    }
 	}
 
+	 public Map<String, Integer> getBookingStatistics() {
+	        try {
+	            setJwtToken();
+	            String url = apiUrl + "api/booking/statistics";  
+
+	            HttpEntity<Void> entity = new HttpEntity<>(headers);
+	            return restTemplate.exchange(url, HttpMethod.GET, entity, Map.class).getBody();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            return null;  
+	        }
+	    }
 }
 
 	

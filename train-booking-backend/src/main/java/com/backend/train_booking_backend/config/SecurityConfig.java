@@ -21,6 +21,7 @@ import com.backend.train_booking_backend.services.impl.UserDetailsServiceImpleme
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
+	
 	 private final UserDetailsServiceImplement userDetailsServiceThuc;
 	    private final JwtRequestFilter jwtRequestFilter;
 
@@ -35,7 +36,12 @@ public class SecurityConfig {
 	        http.csrf(AbstractHttpConfigurer::disable) 
 	            .authorizeHttpRequests(auth -> auth
 	                .requestMatchers("/api/auth/**").permitAll() 
+	                .requestMatchers("/api/booking/statistics").permitAll() 
+	                .requestMatchers("/api/seat/list/**").permitAll() 
+	                .requestMatchers("/api/coach/list/**").permitAll() 
+	                .requestMatchers("/api/schedule/id/**").permitAll() 
 	                .requestMatchers("/api/schedule/search/**").permitAll() 
+	                .requestMatchers("/api/vnpay/**").permitAll()
 	                .requestMatchers("/api/user/**").hasAuthority("USER")
 	                .requestMatchers("/api/admin/**").hasAuthority("ADMIN")
 	                .anyRequest().authenticated()) 

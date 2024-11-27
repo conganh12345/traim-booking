@@ -4,116 +4,40 @@
 	layout:decorate="~{layouts/base-layout.html}">
 <head>
 <title>Trang chủ</title>
+
+<div layout:fragment="headerFiles">
+	<link rel="stylesheet" type="text/css"
+		href="/plugins/light/apex/apexcharts.css">
+	<link rel="stylesheet" type="text/css"
+		href="/css/assets/dark/apex/custom-apexcharts.css">
+	<link rel="stylesheet" type="text/css"
+		href="/css/assets/light/apex/custom-apexcharts.css">
+	<style>
+.apexcharts-title-text {
+	font-family: Nunito, sans-serif !important;
+	font-size: 20px;
+	font-weight: 600;
+}
+
+.flatpickr-calendar .flatpickr-monthDropdown-months {
+	display: inline-block;
+	width: auto;
+}
+
+.flatpickr-calendar .flatpickr-current-month {
+	display: flex;
+	justify-content: space-between;
+}
+</style>
+</div>
 </head>
 <body>
 	<div layout:fragment="content">
 		<div class="middle-content container-xxl p-0">
 			<div class="row layout-top-spacing">
-				<div
-					class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
-					<div class="widget widget-card-four">
-						<div class="widget-content">
-							<div class="w-header">
-								<div class="w-info">
-									<h6 class="value">Expenses</h6>
-								</div>
-								<div class="task-action">
-									<div class="dropdown">
-										<a class="dropdown-toggle" href="#" role="button"
-											id="expenses" data-bs-toggle="dropdown" aria-haspopup="true"
-											aria-expanded="false"> <svg
-												xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-												viewBox="0 0 24 24" fill="none" stroke="currentColor"
-												stroke-width="2" stroke-linecap="round"
-												stroke-linejoin="round"
-												class="feather feather-more-horizontal">
-														<circle cx="12" cy="12" r="1"></circle>
-														<circle cx="19" cy="12" r="1"></circle>
-														<circle cx="5" cy="12" r="1"></circle></svg>
-										</a>
+			
 
-										<div class="dropdown-menu left" aria-labelledby="expenses"
-											style="will-change: transform;">
-											<a class="dropdown-item" href="javascript:void(0);">This
-												Week</a> <a class="dropdown-item" href="javascript:void(0);">Last
-												Week</a> <a class="dropdown-item" href="javascript:void(0);">Last
-												Month</a>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="w-content">
-
-								<div class="w-info">
-									<p class="value">
-										$ 45,141 <span>this week</span>
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-											viewBox="0 0 24 24" fill="none" stroke="currentColor"
-											stroke-width="2" stroke-linecap="round"
-											stroke-linejoin="round" class="feather feather-trending-up">
-													<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
-													<polyline points="17 6 23 6 23 12"></polyline></svg>
-									</p>
-								</div>
-
-							</div>
-
-							<div class="w-progress-stats">
-								<div class="progress">
-									<div class="progress-bar bg-gradient-secondary"
-										role="progressbar" style="width: 57%" aria-valuenow="57"
-										aria-valuemin="0" aria-valuemax="100"></div>
-								</div>
-
-								<div class="">
-									<div class="w-icon">
-										<p>57%</p>
-									</div>
-								</div>
-
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div
-					class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
-					<div class="widget widget-card-five">
-						<div class="widget-content">
-							<div class="account-box">
-
-								<div class="info-box">
-									<div class="icon">
-										<span> <img src="/images/money-bag.png"
-											alt="money-bag">
-										</span>
-									</div>
-
-									<div class="balance-info">
-										<h6>Total Balance</h6>
-										<p>$41,741.42</p>
-									</div>
-								</div>
-
-								<div class="card-bottom-section">
-									<div>
-										<span class="badge badge-light-success">+ 13.6% <svg
-												xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-												viewBox="0 0 24 24" fill="none" stroke="currentColor"
-												stroke-width="2" stroke-linecap="round"
-												stroke-linejoin="round" class="feather feather-trending-up">
-														<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
-														<polyline points="17 6 23 6 23 12"></polyline></svg></span>
-									</div>
-									<a href="javascript:void(0);" class="">View Report</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12">
+				<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 					<div class="row widget-statistic">
 						<div
 							class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 layout-spacing">
@@ -132,8 +56,8 @@
 														<path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
 										</div>
 										<div class="">
-											<p class="w-value">31.6K</p>
-											<h5 class="">Followers</h5>
+											<p th:text="${userCount}" class="w-value"></p>
+											<h5 class="">Số lượng người dùng</h5>
 										</div>
 									</div>
 								</div>
@@ -161,8 +85,8 @@
 													d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
 										</div>
 										<div class="">
-											<p class="w-value">1,900</p>
-											<h5 class="">Referral</h5>
+											<p th:text="${scheduleCount}" class="w-value"></p>
+											<h5 class="">Số lượng chuyến đi</h5>
 										</div>
 									</div>
 								</div>
@@ -188,8 +112,8 @@
 													d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
 										</div>
 										<div class="">
-											<p class="w-value">18.2%</p>
-											<h5 class="">Engagement</h5>
+											<p th:text="${trainCount}" class="w-value"></p>
+											<h5 class="">Số lượng tàu</h5>
 										</div>
 									</div>
 								</div>
@@ -206,6 +130,154 @@
 			</div>
 
 		</div>
+		<div class="statbox widget box box-shadow">
+			<div class="widget-header">
+				<div class="row">
+					<div id="chartLine" class="col-lg-12 layout-spacing">
+						<div class="statbox widget box box-shadow">
+							<div class="layout-top-spacing col-12"></div>
+							<div id="s-line"></div>
+							<div id="order-quantity"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div layout:fragment="footerFiles">
+		<script src="/plugins/apex/apexcharts.min.js"></script>
+		<script src="/plugins/apex/custom-apexcharts.js"></script>
+		<script type="text/javascript">
+    function fetchOrderStatistics() {
+        try {
+            const response = fetch('http://localhost:9333/booking/statistics');
+            
+            response.then(res => {
+                if (!res.ok) throw new Error('Failed to fetch data');
+                
+                return res.json(); 
+            }).then(data => {
+                console.log("Data received:", data);
+                
+                const today = new Date();
+                const categories = [];
+                const seriesData = [];
+
+                for (let i = 14; i >= 0; i--) {
+                    const date = new Date(today);
+                    date.setDate(today.getDate() - i);
+
+                    const formattedDate = date.toLocaleDateString('en-GB');
+                    categories.push(formattedDate);
+
+                    seriesData.push(data[formattedDate] || 0);
+                }
+
+                renderChart(categories, seriesData); 
+            }).catch(error => {
+                console.error('Error fetching order statistics:', error);
+            });
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    function renderChart(categories, seriesData) {
+    	
+    	const existingChart = document.querySelector('#s-line');
+    	if (existingChart) {
+    		existingChart.innerHTML = ''; 
+    	}
+        const sline = {
+            chart: {
+                height: 350,
+                type: 'line',
+                zoom: { enabled: true },
+				toolbar: {
+					show: true,
+					offsetX: 0,
+					offsetY: 25,
+				},
+                dropShadow: { enabled: true, top: 3, left: 3, blur: 5, opacity: 0.1 }
+            },
+            dataLabels: { enabled: false },
+            stroke: { curve: 'smooth', width: 3 },
+            series: [{
+                name: "Số lượng:",
+                data: seriesData
+            }],
+            title: {
+                text: 'Số lượng đơn hàng (15 ngày gần nhất)',
+                align: 'left',
+                style: {
+                    fontSize: '18px',
+                    fontWeight: 'bold',
+                    color: '#333'
+                }
+            },
+            plotOptions: {
+				bar: {
+					columnWidth: '50%'
+				}
+			},
+			fill: {
+				opacity: [1],
+				gradient: {
+					inverseColors: false,
+					shade: 'light',
+					type: "vertical",
+					opacityFrom: 0.85,
+					opacityTo: 0.55,
+					stops: [0, 100, 100, 100]
+				}
+			},
+            grid: {
+                show: true,
+                borderColor: '#e5e5e5',
+                strokeDashArray: 5,
+                opacity: 0.1
+            },
+            xaxis: {
+                categories: categories,
+                title: {
+                    style: {
+                        fontSize: '12px',
+                        color: '#777'
+                    }
+                },
+                tickAmount: 6,
+                labels: {
+                    style: {
+                        fontSize: '10px',
+                        color: '#777'
+                    }
+                }
+            },
+            markers: {
+                size: 6,
+                colors: ['#FF0000'],
+                strokeColor: '#ffffff',
+                strokeWidth: 2,
+                hover: {
+                    size: 8,
+                    colors: ['#FF6347'],
+                    strokeColor: '#ffffff',
+                    strokeWidth: 2
+                }
+            }
+        };
+
+        const chart = new ApexCharts(document.querySelector("#s-line"), sline);
+        chart.render();
+    }
+
+  $(document).ready(function() {
+    fetchOrderStatistics();
+});
+
+</script>
+
 
 	</div>
 </body>

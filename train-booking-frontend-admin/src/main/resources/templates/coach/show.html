@@ -171,11 +171,11 @@
 															</tr>
 														</thead>
 														<tbody>
-															<tr th:if="${#lists.isEmpty(coach.seats)}">
+															<tr th:if="${#lists.isEmpty(seats)}">
 																<td colspan="4" class="text-center">Không có ghế
 																	nào trong toa này.</td>
 															</tr>
-															<tr th:each="seat : ${coach.seats}">
+															<tr th:each="seat : ${seats}">
 																<td th:text="${seat.id}"></td>
 																<td th:text="${seat.seatName}"></td>
 																<td class="text-center">

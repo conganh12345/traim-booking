@@ -99,4 +99,9 @@ public class BookingController {
 		}
 		return new ResponseEntity<>(booking, HttpStatus.OK);
 	}
+	
+	 @GetMapping("/statistics")
+    public Map<String, Integer> getBookingStatistics() {
+        return bookingService.getBookingStatistics();
+    }
 }

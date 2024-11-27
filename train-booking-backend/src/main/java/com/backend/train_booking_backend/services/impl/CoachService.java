@@ -84,4 +84,9 @@ public class CoachService implements ICoachService {
 	        return 0; 
 	    }
 	}
+	
+	@Override
+	public List<Coach> getCoachesByTrainId(int trainId) {
+        return coachRepo.findByTrainId(trainId);
+    }
 }

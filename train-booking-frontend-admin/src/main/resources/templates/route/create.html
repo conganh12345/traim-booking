@@ -85,6 +85,20 @@
 										</div>
 									</div>
 								</div>
+								
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group mb-4">
+											<label for="price">Giá <strong
+												class="text-danger">*</strong></label> <input type="number"
+												th:field="*{price}" id="price" class="form-control"
+												placeholder="Giá"
+												th:classappend="${#fields.hasErrors('price') ? 'is-invalid' : ''}">
+											<span th:if="${#fields.hasErrors('price')}"
+												class="text-danger" th:errors="*{price}"></span>
+										</div>
+									</div>
+								</div>
 			
 
 								<div class="row">

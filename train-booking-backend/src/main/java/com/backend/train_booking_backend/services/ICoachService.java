@@ -14,4 +14,6 @@ public interface ICoachService {
 	Coach updateCoach(Integer id, Coach coach);
 
 	int deleteCoach(Integer id);
+	
+	List<Coach> getCoachesByTrainId(int trainId);
 }

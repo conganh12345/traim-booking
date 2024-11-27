@@ -88,6 +88,14 @@ public class CoachController {
 			default:
 				return new ResponseEntity<>("Không thể xóa toa với ID: " + id, HttpStatus.BAD_REQUEST);
 		}
-
+	}
+	
+	@GetMapping("/list/{trainId}")
+	public ResponseEntity<List<Coach>> getCoaches(@PathVariable("trainId") int trainId) {
+	    List<Coach> coaches = coachService.getCoachesByTrainId(trainId);
+	    if (coaches.isEmpty()) {
+	        return ResponseEntity.noContent().build(); 
+	    }
+	    return ResponseEntity.ok(coaches); 
 	}
 }

@@ -1,6 +1,7 @@
 package com.backend.train_booking_backend.services;
 
 import java.util.List;
+import java.util.Map;
 
 import com.backend.train_booking_backend.models.Booking;
 
@@ -16,4 +17,8 @@ public interface IBookingService {
 	int deleteBooking(Integer id);
 	
 	Booking findByCode(String code);
+	
+	Booking findById(int bookingId);
+	
+	Map<String, Integer> getBookingStatistics();
 }

@@ -2,6 +2,7 @@ package com.frontend.train_booking_frontend_customer.models;
 
 import com.frontend.train_booking_frontend_customer.models.enums.Province;
 
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 public class Route {
@@ -9,9 +10,12 @@ public class Route {
 	
 	private String routeName;
 	
+	private double price;
+	
 	@NotNull(message = "Nơi đi không được để trống")
 	private Province departureLocation;
-	
+
+
 	@NotNull(message = "Nơi đến không được để trống")
 	private Province destinationLocation;
 	
@@ -66,6 +70,12 @@ public class Route {
 		this.train = train;
 	}
 
-	
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
 	
 }
