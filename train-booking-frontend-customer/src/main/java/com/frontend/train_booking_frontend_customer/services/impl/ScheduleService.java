@@ -14,6 +14,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
 import com.frontend.train_booking_frontend_customer.models.Schedule;
@@ -68,6 +69,20 @@ public class ScheduleService implements IScheduleService {
 	        return null;
 	    }
 	}
+	
+//	@Override
+//	public Schedule findById(int id) {
+//		try {
+//			String url = apiUrl + "api/schedule/id/" + id;
+//	        
+//	        HttpEntity<Void> entity = new HttpEntity<>(null);
+//	        
+//	        return restTemplate.exchange(url, HttpMethod.GET, entity, new ParameterizedTypeReference<Schedule>() {}).getBody();
+//		} catch (ResourceAccessException e) {
+//			e.printStackTrace();
+//			return null;
+//		}
+//	}
 
 
 

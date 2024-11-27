@@ -6,6 +6,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
@@ -48,5 +49,20 @@ public class BookingService implements IBookingService{
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+
+	@Override
+	public Booking insertBooking(Booking booking) {
+		try {
+            setJwtToken();
+            String url = apiUrl + "api/booking";
+            HttpEntity<Booking> entity = new HttpEntity<>(booking, headers);
+            Booking booking2 = restTemplate.postForObject(url, entity, Booking.class);
+            return booking2;
+        } catch (ResourceAccessException | HttpClientErrorException e) {
+            e.printStackTrace();
+            return null;
+        }
 	}
 }

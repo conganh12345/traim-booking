@@ -1,8 +1,6 @@
 package com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models;
 
 
-import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.enums.CoachStatus;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

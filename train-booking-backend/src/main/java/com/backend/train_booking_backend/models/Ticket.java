@@ -29,76 +29,89 @@ public class Ticket {
 
 	@Column
 	private double priceTicket;
+	
+	@Column
+	private String customerName;
+	
+	@Column
+	private String customerIdentify;
 
 	@Enumerated(EnumType.STRING)
 	private TicketStatus status;
 
 	@ManyToOne
 	@JoinColumn(name = "booking_id")
-	@JsonIgnore
 	private Booking booking;
 
 	@OneToOne
 	@JoinColumn(name = "seat_id")
     private Seat seat;
 
-
 	public Integer getId() {
 		return id;
 	}
-
 
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
-
 	public String getTicketName() {
 		return ticketName;
 	}
-
 
 	public void setTicketName(String ticketName) {
 		this.ticketName = ticketName;
 	}
 
-
 	public double getPriceTicket() {
 		return priceTicket;
 	}
-
 
 	public void setPriceTicket(double priceTicket) {
 		this.priceTicket = priceTicket;
 	}
 
+	public String getCustomerName() {
+		return customerName;
+	}
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+
+	public String getCustomerIdentify() {
+		return customerIdentify;
+	}
+
+	public void setCustomerIdentify(String customerIdentify) {
+		this.customerIdentify = customerIdentify;
+	}
 
 	public TicketStatus getStatus() {
 		return status;
 	}
 
-
 	public void setStatus(TicketStatus status) {
 		this.status = status;
 	}
-
 
 	public Booking getBooking() {
 		return booking;
 	}
 
-
 	public void setBooking(Booking booking) {
 		this.booking = booking;
 	}
-
 
 	public Seat getSeat() {
 		return seat;
 	}
 
-
 	public void setSeat(Seat seat) {
 		this.seat = seat;
 	}
+
+	
+
+	
 }
