@@ -82,4 +82,15 @@ public class TicketService implements ITicketService {
 	        return 0; 
 	    }
 	}
+
+	@Override
+	public List<Ticket> addTickets(List<Ticket> tickets) {
+		try {
+			return ticketRepo.saveAll(tickets);
+		} catch (Exception e) {
+			throw new RuntimeException("Đã xảy ra lỗi khi thêm các vé.", e);
+		}
+	}
+	
+	
 }

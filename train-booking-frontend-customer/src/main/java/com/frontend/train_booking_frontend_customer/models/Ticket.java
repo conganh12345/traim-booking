@@ -1,13 +1,26 @@
 package com.frontend.train_booking_frontend_customer.models;
 
+
+import com.frontend.train_booking_frontend_customer.models.enums.TicketStatus;
+
 public class Ticket {
 	private Integer id;
+
+    private String ticketName;
+
+    private double priceTicket;
+
+    private TicketStatus status;
 	
-	private String ticketName;
+    private Integer bookingId;  	
+	private Booking booking;
 	
-	private double priceTicket;
+    private Integer seatId;  	
+	private Seat seat;
 	
-	private int seatPosition;
+	private String customerName;
+	
+	private String customerIdentify;
 
 	public Integer getId() {
 		return id;
@@ -33,12 +46,63 @@ public class Ticket {
 		this.priceTicket = priceTicket;
 	}
 
-	public int getSeatPosition() {
-		return seatPosition;
+	public TicketStatus getStatus() {
+		return status;
 	}
 
-	public void setSeatPosition(int seatPosition) {
-		this.seatPosition = seatPosition;
+	public void setStatus(TicketStatus status) {
+		this.status = status;
 	}
+
+	public Integer getBookingId() {
+		return bookingId;
+	}
+
+	public void setBookingId(Integer bookingId) {
+		this.bookingId = bookingId;
+	}
+
+	public Booking getBooking() {
+		return booking;
+	}
+
+	public void setBooking(Booking booking) {
+		this.booking = booking;
+	}
+
+	public Integer getSeatId() {
+		return seatId;
+	}
+
+	public void setSeatId(Integer seatId) {
+		this.seatId = seatId;
+	}
+
+	public Seat getSeat() {
+		return seat;
+	}
+
+	public void setSeat(Seat seat) {
+		this.seat = seat;
+	}
+
+	public String getCustomerName() {
+		return customerName;
+	}
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+
+	public String getCustomerIdentify() {
+		return customerIdentify;
+	}
+
+	public void setCustomerIdentify(String customerIdentify) {
+		this.customerIdentify = customerIdentify;
+	}
+	
+	
+	
 	
 }

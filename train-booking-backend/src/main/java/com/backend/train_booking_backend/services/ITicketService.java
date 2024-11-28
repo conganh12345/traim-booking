@@ -14,4 +14,6 @@ public interface ITicketService {
 	Ticket updateTicket(Integer id, Ticket ticket);
 
 	int deleteTicket(Integer id);
+	
+	List<Ticket> addTickets(List<Ticket> tickets);
 }

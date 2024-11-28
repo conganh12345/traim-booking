@@ -90,4 +90,11 @@ public class TicketController {
 				return new ResponseEntity<>("Không thể xóa vé với ID: " + id, HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@PostMapping("/add/tickets")
+	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
+	public ResponseEntity<List<Ticket>> addTickets(@RequestBody List<Ticket> tickets) {
+		List<Ticket> savedTickets = ticketService.addTickets(tickets);
+        return new ResponseEntity<>(savedTickets, HttpStatus.CREATED);
+	}
 }

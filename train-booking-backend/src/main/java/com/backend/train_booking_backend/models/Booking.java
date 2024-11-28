@@ -40,6 +40,7 @@ public class Booking {
 	private BookingStatus status;
 
 	@OneToMany(mappedBy = "booking")
+	@JsonIgnore
 	private List<Ticket> tickets = new ArrayList<>();
 
 	@ManyToOne
@@ -62,6 +63,7 @@ public class Booking {
 		return totalPrice;
 	}
 
+	
 	public void setTotalPrice(String totalPrice) {
 		this.totalPrice = totalPrice;
 	}
@@ -113,6 +115,8 @@ public class Booking {
 	public void setUser(AppUser user) {
 		this.user = user;
 	}
+
+	
 
 	
 }

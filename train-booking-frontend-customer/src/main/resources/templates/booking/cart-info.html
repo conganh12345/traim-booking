@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/base-layout.html}">
+<head>
+<title>Trang chủ</title>
+<div layout:fragment="headerFiles">
+	<link rel="stylesheet" type="text/css"
+		href="/css/assets/light/apps/blog-post.css">
+	<link rel="stylesheet" type="text/css"
+		href="/css/assets/dark/apps/blog-post.css">
+
+	<link rel="stylesheet" type="text/css"
+		href="/css/assets/dark/apps/ecommerce-create.css">
+	<link rel="stylesheet" type="text/css"
+		href="/css/assets/light/apps/ecommerce-create.css">
+
+	<link href="/css/assets/light/pages/faq.css" rel="stylesheet"
+		type="text/css" />
+	<link href="/css/assets/dark/pages/faq.css" rel="stylesheet"
+		type="text/css" />
+	<style>
+#table-headers th {
+	border: 1px solid gray;
+	font-weight: bold;
+}
+</style>
+</div>
+
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="middle-content container-xxl p-0">
+			<div class="row layout-top-spacing">
+				<div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-4">
+					<div class="single-post-content">
+
+						<div
+							class="header text-center text-white p-1 rounded border border-primary">
+							<p class="mb-0 text-primary fw-bold fs-2">NHẬP THÔNG TIN
+								KHÁCH HÀNG</p>
+						</div>
+
+
+					</div>
+					<span class="badge badge-primary mb-2 me-4 mt-3"
+						style="font-size: 20px">THÔNG TIN GIỎ VÉ</span>
+					<div class="single-post-content mb-4"
+						style="background-color: #d9edf7">
+						<div class="post-content" style="padding: 0 !important">
+
+							<p>Các vé có biểu tượng là các vé bị hết thời gian tạm giữ.
+								Xin vui lòng loại bỏ các vé này khỏi danh sách vé đặt mua trước
+								khi thực hiện giao dịch thanh toán tiền.</p>
+							<p>Quý khách vui lòng điền đầy đủ, chính xác tất cả các thông
+								tin về hành khách đi tàu bao gồm: Họ tên đầy đủ, số giấy tờ tùy
+								thân (Số chứng minh nhân dân hoặc số hộ chiếu hoặc số giấy phép
+								lái xe đường bộ được pháp luật Việt Nam công nhận hoặc ngày
+								tháng năm sinh nếu là trẻ em hoặc thẻ sinh viên nếu là sinh
+								viên). Để đảm bảo an toàn, minh bạch trong quá trình bán vé các
+								thông tin này sẽ được nhân viên soát vé kiểm tra trước khi lên
+								tàu theo đúng các quy định của Tổng công ty Train-booking Việt
+								Nam.</p>
+
+
+						</div>
+
+					</div>
+
+					<div class="single-post-content">
+						<div class="post-content" style="padding: 0 !important">
+
+
+							<table class="table table-bordered"
+								style="border-collapse: collapse">
+								<thead id="table-headers">
+									<tr style="background-color: lavender; text-align: center">
+										<th scope="col" style="width: 35%">Họ tên</th>
+										<th scope="col">Thông tin chỗ</th>
+										<th class="text-center" scope="col">Giá vé</th>
+										<th class="text-center" scope="col">Bảo hiểm</th>
+										<th class="text-center" scope="col">Thành tiền</th>
+										<th class="text-center" scope="col">Thao tác</th>
+									</tr>
+								</thead>
+								<tbody id="ticket-rows">
+									<!-- Hàng dữ liệu sẽ được thêm vào đây -->
+								</tbody>
+								<tfoot>
+									<tr style="border: 1px solid #e7e6e6;">
+										<td>
+											<button id="clearAllTickets"
+												class="badge badge-primary mb-2 me-4"
+												style="border: none; font-size: 16px">Xóa tất cả
+												các vé</button>
+										</td>
+										<td colspan="3"
+											style="text-align: right; font-weight: bold; font-size: 20px">
+											Tổng tiền</td>
+										<td class="text-center" id="totalPrice"
+											style="font-weight: bold; font-size: 20px">0 đ</td>
+										<td class="text-center"></td>
+									</tr>
+								</tfoot>
+							</table>
+
+						</div>
+
+
+					</div>
+
+				</div>
+				<div class="statbox widget box box-shadow single-post-content mt-5">
+					<div class="widget-header">
+						<div class="row">
+							<div class="col-xl-12 col-md-12 col-sm-12 col-12">
+								<h4>Thông tin người đặt vé</h4>
+							</div>
+						</div>
+					</div>
+					<div class="widget-content widget-content-area" th:object="${user}">
+						<div class="col-12">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group mb-4">
+										<label for="username">Tên người dùng <strong
+											class="text-danger">*</strong></label> <input type="text"
+											th:field="*{fullName}" id="username" class="form-control"
+											placeholder="Tên người dùng"
+											th:classappend="${#fields.hasErrors('fullName') ? 'is-invalid' : ''}"
+											readonly style="color: black;">
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group mb-4">
+										<label for="email">Email <strong class="text-danger">*</strong></label>
+										<input type="text" th:field="*{email}" id="email"
+											class="form-control" placeholder="Email"
+											th:classappend="${#fields.hasErrors('email') ? 'is-invalid' : ''}"
+											readonly style="color: black;">
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group mb-4">
+										<label for="identifyCard">CMND/CCCD <strong
+											class="text-danger">*</strong></label> <input type="text"
+											th:field="*{identifyCard}" id="identifyCard"
+											class="form-control" placeholder="Cán cước công dân"
+											th:classappend="${#fields.hasErrors('identifyCard') ? 'is-invalid' : ''}"
+											readonly style="color: black;">
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group mb-4">
+										<label for="phoneNumber">Số điện thoại <strong
+											class="text-danger">*</strong></label> <input type="number"
+											th:field="*{phoneNumber}" id="phoneNumber"
+											class="form-control" placeholder="Số điện thoại"
+											th:classappend="${#fields.hasErrors('phoneNumber') ? 'is-invalid' : ''}"
+											readonly style="color: black;">
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="mb-4 mt-4">
+
+				<p style="font-size: 16px; color: blue">Tôi đã đọc kỹ và đồng ý
+					tuân thủ tất cả các quy định mua vé trực tuyến của Tổng công ty
+					Train-booking và chịu trách nhiệm về tính xác thực của các thông
+					tin trên.</p>
+
+			</div>
+			<button class="badge badge-info mb-2 me-4 mt-3"
+				style="font-size: 20px; float: right; border: none">Đặt vé >></button>
+		</div>
+	</div>
+
+	<!--  BEGIN CUSTOM SCRIPTS FILE  -->
+	<div layout:fragment="footerFiles">
+		<script src="/js/assets/pages/faq.js"></script>
+
+		<script>
+		document.addEventListener("DOMContentLoaded", function () {
+		    const selectedSeats = JSON.parse(localStorage.getItem("selectedSeats")) || [];
+		    const ticketRows = document.getElementById("ticket-rows");
+		    const totalPriceElement = document.getElementById("totalPrice");
+		    const clearAllTicketsButton = document.getElementById("clearAllTickets");
+		    const paymentButton = document.querySelector("button.badge-info");
+		    
+		    
+		    if (!selectedSeats || selectedSeats.length === 0) {
+		        window.location.href = '/dashboard/index';
+		    }
+
+		    let totalPrice = 0;
+
+		    // Hàm hiển thị danh sách vé
+		    function renderTickets() {
+		        ticketRows.innerHTML = ""; // Xóa danh sách hiện tại
+		        totalPrice = 0; // Đặt lại tổng tiền
+
+		        selectedSeats.forEach((ticket, index) => {
+		            const row = document.createElement("tr");
+
+		            // Tính thành tiền (giá vé + bảo hiểm)
+		            const ticketPrice = ticket.price || 0;
+		            const insurancePrice = 20000; // Giá bảo hiểm cố định
+		            const finalPrice = ticketPrice + insurancePrice;
+
+		            totalPrice += finalPrice;
+
+		            row.innerHTML = `
+		                <td>
+		                    <div class="input-group">
+		                        <span class="input-group-text" style="width: 97px">Họ tên</span>
+		                        <input type="text" class="form-control passenger-name" placeholder="Họ tên hành khách">
+		                    </div>
+		                    <div class="input-group mt-2">
+		                        <span class="input-group-text">Số giấy tờ</span>
+		                        <input type="text" class="form-control passenger-id" placeholder="CMND/CCCD">
+		                    </div>
+		                </td>
+		                <td>
+		                    Tàu: ${ticket.trainName} <br>
+		                    Toa: ${ticket.coachName} <br>
+		                    Ghế: ${ticket.seatName} <br>
+		                    Từ: ${ticket.departureLocation} <br>
+		                    Đến: ${ticket.destinationLocation} <br>
+		                    Ngày: ${new Date(ticket.departureDate).toLocaleDateString()} <br>
+		                    Loại ghế: ${ticket.seatTypeName}
+		                </td>
+		                <td class="text-center">${ticketPrice.toLocaleString()} đ</td>
+		                <td class="text-center">${insurancePrice.toLocaleString()} đ</td>
+		                <td class="text-center">${finalPrice.toLocaleString()} đ</td>
+		                <td class="text-center">
+		                    <button class="btn btn-danger btn-sm" onclick="removeTicket(${index})">Xóa</button>
+		                </td>
+		            `;
+		            ticketRows.appendChild(row);
+		        });
+
+		        // Cập nhật tổng tiền
+		        totalPriceElement.textContent = `${totalPrice.toLocaleString()} đ`;
+		    }
+
+		    renderTickets();
+
+		    // Sự kiện xóa tất cả vé
+		    clearAllTicketsButton.addEventListener("click", function () {
+		        if (confirm("Bạn có chắc chắn muốn xóa tất cả vé?")) {
+		            localStorage.removeItem("selectedSeats");
+		            renderTickets(); 
+		            location.reload(); 
+		        }
+		    });
+
+		    paymentButton.addEventListener("click", function (event) {
+		        event.preventDefault(); 
+
+		        const inputs = document.querySelectorAll("input.form-control");
+		        let isValid = true;
+		        const tickets = []; 
+		        let totalPrice = 0;  // You can calculate total price here
+		        const booking = {
+		            totalPrice: totalPrice.toString(),
+		            code: "CODE123", // Generate or set a booking code as needed
+		            bookingTime: new Date().toISOString(), // Current time for the booking
+		            status: "PENDING", // You can adjust based on booking status
+		            userId: 123, // Replace with actual user ID
+		            scheduleId: selectedSeats[0].scheduleId,
+		        };
+
+		        selectedSeats.forEach((ticket, index) => {
+		            const rowInputs = ticketRows.children[index].querySelectorAll("input.form-control");
+		            const customerName = rowInputs[0].value.trim();
+		            const customerIdentify = rowInputs[1].value.trim();
+
+		            if (!customerName) {
+		                isValid = false;
+		                rowInputs[0].style.border = "2px solid red";
+		                rowInputs[0].focus(); 
+		            } else {
+		                rowInputs[0].style.border = ""; 
+		            }
+
+		            // Kiểm tra CCCD/CMND
+		            const isNumeric = /^\d+$/.test(customerIdentify);
+		            if (!customerIdentify || !isNumeric || (customerIdentify.length !== 9 && customerIdentify.length !== 12)) {
+		                isValid = false;
+		                rowInputs[1].style.border = "2px solid red"; 
+		                rowInputs[1].focus();
+		            } else {
+		                rowInputs[1].style.border = "";
+		            }
+
+		            // Nếu hợp lệ, tạo đối tượng Ticket
+		            if (isValid) {
+		                const ticketObject = {
+		                    ticketName: `${ticket.trainName} - ${ticket.seatName}`,
+		                    priceTicket: (ticket.price + 20000) || 0,
+		                    status: "DISABLED",
+		                    bookingId: null, // You can set this later when the booking is confirmed
+		                    seatId: ticket.seatId,
+		                    customerName: customerName,
+		                    customerIdentify: customerIdentify
+		                };
+
+		                tickets.push(ticketObject);
+		                totalPrice += ticketObject.priceTicket; // Calculate total price
+		            }
+		        });
+
+		        // Update the booking total price after calculating all ticket prices
+		        booking.totalPrice = totalPrice.toString();
+
+		        if (isValid) {
+		            fetch("/booking/book-confirm", {
+		                method: "POST",
+		                headers: {
+		                    "Content-Type": "application/json"
+		                },
+		                body: JSON.stringify({
+		                    tickets: tickets,
+		                    booking: booking
+		                })
+		            })
+		            .then(response => {
+		                if (response.ok) {
+		                    alert("Đặt vé thành công!");
+		                    localStorage.removeItem("selectedSeats"); 
+		                    window.location.href = "/booking/book-confirm"; 
+		                } else {
+		                    alert("Đã xảy ra lỗi, vui lòng thử lại!");
+		                }
+		            })
+		            .catch(error => {
+		                console.error("Lỗi khi gửi dữ liệu:", error);
+		                alert("Đã xảy ra lỗi khi xử lý đặt vé!");
+		            });
+		        } else {
+		            alert("Vui lòng kiểm tra lại thông tin nhập vào, CCCD/CMND phải là 12 số.");
+		        }
+		    });
+
+
+		});
+
+		// Hàm xóa vé cụ thể
+		function removeTicket(index) {
+		    const selectedSeats = JSON.parse(localStorage.getItem("selectedSeats")) || [];
+		    selectedSeats.splice(index, 1); // Xóa vé tại vị trí index
+		    localStorage.setItem("selectedSeats", JSON.stringify(selectedSeats));
+		    window.location.href = '/dashboard/index';
+		    location.reload(); // Tải lại trang để cập nhật
+		}
+
+
+
+			</script>
+
+
+	</div>
+	<!--  END CUSTOM SCRIPTS FILE  -->
+</body>
+
+</html>

@@ -1,29 +1,23 @@
 package com.frontend.train_booking_frontend_customer.services.impl;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
-import com.frontend.train_booking_frontend_customer.models.User;
-import com.frontend.train_booking_frontend_customer.services.IUserService;
+import com.frontend.train_booking_frontend_customer.models.Ticket;
+import com.frontend.train_booking_frontend_customer.services.ITicketService;
 
 import jakarta.servlet.http.HttpSession;
 
 @Service
-public class UserService implements IUserService {
+public class TicketService implements ITicketService{
 	@Value("${api.base.url}")
 	private String apiUrl;
 	
@@ -43,36 +37,20 @@ public class UserService implements IUserService {
 		this.headers.set("Authorization", "Bearer " + jwtToken);
 	}
 
-
 	@Override
-	public User userProfile() {
+	public boolean addTickets(List<Ticket> tickets) {
 		try {
-			String email = (String)session.getAttribute("loginEmail");
-			setJwtToken();
-			
-			String url = apiUrl + "api/auth/findByEmail/" + email;
-			HttpEntity<User> entity = new HttpEntity<>(headers);
-			return restTemplate.exchange(url, HttpMethod.GET, entity, User.class).getBody();
-		}catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	public boolean updateUser(User user) {
-	    try {
 	        setJwtToken();
 	        
-	        String url = apiUrl + "api/user/" + user.getId();
+	        String url = apiUrl + "api/ticket/add/tickets";
 	        
-	        HttpEntity<User> entity = new HttpEntity<>(user, headers);
+	        HttpEntity<List<Ticket>> entity = new HttpEntity<>(tickets, headers);
 	        
-	        restTemplate.exchange(url, HttpMethod.PUT, entity, Void.class);
+	        restTemplate.exchange(url, HttpMethod.POST, entity, Void.class);
 	        return true;
 	    } catch (ResourceAccessException e) {
 	        e.printStackTrace();
 	        return false;
 	    }
 	}
-
 }
