@@ -1,8 +1,11 @@
 package com.frontend.train_booking_frontend_customer.controllers;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.frontend.train_booking_frontend_customer.dtos.BookingRequest;
@@ -19,6 +23,7 @@ import com.frontend.train_booking_frontend_customer.models.Schedule;
 import com.frontend.train_booking_frontend_customer.models.Seat;
 import com.frontend.train_booking_frontend_customer.models.Ticket;
 import com.frontend.train_booking_frontend_customer.models.User;
+import com.frontend.train_booking_frontend_customer.models.enums.BookingStatus;
 import com.frontend.train_booking_frontend_customer.services.IBookingService;
 import com.frontend.train_booking_frontend_customer.services.ITicketService;
 import com.frontend.train_booking_frontend_customer.services.IUserService;
@@ -59,7 +64,9 @@ public class BookingController {
 	        redirectAttributes.addFlashAttribute("error", "Không tìm thấy thông tin đặt vé.");
 	        return "redirect:/booking/index";
 	    }
-
+	    String url = bookingService.getVNPayByBookingId(booking.getId());
+	    
+	    model.addAttribute("url", url);
 	    model.addAttribute("page", "booking")
 	         .addAttribute("booking", booking)
 	         .addAttribute("success", "Tra cứu đơn đặt vé thành công!");
@@ -72,8 +79,7 @@ public class BookingController {
 		User user = userService.userProfile();
         if (user == null) {
             return "auth/signIn"; 
-        }
-        
+        }       
 
 		model.addAttribute("page", "cart-info")
         	.addAttribute("page", "user")
@@ -83,53 +89,61 @@ public class BookingController {
 	}
 	
 	@PostMapping("/book-confirm")
-	public String bookConfirm(@RequestBody BookingRequest bookingRequest, Model model) {
-	    
-	    
+	@ResponseBody
+	public ResponseEntity<?> bookConfirm(@RequestBody BookingRequest bookingRequest) {
 	    User user = userService.userProfile();
-        if (user == null) {
-            return "auth/signIn"; 
-        }
+	    if (user == null) {
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Please log in.");
+	    }
 
 	    Booking booking = bookingRequest.getBooking();
-	    if(booking.getSchedule() == null) {
-	    	Schedule schedule = new Schedule();
-	    	booking.setSchedule(schedule);
-	    	booking.getSchedule().setId(booking.getScheduleId());
+	    if (booking.getSchedule() == null) {
+	        Schedule schedule = new Schedule();
+	        schedule.setId(booking.getScheduleId());
+	        booking.setSchedule(schedule);
 	    }
-	    
+
 	    booking.setUser(user);
-	    
 	    Booking booking2 = bookingService.insertBooking(booking);
-	    if(booking2 != null) {
-	    	List<Ticket> tickets = bookingRequest.getTickets();
-		    
-		    for (Ticket ticket : tickets) {
-		        if (ticket.getSeat() == null) {
-		        	Seat seat = new Seat();
-		            ticket.setSeat(seat);
-		            ticket.getSeat().setId(ticket.getSeatId()); 
-		            ticket.setBooking(booking2);
-		        } else {
-		            System.out.println("Seat is null for ticket: " + ticket);
-		        }
-		    }
-		    
-		    if(ticketService.addTickets(tickets)) {
-		    	System.out.println("Add tickets successfull");
-		    }
+	    if (booking2 != null) {
+	        List<Ticket> tickets = bookingRequest.getTickets();
+	        for (Ticket ticket : tickets) {
+	            if (ticket.getSeat() == null) {
+	                Seat seat = new Seat();
+	                seat.setId(ticket.getSeatId());
+	                ticket.setSeat(seat);
+	            }
+	            ticket.setBooking(booking2);
+	        }
+	        
+	        if (ticketService.addTickets(tickets)) {
+	        	System.out.println("Booking với ID không tồn tại.");
+	        	return ResponseEntity.ok(Collections.singletonMap("code", booking2.getCode()));
+
+	        } else {
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                    .body("Failed to add tickets.");
+	        }
 	    }
 
-	    return "instruct/index"; 
+	    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	            .body("Failed to create booking.");
 	}
-
-
 	
-	@GetMapping("/book-confirm")
-	public String showBookingForm() {
-	    return "redirect:/instruct/index"; 
+	
+	@GetMapping("/comfirm-order/{code}")
+	public String comfirmOrder(@PathVariable String code, 
+	                   Model model, RedirectAttributes redirectAttributes) {
+	    Booking booking = bookingService.findByCode(code);
+
+	    String url = bookingService.getVNPayByBookingId(booking.getId());
+	    	    
+	    model.addAttribute("url", url);
+	    model.addAttribute("page", "booking")
+	         .addAttribute("booking", booking)
+	         .addAttribute("success", "Đặt vé thành công! Vui lòng kiểm tra lại hóa đơn và tiến hành thanh toán");
+
+	    return "booking/show"; 
 	}
-
-
 
 }

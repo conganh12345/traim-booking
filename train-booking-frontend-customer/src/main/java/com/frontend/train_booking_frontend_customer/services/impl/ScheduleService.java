@@ -67,19 +67,19 @@ public class ScheduleService implements IScheduleService {
 	    }
 	}
 	
-//	@Override
-//	public Schedule findById(int id) {
-//		try {
-//			String url = apiUrl + "api/schedule/id/" + id;
-//	        
-//	        HttpEntity<Void> entity = new HttpEntity<>(null);
-//	        
-//	        return restTemplate.exchange(url, HttpMethod.GET, entity, new ParameterizedTypeReference<Schedule>() {}).getBody();
-//		} catch (ResourceAccessException e) {
-//			e.printStackTrace();
-//			return null;
-//		}
-//	}
+	@Override
+	public Schedule findById(int id) {
+		try {
+			String url = apiUrl + "api/schedule/id/" + id;
+	        
+	        HttpEntity<Void> entity = new HttpEntity<>(null);
+	        
+	        return restTemplate.exchange(url, HttpMethod.GET, entity, new ParameterizedTypeReference<Schedule>() {}).getBody();
+		} catch (ResourceAccessException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 
 
