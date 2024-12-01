@@ -105,6 +105,9 @@ public class BookingController {
 
 	    booking.setUser(user);
 	    Booking booking2 = bookingService.insertBooking(booking);
+	    booking2.setCode("BK-00" + booking2.getId());
+	    bookingService.updateBooking(booking2);
+
 	    if (booking2 != null) {
 	        List<Ticket> tickets = bookingRequest.getTickets();
 	        for (Ticket ticket : tickets) {

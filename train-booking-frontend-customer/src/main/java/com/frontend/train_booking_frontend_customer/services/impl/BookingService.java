@@ -67,6 +67,23 @@ public class BookingService implements IBookingService{
 	}
 	
 	@Override
+	public boolean updateBooking(Booking booking) {
+	    try {
+	        setJwtToken();
+	        
+	        String url = apiUrl + "api/booking/" + booking.getId();
+	        
+	        HttpEntity<Booking> entity = new HttpEntity<>(booking, headers);
+	        
+	        restTemplate.exchange(url, HttpMethod.PUT, entity, Void.class);
+	        return true;
+	    } catch (ResourceAccessException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+	
+	@Override
 	public String getVNPayByBookingId(int bookingId) {
 	    try {
 	        String url = apiUrl + "api/vnpay/create_payment/" + bookingId;

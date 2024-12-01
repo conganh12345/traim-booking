@@ -341,8 +341,6 @@
 					})
 					.then(data => {
 					    const bookingId = data.code; 
-					    console.log("test" , data.code);
-					    alert("Đặt vé thành công!");
 					    localStorage.removeItem("selectedSeats");
 					    window.location.href = `/booking/comfirm-order/${bookingId}`;
 					})

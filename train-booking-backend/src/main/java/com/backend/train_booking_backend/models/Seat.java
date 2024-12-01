@@ -1,5 +1,8 @@
 package com.backend.train_booking_backend.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -11,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -35,9 +39,21 @@ public class Seat {
 	@ManyToOne
     @JoinColumn(name="seat_type_id")
     private SeatType seatType;
+	
+	@OneToMany(mappedBy = "seat")
+	@JsonIgnore
+	private List<Ticket> tickets = new ArrayList<>();
 
 	public Integer getId() {
 		return id;
+	}
+
+	public List<Ticket> getTickets() {
+		return tickets;
+	}
+
+	public void setTickets(List<Ticket> tickets) {
+		this.tickets = tickets;
 	}
 
 	public void setId(Integer id) {
