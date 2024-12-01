@@ -181,14 +181,19 @@
 .delete-icon {
     margin-left: 10px;
     font-size: 18px;
-    color: #ff0000; /* Màu đỏ cho biểu tượng thùng rác */
+    color: #ff0000; 
     cursor: pointer;
 }
 
 .delete-icon:hover {
-    color: #cc0000; /* Thay đổi màu khi hover */
+    color: #cc0000; 
 }
 
+.booked {
+    background-color: red; 
+    cursor: not-allowed;   
+     color: white;   
+}
 
 </style>
 
@@ -226,6 +231,9 @@
 							<img src="/images/van-tai-duong-sat.jpg" alt="Ship Image"
 								class="img-fluid rounded" style="max-width: 100%;">
 						</div>
+						
+					<input type="hidden" id="scheduleId" th:value="${schedule.id}">
+
 						<div class="row">
 							<div class="col-xxl-12">
 								<div class="d-flex">
@@ -496,43 +504,44 @@
 		</script>
 
 		<script>
+		const scheduleId = document.getElementById('scheduleId').value;
 			$(document).ready(function () {
 			    let currentCarriage = 1;
 	
-			    function fetchSeats(carriageNumber) {
+			    function fetchSeats(carriageNumber, scheduleId) {
 			        $.ajax({
-			            url: `/seat/list/${carriageNumber}`,
+			            url: `/seat/list/${carriageNumber}/${scheduleId}`,
 			            method: 'GET',
 			            success: function (data) {
-			                displaySeats(data, carriageNumber);
-			                console.log("test", data);
+			            	 displaySeats(data.seats, carriageNumber, data.bookedSeats);
 			            },
 			            error: function () {
 			                alert("Không thể tải danh sách ghế. Vui lòng thử lại.");
 			            }
 			        });
 			    }
+
 	
-			    function displaySeats(seats, carriageNumber) {
+			    function displaySeats(seats, carriageNumber, bookedSeats) {
 			        const $seatMap = $('#seat-map');
 			        const $carriageTitle = $('#carriage-title');
-	
+
 			        $carriageTitle.text(`Sơ đồ ghế: Toa ${carriageNumber}`);
 			        $seatMap.empty();
 			        const rows = [];
 			        for (let i = 0; i < seats.length; i += 7) {
 			            rows.push(seats.slice(i, i + 7));
 			        }
-	
+
 			        rows.slice(0, 2).forEach((row, rowIndex) => {
 			            const $rowDiv = $('<div>').addClass('seat-row');
 			            row.forEach((seat, seatIndex) => {
 			                const $seatDiv = $('<div>').addClass('seat').addClass(seat.seatType.status === 'ENABLE' ? 'available' : 'booked');
 			                const seatNumber = rowIndex * 7 + seatIndex + 1;
 			                $seatDiv.text(seatNumber);
-			                
+
 			                $seatDiv.attr('data-seat-id', seat.id);
-			                $seatDiv.attr('data-seat-price',  seat.seatType.price + schedule.route.price);
+			                $seatDiv.attr('data-seat-price', seat.seatType.price + schedule.route.price);
 			                $seatDiv.data('seatId', seat.id)
 			                    .data('coachId', seat.coach.id)
 			                    .data('trainId', seat.coach.train.id)
@@ -540,19 +549,24 @@
 			                    .data('coachName', seat.coach.coachName)
 			                    .data('trainName', seat.coach.train.trainName)
 			                    .data('price', seat.seatType.price + (schedule ? schedule.route.price : 0))
-			                	.data('seatTypeName', seat.seatType.seatName);
-	
+			                    .data('seatTypeName', seat.seatType.seatName);
+
 			                if (schedule) {
 			                    $seatDiv.data('departureLocation', schedule.route.departureLocation)
 			                        .data('destinationLocation', schedule.route.destinationLocation)
 			                        .data('departureDate', schedule.departureDate)
 			                        .data('scheduleId', schedule.id);
 			                }
-	
-			                if (seat.seatType.status === 'ENABLE') {
+
+			                // Kiểm tra nếu ghế đã được đặt và bôi đỏ
+			                if (bookedSeats.includes(seat.id)) {
+			                    $seatDiv.addClass('booked');  // Bôi đỏ ghế đã đặt
+			                    $seatDiv.off('click');  // Ngăn không cho chọn ghế đã đặt
+			                } else if (seat.seatType.status === 'ENABLE') {
+			                    // Xử lý ghế có thể chọn
 			                    $seatDiv.on('click', function () {
 			                        $seatDiv.toggleClass('selected');
-	
+
 			                        const seatData = {
 			                            seatId: $seatDiv.data('seatId'),
 			                            seatName: $seatDiv.data('seatName'),
@@ -567,36 +581,32 @@
 			                            destinationLocation: $seatDiv.data('destinationLocation'),
 			                            departureDate: $seatDiv.data('departureDate')
 			                        };
-	
+
 			                        let selectedSeats = JSON.parse(localStorage.getItem('selectedSeats')) || [];
 			                        if ($seatDiv.hasClass('selected')) {
 			                            selectedSeats.push(seatData);
 			                        } else {
 			                            selectedSeats = selectedSeats.filter(seat => seat.seatId !== $seatDiv.data('seatId'));
 			                        }
-	
+
 			                        localStorage.setItem('selectedSeats', JSON.stringify(selectedSeats));
 			                        updateCart();
 			                    });
 			                }
-			                
-			      
 
-			               //pop-up price
+			                // Pop-up giá
 			                $seatDiv.on('mouseenter', function () {
 			                    const seatPrice = $seatDiv.attr('data-seat-price');
-			                    
 			                    const $pricePopup = $('<div class="price-popup">').text(`Giá: ${formatPrice(seatPrice)} VND`);
 
-			                    
 			                    const offset = $seatDiv.offset();
 			                    const seatWidth = $seatDiv.outerWidth();
 			                    const seatHeight = $seatDiv.outerHeight();
 
 			                    $pricePopup.css({
 			                        position: 'absolute',
-			                        top: offset.top + seatHeight + 5,  
-			                        left: offset.left + seatWidth / 2 - $pricePopup.outerWidth() / 2,  
+			                        top: offset.top + seatHeight + 5,
+			                        left: offset.left + seatWidth / 2 - $pricePopup.outerWidth() / 2,
 			                        zIndex: 9999,
 			                        background: '#fff',
 			                        padding: '5px 10px',
@@ -604,34 +614,35 @@
 			                        border: '1px solid #ccc',
 			                        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
 			                    });
-			       
+
 			                    $('body').append($pricePopup);
 			                });
 
 			                $seatDiv.on('mouseleave', function () {
 			                    $('.price-popup').remove();
 			                });
-	
+
 			                $rowDiv.append($seatDiv);
 			            });
-	
+
 			            $seatMap.append($rowDiv);
 			        });
 			    }
+
 	
 			    $('.carriage').on('click', function () {
 			        const carriageNumber = $(this).data('carriage');
 	
 			        $('.carriage').removeClass('selected');
 			        $(this).addClass('selected');
-			        fetchSeats(carriageNumber);
+			        fetchSeats(carriageNumber, scheduleId);
 			        currentCarriage = carriageNumber;
 			    });
 	
 			    $('#prevCarriage').on('click', function () {
 			        if (currentCarriage > 1) {
 			            currentCarriage--;
-			            fetchSeats(currentCarriage);
+			            fetchSeats(currentCarriage, scheduleId);
 			            $('.carriage').removeClass('selected');
 			            $(`.carriage[data-carriage="${currentCarriage}"]`).addClass('selected');
 			        }
@@ -640,13 +651,13 @@
 			    $('#nextCarriage').on('click', function () {
 			        if (currentCarriage < $('.carriage').length) {
 			            currentCarriage++;
-			            fetchSeats(currentCarriage);
+			            fetchSeats(currentCarriage, scheduleId);
 			            $('.carriage').removeClass('selected');
 			            $(`.carriage[data-carriage="${currentCarriage}"]`).addClass('selected');
 			        }
 			    });
 	
-			    fetchSeats(1);
+			    fetchSeats(1, scheduleId);
 	
 			    function updateCart() {
 			        const $cartContent = $('#cart-content');

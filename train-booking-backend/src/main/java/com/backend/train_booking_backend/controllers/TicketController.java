@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.backend.train_booking_backend.models.Seat;
 import com.backend.train_booking_backend.models.Ticket;
 import com.backend.train_booking_backend.services.ITicketService;
 
@@ -97,4 +98,20 @@ public class TicketController {
 		List<Ticket> savedTickets = ticketService.addTickets(tickets);
         return new ResponseEntity<>(savedTickets, HttpStatus.CREATED);
 	}
+	
+	@GetMapping("/booked-seats/{scheduleId}")
+	public ResponseEntity<List<Integer>> getBookedSeats(@PathVariable Integer scheduleId) {
+	    List<Integer> bookedSeats = ticketService.getBookedSeatsForSchedule(scheduleId);
+	    return new ResponseEntity<>(bookedSeats, HttpStatus.OK);
+	}
+	
+	@GetMapping("/list/{bookingId}")
+	public ResponseEntity<List<Ticket>> getTicketsByBookingId(@PathVariable("bookingId") int bookingId) {
+	    List<Ticket> tickets = ticketService.getTicketsByBookingId(bookingId);
+	    if (tickets.isEmpty()) {
+	        return ResponseEntity.noContent().build(); 
+	    }
+	    return ResponseEntity.ok(tickets); 
+	}
+
 }

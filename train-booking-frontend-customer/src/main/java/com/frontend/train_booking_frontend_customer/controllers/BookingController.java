@@ -59,6 +59,8 @@ public class BookingController {
 	    }
 
 	    Booking booking = bookingService.findByCode(code);
+	    
+	    List<Ticket> tickets = ticketService.getTicketsByBookingId(booking.getId());
 
 	    if (booking == null) {
 	        redirectAttributes.addFlashAttribute("error", "Không tìm thấy thông tin đặt vé.");
@@ -69,6 +71,7 @@ public class BookingController {
 	    model.addAttribute("url", url);
 	    model.addAttribute("page", "booking")
 	         .addAttribute("booking", booking)
+	         .addAttribute("tickets", tickets)
 	         .addAttribute("success", "Tra cứu đơn đặt vé thành công!");
 
 	    return "booking/show"; 
@@ -138,12 +141,13 @@ public class BookingController {
 	public String comfirmOrder(@PathVariable String code, 
 	                   Model model, RedirectAttributes redirectAttributes) {
 	    Booking booking = bookingService.findByCode(code);
-
+	    List<Ticket> tickets = ticketService.getTicketsByBookingId(booking.getId());
 	    String url = bookingService.getVNPayByBookingId(booking.getId());
 	    	    
 	    model.addAttribute("url", url);
 	    model.addAttribute("page", "booking")
 	         .addAttribute("booking", booking)
+	         .addAttribute("tickets", tickets)
 	         .addAttribute("success", "Đặt vé thành công! Vui lòng kiểm tra lại hóa đơn và tiến hành thanh toán");
 
 	    return "booking/show"; 

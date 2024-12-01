@@ -78,10 +78,9 @@
 						th:text="${#temporals.format(booking.bookingTime, 'HH:mm, dd/MM/yyyy')}"></span></p>
 				</div>
 				<div>
-					<!-- Giả sử bạn đã truyền booking vào model -->
    					 <a th:if="${booking.status != 'COMPLETED'}" th:href="${url}" target="_blank" class="btn btn-success">Thanh toán</a>
 					<iframe id="pdfFrame" style="display: none;"></iframe>
-					<a onclick="window.history.back();" class="btn"> Quay lại tra cứu </a>
+					<a onclick="window.history.back();" class="btn"> Quay lại</a>
 				</div>
 			</div>
 
@@ -104,14 +103,21 @@
 											class="table style-3 dt-table-hover" style="width: 100%">
 											<thead>
 												<tr>
-													<th style="width: 5%">STT</th>
-													<th>Mã vé</th>
+													<th>STT</th>
 													<th>Tên vé</th>
-													<th>Giá tiền</th>
+													<th>Tên khách hàng</th>
+													<th>CCCD/CMND</th>
+													<th>Giá vé</th>
 												</tr>
 											</thead>
 											<tbody>
-												<tr>
+												<tr th:each="ticket, stat : ${tickets}">
+													<td th:text="${stat.count}"></td>
+													<td th:text="${ticket.ticketName}"></td>
+													<td th:text="${ticket.customerName}"></td>
+													<td th:text="${ticket.customerIdentify}"></td>
+													<td th:id="totalPrice" th:data-price="${ticket.priceTicket}"></td>
+												</tr>
 											</tbody>
 										</table>
 									</div>
@@ -134,13 +140,13 @@
 								<div class="col-xxl-12">
 									<div class="d-flex justify-content-between">
 										<p class="text-start me-1">Tổng tiền:</p>
-										<b><p th:id="totalPrice1"
+										<b><p th:id="price1"
 												th:data-price="${booking.totalPrice}"></p></b>
 									</div>
 									<hr>
 									<div class="d-flex justify-content-between">
 										<b><p class="text-start me-1">Tổng thanh toán:</p></b> <b><p
-												class="text-dark text-bold" th:id="totalPrice"
+												class="text-dark text-bold" th:id="price2"
 												th:data-price="${booking.totalPrice}"></p></b>
 									</div>
 								</div>
@@ -330,15 +336,22 @@
 		</script>
 
 		<script>
-			$(document).ready(function() {
-				var priceElement = $("#totalPrice");
-				var priceElement1 = $("#totalPrice1");
-				var price = parseInt(priceElement.data("price"));
-
-				var formattedPrice = price.toLocaleString('vi-VN') + " VNĐ";
-				priceElement.text(formattedPrice);
-				priceElement1.text(formattedPrice);
-			});
+		 	$(document).ready(function() {
+		        var priceElement1 = $("#price1");
+		        var priceElement2 = $("#price2");
+		        var price = parseInt(priceElement1.data("price"));
+		        var price = parseInt(priceElement2.data("price"));
+		        
+		        var formattedPrice = price.toLocaleString('vi-VN') + " VNĐ";
+		        priceElement1.text(formattedPrice);
+		        priceElement2.text(formattedPrice);
+		        
+		        $("td#totalPrice").each(function() {
+		            var price = parseInt($(this).data("price"));
+		            var formattedPrice = price.toLocaleString('vi-VN') + " VND";
+		            $(this).text(formattedPrice);
+		        });
+		    });
 		</script>
 	</div>
 	<!--  END CUSTOM SCRIPTS FILE  -->

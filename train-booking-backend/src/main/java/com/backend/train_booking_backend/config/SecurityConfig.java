@@ -38,6 +38,8 @@ public class SecurityConfig {
 	                .requestMatchers("/api/auth/**").permitAll() 
 	                .requestMatchers("/api/booking/statistics").permitAll() 
 	                .requestMatchers("/api/seat/list/**").permitAll() 
+	                .requestMatchers("/api/ticket/booked-seats/**").permitAll() 
+	                .requestMatchers("/api/ticket/list/**").permitAll() 
 	                .requestMatchers("/api/coach/list/**").permitAll() 
 	                .requestMatchers("/api/schedule/id/**").permitAll() 
 	                .requestMatchers("/api/schedule/search/**").permitAll() 

@@ -29,6 +29,22 @@ public class Ticket {
     private Integer seatId;  	
 	private Seat seat;
 	
+	private String customerName;
+	
+	private String customerIdentify;
+	
+	public String getCustomerName() {
+		return customerName;
+	}
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+	public String getCustomerIdentify() {
+		return customerIdentify;
+	}
+	public void setCustomerIdentify(String customerIdentify) {
+		this.customerIdentify = customerIdentify;
+	}
 	public Integer getId() {
 		return id;
 	}

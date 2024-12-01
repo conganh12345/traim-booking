@@ -18,12 +18,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Schedule;
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Ticket;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Booking;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.User;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.BookingService;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.UserService;
-import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.ScheduleService;
 
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.ScheduleService;
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.TicketService;
 
 import jakarta.validation.Valid;
 
@@ -38,6 +40,9 @@ public class BookingController {
 	
 	@Autowired
 	private ScheduleService scheduleService;
+	
+	@Autowired
+	private TicketService ticketService;
 	
 	@GetMapping("/index")
 	public String index(Model model) {
@@ -54,9 +59,11 @@ public class BookingController {
 	@GetMapping("/show/{id}")
 	public String show(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
 		Booking booking = bookingService.getBookingById(id);
+		List<Ticket> tickets = ticketService.getTicketsByBookingId(booking.getId());
 
 		model.addAttribute("page", "booking")
-			.addAttribute("booking", booking);
+			.addAttribute("booking", booking)
+			 .addAttribute("tickets", tickets);
 
 		return "booking/show";
 	}

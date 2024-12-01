@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.backend.train_booking_backend.models.Seat;
 import com.backend.train_booking_backend.models.Ticket;
 import com.backend.train_booking_backend.repositories.SeatRepository;
 import com.backend.train_booking_backend.repositories.TicketRepository;
@@ -92,5 +93,13 @@ public class TicketService implements ITicketService {
 		}
 	}
 	
+	@Override
+	  public List<Integer> getBookedSeatsForSchedule(Integer scheduleId) {
+        return ticketRepo.findBookedSeatIdsBySchedule(scheduleId);
+    }
 	
+	@Override
+	public List<Ticket> getTicketsByBookingId(int bookingId) {
+        return ticketRepo.findByBookingId(bookingId);
+    }
 }

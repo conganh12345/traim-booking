@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -113,6 +114,22 @@ public class TicketService {
 	        return false;
 	    	}
 	    }
+	
+	public List<Ticket> getTicketsByBookingId(int bookingId) {
+        String url = apiUrl + "api/ticket/list/" + bookingId;
+        
+        try {
+            HttpEntity<Void> requestEntity = new HttpEntity<>(null);
+            
+            ResponseEntity<List<Ticket>> response = restTemplate.exchange(
+	                url, HttpMethod.GET, requestEntity, new ParameterizedTypeReference<List<Ticket>>() {});
+	        return response.getBody();
+
+        } catch (Exception e) {
+            System.out.println("Lỗi khi gọi API: " + e.getMessage());
+            return List.of();
+        }
+	}
 }
 
 	
