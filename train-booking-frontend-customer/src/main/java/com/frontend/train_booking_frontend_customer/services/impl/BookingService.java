@@ -65,4 +65,18 @@ public class BookingService implements IBookingService{
             return null;
         }
 	}
+	
+	@Override
+	public String getVNPayByBookingId(int bookingId) {
+	    try {
+	        String url = apiUrl + "api/vnpay/create_payment/" + bookingId;
+
+	        return restTemplate.postForObject(url, null, String.class);
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return null;
+	    }
+	}
+
 }

@@ -40,30 +40,8 @@ public class Seat {
 	public void setSeatName(String seatName) {
 		this.seatName = seatName;
 	}
-	public Integer getSeatTypeId() {
-		return seatTypeId;
-	}
-	public void setSeatTypeId(Integer seatTypeId) {
-		this.seatTypeId = seatTypeId;
-	}
-	public SeatType getSeatType() {
-		return seatType;
-	}
-	public void setSeatType(SeatType seatType) {
-		this.seatType = seatType;
-	}
-	public Integer getCoachId() {
-		return coachId;
-	}
-	public void setCoachId(Integer coachId) {
-		this.coachId = coachId;
-	}
-	public Coach getCoach() {
-		return coach;
-	}
-	public void setCoach(Coach coach) {
-		this.coach = coach;
-	}
+	
+
 
 	
 }

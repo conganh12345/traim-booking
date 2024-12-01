@@ -333,14 +333,19 @@
 		                })
 		            })
 		            .then(response => {
-		                if (response.ok) {
-		                    alert("Đặt vé thành công!");
-		                    localStorage.removeItem("selectedSeats"); 
-		                    window.location.href = "/booking/book-confirm"; 
-		                } else {
-		                    alert("Đã xảy ra lỗi, vui lòng thử lại!");
-		                }
-		            })
+					    if (response.ok) {
+					        return response.json();
+					    } else {
+					        throw new Error("Failed to confirm booking.");
+					    }
+					})
+					.then(data => {
+					    const bookingId = data.code; 
+					    console.log("test" , data.code);
+					    alert("Đặt vé thành công!");
+					    localStorage.removeItem("selectedSeats");
+					    window.location.href = `/booking/comfirm-order/${bookingId}`;
+					})
 		            .catch(error => {
 		                console.error("Lỗi khi gửi dữ liệu:", error);
 		                alert("Đã xảy ra lỗi khi xử lý đặt vé!");
