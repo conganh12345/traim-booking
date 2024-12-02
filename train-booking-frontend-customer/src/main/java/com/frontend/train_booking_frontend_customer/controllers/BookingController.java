@@ -42,6 +42,7 @@ public class BookingController {
 	@Autowired
 	private ITicketService ticketService;
 	
+	Booking booking = new Booking();
 	
 	@GetMapping("/index")
 	public String index(Model model) {
@@ -141,6 +142,7 @@ public class BookingController {
 	public String comfirmOrder(@PathVariable String code, 
 	                   Model model, RedirectAttributes redirectAttributes) {
 	    Booking booking = bookingService.findByCode(code);
+	    this.booking = booking;
 	    List<Ticket> tickets = ticketService.getTicketsByBookingId(booking.getId());
 	    String url = bookingService.getVNPayByBookingId(booking.getId());
 	    	    
@@ -151,6 +153,28 @@ public class BookingController {
 	         .addAttribute("success", "Đặt vé thành công! Vui lòng kiểm tra lại hóa đơn và tiến hành thanh toán");
 
 	    return "booking/show"; 
+	}
+
+	@GetMapping("/payment-success")
+	public String handlePaymentSuccess(Model model, RedirectAttributes redirectAttributes) {
+	    try {
+	        Booking updatedBooking = bookingService.processPayment(this.booking.getId());
+
+	        this.booking = updatedBooking;
+
+	        List<Ticket> tickets = ticketService.getTicketsByBookingId(updatedBooking.getId());
+
+	        model.addAttribute("page", "booking")
+	             .addAttribute("booking", updatedBooking)
+	             .addAttribute("tickets", tickets)
+	             .addAttribute("success", "Thanh toán thành công! Dưới đây là chi tiết hóa đơn.");
+
+	        return "booking/show";
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        redirectAttributes.addFlashAttribute("error", "Đã xảy ra LỖI.");
+	        return "redirect:/booking/index";
+	    }
 	}
 
 }

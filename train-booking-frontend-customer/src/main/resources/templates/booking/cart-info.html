@@ -247,13 +247,11 @@
 		            ticketRows.appendChild(row);
 		        });
 
-		        // Cập nhật tổng tiền
 		        totalPriceElement.textContent = `${totalPrice.toLocaleString()} đ`;
 		    }
 
 		    renderTickets();
 
-		    // Sự kiện xóa tất cả vé
 		    clearAllTicketsButton.addEventListener("click", function () {
 		        if (confirm("Bạn có chắc chắn muốn xóa tất cả vé?")) {
 		            localStorage.removeItem("selectedSeats");

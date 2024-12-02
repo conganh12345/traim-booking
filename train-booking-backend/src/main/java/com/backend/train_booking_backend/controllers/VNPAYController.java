@@ -47,26 +47,20 @@ public class VNPAYController {
 		return result;
     }
 
-    // Sau khi hoàn tất thanh toán, VNPAY sẽ chuyển hướng trình duyệt về URL này
-	@GetMapping("/payment-return")
+	@GetMapping("/payment-return/{bookingId}")
 	@ResponseBody
-	public ResponseEntity<?> paymentCompleted(HttpServletRequest request) {
+	public ResponseEntity<?> paymentCompleted(@PathVariable Integer bookingId, HttpServletRequest request) {
 	    try {
-	        Booking completedBooking = vnpayService.orderReturn(request, this.booking);
-	        
-	        if (completedBooking == null) {
-	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Thanh toán không thành công.");
-	        }
+	        Booking booking = bookingService.findById(bookingId);
 
-	        return ResponseEntity.ok(Map.of(
-	            "message", "Thanh toán thành công! Vui lòng quay trở lại website để hoàn tất đơn hàng!",
-	            "bookingCode", completedBooking.getCode(),
-	            "totalPrice", completedBooking.getTotalPrice()
-	        ));
+	        Booking completedBooking = vnpayService.orderReturn(request, booking);
+
+	        return ResponseEntity.ok(completedBooking);
 	    } catch (Exception e) {
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 	                             .body("Đã xảy ra lỗi trong quá trình xử lý thanh toán.");
 	    }
 	}
+
 
 }
