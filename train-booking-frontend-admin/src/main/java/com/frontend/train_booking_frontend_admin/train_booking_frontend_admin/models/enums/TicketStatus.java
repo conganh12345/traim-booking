@@ -1,8 +1,8 @@
 package com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.enums;
 
 public enum TicketStatus {
-    ENABLE("Hoạt Động", "badge-light-success"), 
-    DISABLED("Không Hoạt Động", "badge-light-danger"); 
+    ENABLE("Đã duyệt", "badge-light-success"), 
+    DISABLED("Chưa duyệt", "badge-light-danger"); 
 
     private final String displayName;
     private final String badgeClass; 

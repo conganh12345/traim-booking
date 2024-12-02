@@ -59,9 +59,9 @@
 									<th style="width: 5%">STT</th>
 									<th>Tên tàu</th>
 									<th>Tên hành trình</th>
+									<th>Chi tiết</th>
 									<th>Giá</th>
-									<th>Nơi đi</th>
-									<th>Nơi đến</th>
+
 									<th class="no-content" style="width: 5%">Thao tác</th>
 								</tr>
 							</thead>
@@ -72,13 +72,24 @@
 										th:text="${route.train != null ? route.train.trainName : ''}"></span>
 									</td>
 									<td th:text="${route.routeName}"></td>
-									<td th:id="totalPrice" th:data-price="${route.price}" class="text-truncate"
-										style="max-width: 250px;"></td>
-									<td th:text="${route.departureLocation.displayName}"></td>
-									<td th:text="${route.destinationLocation.displayName}"
-										class="text-truncate" style="max-width: 250px;"></td>
+
+
+
+									<td style="width: 25%">
+
+										<p class="text-start me-1">
+											Nơi đi: <span class="text-primary"
+												th:text="${route.departureLocation.displayName}"></span>
+										</p>
+										<p class="text-start me-1">
+											Nơi đến: <span class="text-primary"
+												th:text="${route.destinationLocation.displayName}"></span>
+										</p>
+
+									</td>
+									<td th:id="totalPrice" th:data-price="${route.price}"></td>
 									<td
-										class="table-controls d-flex justify-content-center align-items-center pt-2">
+										class="table-controls d-flex justify-content-center align-items-center pt-4">
 										<li><a th:href="@{/route/edit/{id}(id=${route.id})}"
 											class="bs-tooltip edit" data-bs-toggle="tooltip"
 											data-bs-placement="top"> <svg
@@ -192,15 +203,15 @@
 				});
 			});
 		</script>
-		
+
 		<script>
-		 	$(document).ready(function() {
-		        var priceElement = $("#totalPrice");
-		        var price = parseInt(priceElement.data("price"));
-		        
-		        var formattedPrice = price.toLocaleString('vi-VN') + " VNĐ";
-		        priceElement.text(formattedPrice);
-		    });
+			$(document).ready(function() {
+				var priceElement = $("#totalPrice");
+				var price = parseInt(priceElement.data("price"));
+
+				var formattedPrice = price.toLocaleString('vi-VN') + " VNĐ";
+				priceElement.text(formattedPrice);
+			});
 		</script>
 
 	</div>

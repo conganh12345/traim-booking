@@ -167,6 +167,7 @@
 															<tr>
 																<th width="10%">ID</th>
 																<th>Tên ghế</th>
+																<th>Loại ghế</th>
 																<th width="20%" class="text-center">Thao tác</th>
 															</tr>
 														</thead>
@@ -178,6 +179,7 @@
 															<tr th:each="seat : ${seats}">
 																<td th:text="${seat.id}"></td>
 																<td th:text="${seat.seatName}"></td>
+																<td th:text="${seat.seatType.seatName}"></td>
 																<td class="text-center">
 																	<div class="action-btns">
 																		<a

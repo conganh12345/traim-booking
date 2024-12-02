@@ -56,8 +56,9 @@
 							style="width: 100%">
 							<thead>
 								<tr>
-									<th style="width: 5%">STT</th>
-									<th>Tên lịch trình</th>
+									<th>STT</th>
+									<th>Tên hành trình</th>
+									<th>Chi tiết</th>
 									<th>Tên ga đi qua</th>
 									<th class="no-content" style="width: 5%">Thao tác</th>
 								</tr>
@@ -67,10 +68,21 @@
 									<td th:text="${stat.count}"></td>
 									<td
 										th:text="${station.route != null ? station.route.routeName : ''}"></td>
+										
+								<td style="width: 25%">
+					
+									    <p class="text-start me-1">Nơi đi: 
+									    	<span class="text-primary"  th:text="${station.route.departureLocation.displayName}"></span>
+									    </p>
+									    <p class="text-start me-1">Nơi đến: 
+									    	<span class="text-primary" th:text="${station.route.destinationLocation.displayName}"></span>
+									    </p>
+					
+									</td>
 									<td th:text="${station.stationName}" class="text-truncate"
 										style="max-width: 250px;"></td>
 									<td
-										class="table-controls d-flex justify-content-center align-items-center pt-2">
+										class="table-controls d-flex justify-content-center align-items-center pt-4">
 										<li><a th:href="@{/station/edit/{id}(id=${station.id})}"
 											class="bs-tooltip edit" data-bs-toggle="tooltip"
 											data-bs-placement="top"> <svg

@@ -66,9 +66,9 @@ public class StationController {
 		
 		station.setRoute(route);
 		if (stationService.addStation(station)) {
-			redirectAttributes.addFlashAttribute("success", "Thêm mới lịch trình thành công!");
+			redirectAttributes.addFlashAttribute("success", "Thêm mới nhà ga thành công!");
 		} else {
-			redirectAttributes.addFlashAttribute("error", "Thêm mới lịch trình thất bại!");
+			redirectAttributes.addFlashAttribute("error", "Thêm mới nhà ga thất bại!");
 		}
 		return "redirect:/station/index";
 	}
@@ -98,9 +98,9 @@ public class StationController {
 		
 		station.setRoute(route);
 		if (stationService.updateStation(station)) {
-			redirectAttributes.addFlashAttribute("success", "Cập nhật lịch trình thành công!");
+			redirectAttributes.addFlashAttribute("success", "Cập nhật nhà ga thành công!");
 		} else {
-			redirectAttributes.addFlashAttribute("error", "Cập nhật lịch trình thất bại!");
+			redirectAttributes.addFlashAttribute("error", "Cập nhật nhà ga thất bại!");
 		}
 		return "redirect:/station/index";
 	}
@@ -110,7 +110,7 @@ public class StationController {
 		if (stationService.deleteStation(id)) {
 			return ResponseEntity.ok().build();
 		} else {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Không thể xóa lịch trình.");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Không thể xóa nhà ga.");
 		}
 	}
 }

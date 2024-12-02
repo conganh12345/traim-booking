@@ -61,21 +61,6 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group mb-4">
-											<label for="bookingId">Code<strong class="text-danger">*</strong></label>
-											<select th:field="*{bookingId}" id="bookingId"
-												class="form-control">
-												<option value="" selected>Code</option>
-												<option th:each="booking : ${bookings}" th:value="${booking.id}"
-													th:text="${booking.code}"></option>
-											</select> <span th:if="${#fields.hasErrors('bookingId')}"
-												class="text-danger" th:errors="*{bookingId}"></span>
-										</div>
-									</div>
-								</div>
-
-								<div class="row">
-									<div class="col-md-6">
-										<div class="form-group mb-4">
 											<label for="ticketName">Tên vé <strong
 												class="text-danger">*</strong></label> <input type="text"
 												th:field="*{ticketName}" id="ticketName" class="form-control"

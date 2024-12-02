@@ -1,8 +1,8 @@
 package com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.enums;
 
 public enum SeatTypeStatus {
-	ENABLE("Còn chỗ", "badge-light-success"), 
-    DISABLED("Hết chỗ", "badge-light-danger"); 
+	ENABLE("Bật", "badge-primary"), 
+    DISABLED("Tắt", "badge-danger"); 
 
     private final String displayName;
     private final String badgeClass; 
