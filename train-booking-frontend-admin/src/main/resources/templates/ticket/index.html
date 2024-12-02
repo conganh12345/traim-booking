@@ -67,7 +67,7 @@
 									<td
 										th:text="${ticket.booking != null ? ticket.booking.code : ''}"></td>
 									<td th:text="${ticket.ticketName}"></td>
-									<td th:text="${ticket.priceTicket}" class="text-truncate"
+									<td th:id="totalPrice" th:data-price="${ticket.priceTicket}" class="text-truncate"
 										style="max-width: 250px;"></td>
 									<td class="text-truncate" style="max-width: 250px;"><span
 										th:class="'badge ' + ${ticket.status.badgeClass}"
@@ -186,6 +186,16 @@
 					$('#deleteModal').modal('hide');
 				});
 			});
+		</script>
+		
+		<script>
+		 	$(document).ready(function() {
+		 		 $("td#totalPrice").each(function() {
+		            var price = parseInt($(this).data("price"));
+		            var formattedPrice = price.toLocaleString('vi-VN') + " VND";
+		            $(this).text(formattedPrice);
+		        });
+		    });
 		</script>
 
 	</div>
