@@ -96,4 +96,16 @@ public class BookingService implements IBookingService{
 	    }
 	}
 
+	@Override
+	public Booking processPayment(int bookingId) {
+	    try {
+	        String url = apiUrl + "api/vnpay/payment-return/" + bookingId;
+
+	        return restTemplate.getForObject(url, Booking.class);
+	    } catch (ResourceAccessException | HttpClientErrorException e) {
+	        e.printStackTrace();
+	        return null;
+	    }
+	}
+
 }

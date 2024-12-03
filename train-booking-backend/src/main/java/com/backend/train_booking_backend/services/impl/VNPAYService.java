@@ -95,19 +95,10 @@ public class VNPAYService {
 	}
 
 	public Booking orderReturn(HttpServletRequest request, Booking booking) {
-		String transactionStatus = request.getParameter("vnp_TransactionStatus");
-		
-		booking.setCode(request.getParameter("vnp_TransactionNo"));
-		
-		if ("00".equals(transactionStatus)) {
-				booking.setStatus(BookingStatus.COMPLETED);
-				booking = bookingService.updateBooking(booking.getId(), booking);
-			return booking;
-		} else {
-				booking.setStatus(BookingStatus.CANCELLED);
-				booking = bookingService.updateBooking(booking.getId(), booking);
-			return booking;
-		}
+	
+		booking.setStatus(BookingStatus.COMPLETED);
+			booking = bookingService.updateBooking(booking.getId(), booking);
+		return booking;	
 	}
 
 }

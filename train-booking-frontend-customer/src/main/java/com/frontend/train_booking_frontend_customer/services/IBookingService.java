@@ -7,4 +7,5 @@ public interface IBookingService {
 	Booking insertBooking(Booking booking);
 	boolean updateBooking(Booking booking); 
 	public String getVNPayByBookingId(int bookingId);
+	Booking processPayment(int bookingId);
 }
