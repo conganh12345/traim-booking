@@ -79,5 +79,5 @@ public class VNPAYConfig {
 		}
 		return sb.toString();
 	}
-	
+
 }
