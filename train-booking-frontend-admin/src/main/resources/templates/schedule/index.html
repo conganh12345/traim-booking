@@ -60,7 +60,7 @@
 									<th>Hành trình</th>
 									<th>Ngày khởi hành</th>
 									<th>Ngày đến dự kiến</th>
-								
+									<th>Trạng thái</th>
 									<th class="no-content" style="width: 5%">Thao tác</th>
 								</tr>
 							</thead>
@@ -85,7 +85,10 @@
 										th:text="${#temporals.format(schedule.departureDate, 'HH:mm, dd/MM/yyyy')}"></td>
 									<td
 										th:text="${#temporals.format(schedule.estimateArrivalDate, 'HH:mm, dd/MM/yyyy')}"></td>
-						
+									
+									<td class="text-truncate" style="max-width: 250px;"><span
+										th:class="'badge ' + ${schedule.status.badgeClass}"
+										th:text="${schedule.status.displayName}"></span></td>
 
 									<td
 										class="table-controls d-flex justify-content-center align-items-center pt-5">

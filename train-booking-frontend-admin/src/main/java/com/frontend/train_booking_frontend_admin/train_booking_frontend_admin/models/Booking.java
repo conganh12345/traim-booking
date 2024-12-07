@@ -24,7 +24,7 @@ public class Booking {
     @NotNull(message = "Thời gian đặt không được để trống")
     private LocalDateTime bookingTime;
 
-	@NotEmpty(message = "Trạng thái không được để trống")
+    @NotNull(message = "Trạng thái không được để trống")
     private BookingStatus status;
 	
 	@NotNull(message = "Người dùng không được để trống")

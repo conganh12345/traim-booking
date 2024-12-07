@@ -61,7 +61,7 @@
 									<th>Tên hành trình</th>
 									<th>Chi tiết</th>
 									<th>Giá</th>
-
+									<th>Trạng thái</th>
 									<th class="no-content" style="width: 5%">Thao tác</th>
 								</tr>
 							</thead>
@@ -87,7 +87,13 @@
 										</p>
 
 									</td>
+																		
 									<td th:id="totalPrice" th:data-price="${route.price}"></td>
+									
+									<td class="text-truncate" style="max-width: 250px;"><span
+										th:class="'badge ' + ${route.status.badgeClass}"
+										th:text="${route.status.displayName}"></span></td>
+										
 									<td
 										class="table-controls d-flex justify-content-center align-items-center pt-4">
 										<li><a th:href="@{/route/edit/{id}(id=${route.id})}"
@@ -205,13 +211,13 @@
 		</script>
 
 		<script>
-			$(document).ready(function() {
-				var priceElement = $("#totalPrice");
-				var price = parseInt(priceElement.data("price"));
-
-				var formattedPrice = price.toLocaleString('vi-VN') + " VNĐ";
-				priceElement.text(formattedPrice);
-			});
+		$(document).ready(function() {
+	 		 $("td#totalPrice").each(function() {
+	            var price = parseInt($(this).data("price"));
+	            var formattedPrice = price.toLocaleString('vi-VN') + " VND";
+	            $(this).text(formattedPrice);
+	        });
+	    });
 		</script>
 
 	</div>

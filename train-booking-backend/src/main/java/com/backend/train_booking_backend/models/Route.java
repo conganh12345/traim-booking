@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.backend.train_booking_backend.models.enums.Province;
+import com.backend.train_booking_backend.models.enums.RouteStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -30,6 +31,9 @@ public class Route {
 	
 	@Column
 	private Double price;
+	
+	@Enumerated(EnumType.STRING)
+	private RouteStatus status;
 
 	@Enumerated(EnumType.STRING)
 	private Province departureLocation;
@@ -111,5 +115,17 @@ public class Route {
 
 	public void setRouteName(String routeName) {
 		this.routeName = routeName;
+	}
+
+	public RouteStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(RouteStatus status) {
+		this.status = status;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
 	}
 }

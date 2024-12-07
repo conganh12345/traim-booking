@@ -118,7 +118,21 @@
 								    </div>
 								</div>
 
-
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group mb-4">
+											<label for="status">Trạng thái <strong
+												class="text-danger">*</strong></label> <select th:field="*{status}"
+												id="status" class="form-control"
+												th:classappend="${#fields.hasErrors('status') ? 'is-invalid' : ''}">
+												<option value="">Chọn</option>
+												<option th:each="status : ${scheduleStatus}"
+													th:value="${status}" th:text="${status.displayName}"></option>
+											</select> <span th:if="${#fields.hasErrors('status')}"
+												class="text-danger" th:errors="*{status}"></span>
+										</div>
+									</div>
+								</div>
 
 								<button type="submit" class="btn btn-primary">Hoàn tất</button>
 							</form>
