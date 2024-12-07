@@ -2,6 +2,8 @@ package com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.m
 
 import java.time.LocalDateTime;
 
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.enums.ScheduleStatus;
+
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -21,7 +23,9 @@ public class Schedule {
 	@NotNull(message = "Ngày đến dự kiến không được để trống")
 	@Future(message = "Ngày đến dự kiến phải là một ngày trong tương lai")
 	private LocalDateTime estimateArrivalDate;
-
+	
+	@NotNull(message = "Trạng thái không được để trống")
+    private ScheduleStatus status;
 
 	@NotNull(message = "Hành trình không được để trống")
     private Integer routeId;  	
@@ -62,5 +66,11 @@ public class Schedule {
 	}
 	public void setEstimateArrivalDate(LocalDateTime estimateArrivalDate) {
 		this.estimateArrivalDate = estimateArrivalDate;
+	}
+	public ScheduleStatus getStatus() {
+		return status;
+	}
+	public void setStatus(ScheduleStatus status) {
+		this.status = status;
 	}
 }

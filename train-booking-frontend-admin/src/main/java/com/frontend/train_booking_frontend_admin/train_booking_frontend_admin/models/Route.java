@@ -1,6 +1,7 @@
 package com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models;
 
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.enums.Province;
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.enums.RouteStatus;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -20,6 +21,9 @@ public class Route {
     
 	@NotNull(message = "Nơi đến không được để trống")
     private Province destinationLocation;
+	
+	@NotNull(message = "Trạng thái không được để trống")
+    private RouteStatus status;
     
     @NotNull(message = "Tàu không được để trống")
     private Integer trainId;  	
@@ -67,6 +71,11 @@ public class Route {
 	}
 	public void setTrain(Train train) {
 		this.train = train;
-	}	
-    
+	}
+	public RouteStatus getStatus() {
+		return status;
+	}
+	public void setStatus(RouteStatus status) {
+		this.status = status;
+	}	   
 }

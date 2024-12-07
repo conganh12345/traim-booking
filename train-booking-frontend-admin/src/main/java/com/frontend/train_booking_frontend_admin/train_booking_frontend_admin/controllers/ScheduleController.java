@@ -19,6 +19,8 @@ import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.mo
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Schedule;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Seat;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Train;
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.enums.RouteStatus;
+import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.enums.ScheduleStatus;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.RouteService;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.ScheduleService;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.TrainService;
@@ -48,10 +50,12 @@ public class ScheduleController {
 	@GetMapping("/create")
 	public String create(Model model) {
 		List<Route> routes = routeService.getAllRoutes();
-
+		
 		model.addAttribute("page", "schedule")
 			.addAttribute("routes", routes)
-			.addAttribute("schedule", new Schedule());
+			.addAttribute("schedule", new Schedule())
+	         .addAttribute("scheduleStatus", ScheduleStatus.values());
+
 
 		return "schedule/create";
 	}
@@ -92,7 +96,10 @@ public class ScheduleController {
 		Schedule schedule = scheduleService.getScheduleById(id);
 		List<Route> routes = routeService.getAllRoutes();
 
-		model.addAttribute("page", "schedule").addAttribute("schedule", schedule).addAttribute("routes", routes);
+		model.addAttribute("page", "schedule")
+			.addAttribute("schedule", schedule)
+			.addAttribute("routes", routes)
+			.addAttribute("scheduleStatus", ScheduleStatus.values());
 
 		return "schedule/edit";
 	}

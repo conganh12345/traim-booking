@@ -4,10 +4,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.backend.train_booking_backend.models.enums.ScheduleStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -31,6 +34,9 @@ public class Schedule {
 
 	@Column
 	private LocalDateTime estimateArrivalDate;
+	
+	@Enumerated(EnumType.STRING)
+	private ScheduleStatus status;
 	
 	@ManyToOne
     @JoinColumn(name="route_id")
@@ -86,5 +92,13 @@ public class Schedule {
 
 	public void setBooking(List<Booking> booking) {
 		this.booking = booking;
+	}
+
+	public ScheduleStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(ScheduleStatus status) {
+		this.status = status;
 	}
 }
