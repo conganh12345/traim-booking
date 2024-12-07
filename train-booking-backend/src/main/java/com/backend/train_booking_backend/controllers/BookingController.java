@@ -61,14 +61,14 @@ public class BookingController {
 	}
 
 	@PostMapping
-	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')") 
+	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
 	public ResponseEntity<Booking> addBooking(@RequestBody Booking booking) {
 		Booking createdBooking = bookingService.addBooking(booking);
 		return new ResponseEntity<>(createdBooking, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")
-	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')") 
+	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
 	public ResponseEntity<Booking> updateBooking(@RequestBody Booking booking, @PathVariable Integer id) {
 		Booking updatedBooking = bookingService.updateBooking(id, booking);
 		if (updatedBooking == null) {
@@ -78,20 +78,20 @@ public class BookingController {
 	}
 
 	@DeleteMapping("/{id}")
-	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')") 
+	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
 	public ResponseEntity<String> deleteBooking(@PathVariable Integer id) {
 		switch (bookingService.deleteBooking(id)) {
-			case 2:
-				return new ResponseEntity<>("Không tìm thấy đặt vé này: " + id, HttpStatus.NOT_FOUND);
-			case 1:
-				return new ResponseEntity<>("Đặt vé đã bị xóa", HttpStatus.OK);
-			default:
-				return new ResponseEntity<>("Không thể xóa đặt vé với ID: " + id, HttpStatus.BAD_REQUEST);
+		case 2:
+			return new ResponseEntity<>("Không tìm thấy đặt vé này: " + id, HttpStatus.NOT_FOUND);
+		case 1:
+			return new ResponseEntity<>("Đặt vé đã bị xóa", HttpStatus.OK);
+		default:
+			return new ResponseEntity<>("Không thể xóa đặt vé với ID: " + id, HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@GetMapping("/code/{code}")
-	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')") 
+	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
 	public ResponseEntity<Booking> getBooking(@PathVariable String code) {
 		Booking booking = bookingService.findByCode(code);
 		if (booking == null) {
@@ -99,9 +99,14 @@ public class BookingController {
 		}
 		return new ResponseEntity<>(booking, HttpStatus.OK);
 	}
-	
-	 @GetMapping("/statistics")
-    public Map<String, Integer> getBookingStatistics() {
-        return bookingService.getBookingStatistics();
-    }
+
+	@GetMapping("/statistics")
+	public Map<String, Integer> getBookingStatistics() {
+		return bookingService.getBookingStatistics();
+	}
+
+	@GetMapping("/revenue")
+	public Map<String, Long> getBookingRevenue() {
+		return bookingService.getRevenueForLast15Days();
+	}
 }

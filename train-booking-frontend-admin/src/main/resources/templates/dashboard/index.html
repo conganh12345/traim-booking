@@ -35,7 +35,7 @@
 	<div layout:fragment="content">
 		<div class="middle-content container-xxl p-0">
 			<div class="row layout-top-spacing">
-			
+
 
 				<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 					<div class="row widget-statistic">
@@ -138,6 +138,37 @@
 							<div class="layout-top-spacing col-12"></div>
 							<div id="s-line"></div>
 							<div id="order-quantity"></div>
+							<div id="order-summary" style="margin-left: 20px;">
+								<p>
+									<strong>Số lượng đơn hàng:</strong> <span id="order-count">0</span>
+								</p>
+								<p>
+									<strong>Khoảng thời gian:</strong> <span id="date-range"></span>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="statbox widget box box-shadow mt-3">
+			<div class="widget-header">
+				<div class="row">
+					<div id="revenue-chart-container" class="col-lg-12 layout-spacing">
+						<div class="statbox widget box box-shadow">
+							<div class="layout-top-spacing col-12"></div>
+							<div id="revenue-chart"></div>
+							<div id="revenue-info"
+								style="margin-left: 20px;">
+								<p>
+									<strong>Doanh thu:</strong> <span id="total-revenue"></span>
+								</p>
+								<p>
+									<strong>Khoảng thời gian:</strong> <span id="time-period"></span>
+								</p>
+				
+							</div>
 						</div>
 					</div>
 				</div>
@@ -149,39 +180,55 @@
 		<script src="/plugins/apex/apexcharts.min.js"></script>
 		<script src="/plugins/apex/custom-apexcharts.js"></script>
 		<script type="text/javascript">
-    function fetchOrderStatistics() {
-        try {
-            const response = fetch('http://localhost:9333/booking/statistics');
-            
-            response.then(res => {
-                if (!res.ok) throw new Error('Failed to fetch data');
-                
-                return res.json(); 
-            }).then(data => {
-                console.log("Data received:", data);
-                
-                const today = new Date();
-                const categories = [];
-                const seriesData = [];
+		function fetchOrderStatistics() {
+	        try {
+	            const response = fetch('http://localhost:9333/booking/statistics');
+	            
+	            response.then(res => {
+	                if (!res.ok) throw new Error('Failed to fetch data');
+	                
+	                return res.json(); 
+	            }).then(data => {
+	                console.log("Data received:", data);
+	                
+	                const today = new Date();
+	                const categories = [];
+	                const seriesData = [];
+	                let totalOrders = 0;
+	                let startDate = null;
+	                let endDate = null;
 
-                for (let i = 14; i >= 0; i--) {
-                    const date = new Date(today);
-                    date.setDate(today.getDate() - i);
+	                for (let i = 14; i >= 0; i--) {
+	                    const date = new Date(today);
+	                    date.setDate(today.getDate() - i);
 
-                    const formattedDate = date.toLocaleDateString('en-GB');
-                    categories.push(formattedDate);
+	                    const formattedDate = date.toLocaleDateString('en-GB');
+	                    categories.push(formattedDate);
 
-                    seriesData.push(data[formattedDate] || 0);
-                }
+	                    const dailyOrders = data[formattedDate] || 0;
+	                    seriesData.push(dailyOrders);
 
-                renderChart(categories, seriesData); 
-            }).catch(error => {
-                console.error('Error fetching order statistics:', error);
-            });
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    }
+	                    totalOrders += dailyOrders;
+	                }
+
+	                startDate = new Date(today);
+	                startDate.setDate(today.getDate() - 14);
+	                endDate = today;
+
+	                const formattedStartDate = startDate.toLocaleDateString('en-GB');
+	                const formattedEndDate = endDate.toLocaleDateString('en-GB');
+
+	                document.getElementById('order-count').textContent = totalOrders;
+	                document.getElementById('date-range').textContent = `${formattedStartDate} - ${formattedEndDate}`;
+
+	                renderChart(categories, seriesData); 
+	            }).catch(error => {
+	                console.error('Error fetching order statistics:', error);
+	            });
+	        } catch (error) {
+	            console.error('Error:', error);
+	        }
+	    }
 
     function renderChart(categories, seriesData) {
     	
@@ -278,6 +325,145 @@
 
 </script>
 
+		<script type="text/javascript">
+		function fetchRevenueStatistics() {
+		    try {
+		        const response = fetch('http://localhost:9333/booking/revenue');
+		        
+		        response.then(res => {
+		            if (!res.ok) throw new Error('Failed to fetch revenue data');
+		            
+		            return res.json(); 
+		        }).then(data => {
+		            console.log("Revenue Data received:", data);
+
+		            const today = new Date();
+		            const categories = [];
+		            const seriesData = [];
+		            let totalRevenue = 0;
+
+		            for (let i = 14; i >= 0; i--) {
+		                const date = new Date(today);
+		                date.setDate(today.getDate() - i);
+
+		                const formattedDate = date.toLocaleDateString('en-GB');
+		                categories.push(formattedDate);
+
+		                const revenue = data[formattedDate] || 0;
+		                seriesData.push(revenue);
+		                totalRevenue += revenue;  // Cộng tổng doanh thu
+		            }
+
+		            renderRevenueChart(categories, seriesData);
+
+		            // Hiển thị khoảng thời gian và doanh thu
+		            const startDate = categories[categories.length - 1];
+		            const endDate = categories[0];
+		            const timePeriodText = `${startDate} đến ${endDate}`;
+
+		            document.getElementById('time-period').textContent = timePeriodText;
+		            document.getElementById('total-revenue').textContent = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalRevenue);
+		        }).catch(error => {
+		            console.error('Error fetching revenue statistics:', error);
+		        });
+		    } catch (error) {
+		        console.error('Error:', error);
+		    }
+		}
+
+function renderRevenueChart(categories, seriesData) {
+    const revenueChartOptions = {
+        chart: {
+            height: 350,
+            type: 'bar',
+            toolbar: { show: true },
+            dropShadow: { enabled: true, top: 3, left: 3, blur: 5, opacity: 0.1 }
+        },
+        dataLabels: { enabled: false },
+        series: [{
+            name: "Doanh thu:",
+            data: seriesData
+        }],
+        title: {
+            text: 'Doanh thu (15 ngày gần nhất)',
+            align: 'left',
+            style: {
+                fontSize: '18px',
+                fontWeight: 'bold',
+                color: '#333'
+            }
+        },
+        xaxis: {
+            categories: categories,
+            title: {
+                style: {
+                    fontSize: '12px',
+                    color: '#777'
+                }
+            },
+            tickAmount: 6,
+            labels: {
+                style: {
+                    fontSize: '10px',
+                    color: '#777'
+                }
+            }
+        },
+        yaxis: {
+            title: {
+                text: "",
+                style: {
+                    fontSize: '12px',
+                    color: '#777'
+                }
+            },
+            labels: {
+                formatter: function(value) {
+                    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
+                }
+            }
+        },
+        grid: {
+            show: true,
+            borderColor: '#e5e5e5',
+            strokeDashArray: 5,
+            opacity: 0.1
+        },
+        plotOptions: {
+            bar: {
+                horizontal: false,
+                columnWidth: '50%',
+            }
+        },
+        tooltip: {
+            y: {
+                formatter: function(value) {
+                    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
+                }
+            }
+        },
+        markers: {
+            size: 6,
+            colors: ['#FF0000'],
+            strokeColor: '#ffffff',
+            strokeWidth: 2,
+            hover: {
+                size: 8,
+                colors: ['#FF6347'],
+                strokeColor: '#ffffff',
+                strokeWidth: 2
+            }
+        }
+    };
+
+    const revenueChart = new ApexCharts(document.querySelector("#revenue-chart"), revenueChartOptions);
+    revenueChart.render();
+}
+
+$(document).ready(function() {
+    fetchRevenueStatistics();
+});
+</script>
 
 	</div>
 </body>
