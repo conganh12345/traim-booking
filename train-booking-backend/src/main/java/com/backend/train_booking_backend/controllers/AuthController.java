@@ -17,6 +17,7 @@ import com.backend.train_booking_backend.models.AppUser;
 import com.backend.train_booking_backend.models.enums.ERole;
 import com.backend.train_booking_backend.security.JwtUtils;
 import com.backend.train_booking_backend.services.IUserService;
+import com.backend.train_booking_backend.services.impl.SendEmailService;
 import com.backend.train_booking_backend.services.impl.UserDetailsServiceImplement;
 
 import io.jsonwebtoken.Claims;
@@ -35,8 +36,8 @@ public class AuthController {
 	private PasswordEncoder passwordEncoder;
 
 	@Autowired
-	private IUserService userService; // Inject UserRepository
-
+	private IUserService userService; 
+	
 	public static String token;
 
 	@PostMapping("/generateToken")
@@ -88,7 +89,7 @@ public class AuthController {
 					userLogin.setRole(ERole.valueOf(roleString));
 				}
 			}
-
+			
 			return ResponseEntity.ok(userLogin);
 		} else {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);

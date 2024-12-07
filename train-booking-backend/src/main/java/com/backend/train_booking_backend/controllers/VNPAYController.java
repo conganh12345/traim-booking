@@ -15,6 +15,7 @@ import com.backend.train_booking_backend.dtos.BookingRequest;
 import com.backend.train_booking_backend.models.Booking;
 import com.backend.train_booking_backend.services.ITrainService;
 import com.backend.train_booking_backend.services.impl.BookingService;
+import com.backend.train_booking_backend.services.impl.SendEmailService;
 import com.backend.train_booking_backend.services.impl.VNPAYService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,6 +38,9 @@ public class VNPAYController {
 	@Autowired
 	private BookingService bookingService;
 	
+	@Autowired
+	private SendEmailService sendEmailService;
+	
 	Booking booking;
 	
 	@PostMapping("/create_payment/{bookingId}")
@@ -54,6 +58,8 @@ public class VNPAYController {
 	        Booking booking = bookingService.findById(bookingId);
 
 	        Booking completedBooking = vnpayService.orderReturn(request, booking);
+	        
+	        sendEmailService.sendOrderDetails(booking.getUser().getEmail(), completedBooking);
 
 	        return ResponseEntity.ok(completedBooking);
 	    } catch (Exception e) {
