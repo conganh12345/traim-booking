@@ -10,17 +10,20 @@ import org.springframework.stereotype.Repository;
 
 import com.backend.train_booking_backend.models.Schedule;
 import com.backend.train_booking_backend.models.enums.Province;
+import com.backend.train_booking_backend.models.enums.ScheduleStatus;
 
 @Repository
 public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
 	@Query("SELECT s FROM Schedule s " +
-	           "JOIN s.route r " +
-	           "WHERE r.departureLocation = :departureLocation " +
-	           "AND r.destinationLocation = :destinationLocation " +
-	           "AND FUNCTION('DATE', s.departureDate) = :departureDate")
-	    List<Schedule> findSchedulesByRouteAndDate(
-	            @Param("departureLocation") Province departureLocation,
-	            @Param("destinationLocation") Province destinationLocation,
-	            @Param("departureDate") LocalDate departureDate
-	    );
+		       "JOIN s.route r " +
+		       "WHERE r.departureLocation = :departureLocation " +
+		       "AND r.destinationLocation = :destinationLocation " +
+		       "AND FUNCTION('DATE', s.departureDate) = :departureDate " + 
+		       "AND s.status = :status")
+		List<Schedule> findSchedulesByRouteAndDate(
+		        @Param("departureLocation") Province departureLocation,
+		        @Param("destinationLocation") Province destinationLocation,
+		        @Param("departureDate") LocalDate departureDate,
+		        @Param("status") ScheduleStatus status
+		);
 }

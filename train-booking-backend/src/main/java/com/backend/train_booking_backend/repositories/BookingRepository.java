@@ -18,6 +18,8 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
 	int countByScheduleId(Integer schduleId);
 	public Booking findByCode(String code);
 	
+	List<Booking> findByUserId(Integer userId);
+	
 	@Query("SELECT b.bookingTime, COUNT(b) FROM Booking b WHERE b.bookingTime BETWEEN :startDate AND :endDate GROUP BY b.bookingTime ORDER BY b.bookingTime")
 	List<Object[]> getBookingStatistics(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 

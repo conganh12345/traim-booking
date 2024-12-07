@@ -1,5 +1,8 @@
 package com.frontend.train_booking_frontend_customer.services.impl;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -106,6 +109,22 @@ public class BookingService implements IBookingService{
 	        e.printStackTrace();
 	        return null;
 	    }
+	}
+
+
+	@Override
+	public List<Booking> getBookingsByUser(int userId) {
+		try {
+			setJwtToken();
+			String url = apiUrl + "api/booking/userid/" + userId;
+			HttpEntity<Booking> entity = new HttpEntity<>(headers);
+			Booking[] bookings = restTemplate.exchange(url, HttpMethod.GET, entity, Booking[].class).getBody();
+
+			return Arrays.asList(bookings);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

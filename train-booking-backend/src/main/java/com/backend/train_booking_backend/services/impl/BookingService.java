@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.backend.train_booking_backend.models.AppUser;
 import com.backend.train_booking_backend.models.Booking;
 import com.backend.train_booking_backend.repositories.BookingRepository;
 import com.backend.train_booking_backend.repositories.TicketRepository;
@@ -23,6 +22,7 @@ import com.backend.train_booking_backend.services.IBookingService;
 public class BookingService implements IBookingService {
 	@Autowired
 	private BookingRepository bookingRepo;
+
 
 	@Autowired
 	private TicketRepository ticketRepo;
@@ -128,30 +128,47 @@ public class BookingService implements IBookingService {
 			bookingStatistics.put(dateTime.toLocalDate().format(formatter), count.intValue());
 		}
 
-		return bookingStatistics;
-	}
-
-	@Override
-	public Map<String, Long> getRevenueForLast15Days() {
-	    LocalDateTime endDate = LocalDateTime.now();
-	    LocalDateTime startDate = endDate.minusDays(14);
-
-	    List<Object[]> statistics = bookingRepo.getRevenueStatistics(startDate, endDate);
-
-	    Map<String, Long> revenueData = new HashMap<>();
-	    
-	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-	    for (Object[] row : statistics) {
-	        java.sql.Date sqlDate = (java.sql.Date) row[0];
-	        LocalDateTime date = sqlDate.toLocalDate().atStartOfDay(); 
-	        String formattedDate = date.format(formatter);
-	        
-	        BigDecimal revenue = (BigDecimal) row[1];
-	        revenueData.put(formattedDate, revenue.longValue());
+	        return bookingStatistics;
 	    }
 
-	    return revenueData;
-	}
+		public Map<String, Long> getRevenueForLast15Days() {
+			LocalDateTime endDate = LocalDateTime.now();
+			LocalDateTime startDate = endDate.minusDays(14);
+	
+			List<Object[]> statistics = bookingRepo.getRevenueStatistics(startDate, endDate);
+	
+			Map<String, Long> revenueData = new HashMap<>();
+			
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	
+			for (Object[] row : statistics) {
+				java.sql.Date sqlDate = (java.sql.Date) row[0];
+				LocalDateTime date = sqlDate.toLocalDate().atStartOfDay(); 
+				String formattedDate = date.format(formatter);
+				
+				BigDecimal revenue = (BigDecimal) row[1];
+				revenueData.put(formattedDate, revenue.longValue());
+			}
+	
+			return revenueData;
+		}
 
+		@Override
+	public List<Booking> findByUserId(int userId) {
+		List<Booking> booking = bookingRepo.findByUserId(userId);
+
+		if (booking.isEmpty()) {
+			return null;
+		}
+		return booking;
+	}
+	
 }
+
+
+
+
+
+
+
+

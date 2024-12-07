@@ -1,6 +1,7 @@
 package com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.controllers;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,13 +18,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Route;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Schedule;
-import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Seat;
-import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.Train;
-import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.enums.RouteStatus;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.models.enums.ScheduleStatus;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.RouteService;
 import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.ScheduleService;
-import com.frontend.train_booking_frontend_admin.train_booking_frontend_admin.services.TrainService;
 
 import jakarta.validation.Valid;
 

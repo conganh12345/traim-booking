@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.backend.train_booking_backend.models.Schedule;
 import com.backend.train_booking_backend.models.enums.Province;
+import com.backend.train_booking_backend.models.enums.ScheduleStatus;
 import com.backend.train_booking_backend.repositories.BookingRepository;
 import com.backend.train_booking_backend.repositories.ScheduleRepository;
 import com.backend.train_booking_backend.services.IScheduleService;
@@ -90,7 +91,7 @@ public class ScheduleService implements IScheduleService {
 	@Override
 	public List<Schedule> getSchedules(Province departureLocation, Province destinationLocation, LocalDate departureDate) {
 		try {
-	        return scheduleRepo.findSchedulesByRouteAndDate(departureLocation, destinationLocation, departureDate);
+	        return scheduleRepo.findSchedulesByRouteAndDate(departureLocation, destinationLocation, departureDate, ScheduleStatus.ACTIVE);
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	        return new ArrayList<>();
