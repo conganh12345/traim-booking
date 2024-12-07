@@ -23,4 +23,6 @@ public interface IBookingService {
 	List<Booking> findByUserId(int userId);
 	
 	Map<String, Integer> getBookingStatistics();
+	
+	Map<String, Long> getRevenueForLast15Days();
 }

@@ -1,5 +1,6 @@
 package com.backend.train_booking_backend.services.impl;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.backend.train_booking_backend.models.AppUser;
 import com.backend.train_booking_backend.models.Booking;
 import com.backend.train_booking_backend.repositories.BookingRepository;
 import com.backend.train_booking_backend.repositories.TicketRepository;
@@ -22,6 +22,7 @@ import com.backend.train_booking_backend.services.IBookingService;
 public class BookingService implements IBookingService {
 	@Autowired
 	private BookingRepository bookingRepo;
+
 
 	@Autowired
 	private TicketRepository ticketRepo;
@@ -112,18 +113,14 @@ public class BookingService implements IBookingService {
 	public Map<String, Integer> getBookingStatistics() {
 		Map<String, Integer> bookingStatistics = new HashMap<>();
 
-		// Tính toán khoảng thời gian 15 ngày gần nhất
-		LocalDate endDate = LocalDate.now(); // Ngày hiện tại
-		LocalDate startDate = endDate.minusDays(14); // 15 ngày trước
+		LocalDate endDate = LocalDate.now();
+		LocalDate startDate = endDate.minusDays(14);
 
-		// Chuyển đổi LocalDate thành LocalDateTime (ở đầu ngày)
 		LocalDateTime startDateTime = startDate.atStartOfDay();
-		LocalDateTime endDateTime = endDate.atTime(23, 59, 59); // Cuối ngày
+		LocalDateTime endDateTime = endDate.atTime(23, 59, 59);
 
-		// Lấy thống kê booking từ cơ sở dữ liệu
 		List<Object[]> stats = bookingRepo.getBookingStatistics(startDateTime, endDateTime);
 
-		// Chuyển đổi dữ liệu thành định dạng {Date: Count}
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		for (Object[] stat : stats) {
 			LocalDateTime dateTime = (LocalDateTime) stat[0];
@@ -131,10 +128,32 @@ public class BookingService implements IBookingService {
 			bookingStatistics.put(dateTime.toLocalDate().format(formatter), count.intValue());
 		}
 
-		return bookingStatistics;
-	}
+	        return bookingStatistics;
+	    }
 
-	@Override
+		public Map<String, Long> getRevenueForLast15Days() {
+			LocalDateTime endDate = LocalDateTime.now();
+			LocalDateTime startDate = endDate.minusDays(14);
+	
+			List<Object[]> statistics = bookingRepo.getRevenueStatistics(startDate, endDate);
+	
+			Map<String, Long> revenueData = new HashMap<>();
+			
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	
+			for (Object[] row : statistics) {
+				java.sql.Date sqlDate = (java.sql.Date) row[0];
+				LocalDateTime date = sqlDate.toLocalDate().atStartOfDay(); 
+				String formattedDate = date.format(formatter);
+				
+				BigDecimal revenue = (BigDecimal) row[1];
+				revenueData.put(formattedDate, revenue.longValue());
+			}
+	
+			return revenueData;
+		}
+
+		@Override
 	public List<Booking> findByUserId(int userId) {
 		List<Booking> booking = bookingRepo.findByUserId(userId);
 
@@ -144,5 +163,12 @@ public class BookingService implements IBookingService {
 		return booking;
 	}
 	
-	
 }
+
+
+
+
+
+
+
+

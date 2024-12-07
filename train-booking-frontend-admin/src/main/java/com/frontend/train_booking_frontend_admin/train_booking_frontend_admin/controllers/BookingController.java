@@ -74,4 +74,11 @@ public class BookingController {
 
 	        return ResponseEntity.ok(statistics);
 	    }
+	 
+	 @GetMapping("/revenue")
+	    public ResponseEntity<Map<String, Integer>> getBookingRevenue() {
+	        Map<String, Integer> statistics = bookingService.getBookingRevenue();
+
+	        return ResponseEntity.ok(statistics);
+	    }
 }

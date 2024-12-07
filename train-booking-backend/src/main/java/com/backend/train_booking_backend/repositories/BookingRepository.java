@@ -23,4 +23,11 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
 	@Query("SELECT b.bookingTime, COUNT(b) FROM Booking b WHERE b.bookingTime BETWEEN :startDate AND :endDate GROUP BY b.bookingTime ORDER BY b.bookingTime")
 	List<Object[]> getBookingStatistics(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 
+	@Query("SELECT DATE(b.bookingTime) AS bookingDate, SUM(b.totalPrice) AS totalRevenue " +
+	       "FROM Booking b " +
+	       "WHERE b.bookingTime BETWEEN :startDate AND :endDate " +
+	       "GROUP BY DATE(b.bookingTime) " +
+	       "ORDER BY DATE(b.bookingTime)")
+	List<Object[]> getRevenueStatistics(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
+
 }

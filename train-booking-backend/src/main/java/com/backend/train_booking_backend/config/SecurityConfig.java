@@ -37,6 +37,7 @@ public class SecurityConfig {
 	            .authorizeHttpRequests(auth -> auth
 	                .requestMatchers("/api/auth/**").permitAll() 
 	                .requestMatchers("/api/booking/statistics").permitAll() 
+	                .requestMatchers("/api/booking/revenue").permitAll() 
 	                .requestMatchers("/api/seat/list/**").permitAll() 
 	                .requestMatchers("/api/ticket/booked-seats/**").permitAll() 
 	                .requestMatchers("/api/ticket/list/**").permitAll() 

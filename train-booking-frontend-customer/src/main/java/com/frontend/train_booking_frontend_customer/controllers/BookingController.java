@@ -200,7 +200,7 @@ public class BookingController {
 	        model.addAttribute("page", "booking")
 	             .addAttribute("booking", updatedBooking)
 	             .addAttribute("tickets", tickets)
-	             .addAttribute("success", "Thanh toán thành công! Dưới đây là chi tiết hóa đơn.");
+	             .addAttribute("success", "Thanh toán thành công! Vui lòng kiểm tra email để xem chi tiết thông tin đơn hàng.");
 
 	        return "booking/show";
 	    } catch (Exception e) {
