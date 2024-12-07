@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/base-layout.html}">
+<head>
+<title>Danh sách đặt vé</title>
+
+<div layout:fragment="headerFiles">
+	<link rel="stylesheet" type="text/css"
+		href="/plugins/table/datatable/datatables.css">
+	<link rel="stylesheet" type="text/css"
+		href="/plugins/table/datatable/extensions/col-reorder/col-reorder.datatables.min.css">
+	<link rel="stylesheet" type="text/css"
+		href="/plugins/table/datatable/extensions/fixed-columns/fixed-columns.datatables.min.css">
+	<link rel="stylesheet" type="text/css"
+		href="/css/plugins/light/table/datatable/dt-global_style.css">
+	<link rel="stylesheet" type="text/css"
+		href="/css/plugins/dark/table/datatable/dt-global_style.css">
+	<link rel="stylesheet" type="text/css"
+		href="/css/plugins/light/table/datatable/custom_dt_custom.css">
+	<link rel="stylesheet" type="text/css"
+		href="/css/plugins/dark/table/datatable/custom_dt_custom.css">
+</div>
+
+</head>
+<body>
+	<div layout:fragment="content">
+	<div class="middle-content container-xxl p-0">
+
+		<!-- BREADCRUMB -->
+		<div class="page-meta">
+			<nav class="breadcrumb-style-one" aria-label="breadcrumb">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="#">Đặt vé</a></li>
+					<li class="breadcrumb-item active" aria-current="page">Quản lý
+						đơn đặt vé</li>
+				</ol>
+			</nav>
+		</div>
+		<!-- /BREADCRUMB -->
+		
+		    <div class="row layout-top-spacing">
+        <div class="col-xl-12 col-lg-12 col-sm-12">
+            <div class="statbox widget box box-shadow">
+                <div class="widget-header d-flex align-items-center ">
+                    <h4 class="m-0">Bộ lọc</h4>
+                </div>
+                <div class="widget-content widget-content-area">
+                <div class="col-lg-12 p-4">
+                    <div id="filterBody" class="row align-items-center">
+                        <div class="col-md-4">
+                        <div class="form-group mb-4">
+                        	<label for="trainId">Mã đặt vé</label>
+                            <input type="text" id="code-filter" class="form-control" placeholder="Tìm theo mã đặt vé">
+                           </div>
+                        </div>
+                        <div class="col-md-4">
+                        <div class="form-group mb-4">
+                        	<label for="trainId">Tên chuyến đi</label>
+                            <input type="text" id="name-filter" class="form-control" placeholder="Tìm theo tên chuyến đi">
+                        </div>
+                        </div>
+                        <div class="col-md-4">
+                        <div class="form-group mb-4">
+                        	<label for="trainId">Trạng thái</label>
+                            <select id="status-filter" class="form-control">
+                                <option value="">Chọn</option>
+                                <option value="Hoàn thành">Hoàn thành</option>
+                                <option value="Thất bại">Thất bại</option>
+                                <option value="Đã hủy">Đã hủy</option>
+                                <option value="Đang chờ">Đang chờ</option>
+                            </select>
+                        </div>
+                        </div>
+              
+                         <div class="filter-header d-flex justify-content-end align-items-center">
+				            <button type="button" class="btn btn-secondary me-2" id="filter-btn">Lọc</button>
+				            <button type="button" class="btn btn-light-secondary" id="remove-filter-btn">Xoá bộ lọc</button>
+				        </div>
+                    </div>
+                </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+		<div class="row layout-top-spacing">
+			<div class="col-xl-12 col-lg-12 col-sm-12">
+				<div class="statbox widget box box-shadow">
+					<div class="widget-header">
+						<div class="row">
+							<div class="col-xl-12 col-md-12 col-sm-12 col-12">
+								<h4>Danh sách đơn đặt vé</h4>
+							</div>
+						</div>
+					</div>
+					<div class="widget-content widget-content-area">
+						<table id="booking-table" class="table style-3 dt-table-hover"
+							style="width: 100%">
+							<thead>
+								<tr>
+									<th style="width: 5%">STT</th>
+									<th>Mã đặt vé</th>
+									<th>Tên người dùng</th>
+									<th>Tên chuyến đi</th>
+									<th>Giá</th>
+									<th>Thời gian đặt vé</th>
+									<th>Trạng thái</th>
+									<th class="no-content" style="width: 5%">Thao tác</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="booking, stat : ${bookings}">
+									<td th:text="${stat.count}"></td>
+									<td>
+									<span class="badge badge-dark" th:text="${booking.code}"></span>
+									</td>
+									
+									<td>
+									    <p class="text-start me-1">Tên: 
+									    	<span class="text-primary" th:text="${booking.user != null ? booking.user.fullName : ''}"></span>
+									    </p>
+									    <p class="text-start me-1">Email: 
+									    	<span class="text-primary" th:text="${booking.user != null ? booking.user.email : ''}"></span>
+									    </p>
+									    <p class="text-start me-1">Số điện thoại: 
+									    	<span class="text-primary" th:text="${booking.user != null ? booking.user.phoneNumber : ''}"></span>
+									    </p>
+					
+									</td>
+
+									<td
+										th:text="${booking.schedule != null ? booking.schedule.scheduleName : ''}"></td>
+										
+									<td th:id="totalPrice" th:data-price="${booking.totalPrice}"></td>
+									
+									<td
+										th:text="${#temporals.format(booking.bookingTime, 'HH:mm, dd/MM/yyyy')}"
+										class="text-truncate" style="max-width: 250px;"></td>
+		
+									<td class="text-truncate" style="max-width: 250px;"><span
+										th:class="'badge ' + ${booking.status.badgeClass}"
+										th:text="${booking.status.displayName}"></span></td>
+									<td
+										class="table-controls d-flex justify-content-center align-items-center p-5">
+										<li><a th:href="@{/booking/showDetail/{code}(code=${booking.code})}"
+										
+											class="bs-tooltip edit" data-bs-toggle="tooltip"
+											data-bs-placement="top"> <svg
+													xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+													viewBox="0 0 24 24" fill="none" stroke="currentColor"
+													stroke-width="2" stroke-linecap="round"
+													stroke-linejoin="round"
+													class="feather feather-eye br-6 mb-1">
+												<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+												<circle cx="12" cy="12" r="3"></circle></svg>
+										</a></li>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+	</div>
+
+	<!--  BEGIN CUSTOM SCRIPTS FILE  -->
+	<div layout:fragment="footerFiles">
+		<script src="/plugins/table/datatable/datatables.js"></script>
+		<script
+			src="/plugins/table/datatable/extensions/col-reorder/col-reorder.datatables.min.js"></script>
+		<script
+			src="/plugins/table/datatable/extensions/fixed-columns/fixed-columns.datatables.min.js"></script>
+		<script>
+			$('#booking-table')
+				.DataTable(
+					{
+						"dom" : "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>"
+								+ "<'table-responsive'tr>"
+								+ "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
+						"oLanguage" : {
+							"oPaginate" : {
+								"sPrevious" : '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
+								"sNext" : '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>'
+							},
+							"sEmptyTable" : "Chưa có dữ liệu",
+							"sInfo" : "Đang hiển thị trang _PAGE_ của  _PAGES_",
+							"sSearch" : '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+							"sSearchPlaceholder" : "Tìm kiếm...",
+							"sZeroRecords" : "Không có bản ghi nào trùng khớp",
+							"sLengthMenu" : "Kết quả :  _MENU_",
+						},
+						"stripeClasses" : [],
+						"lengthMenu" : [ 7, 10, 20, 50 ],
+						"pageLength" : 10,
+						"ordering" : false
+					});
+		</script>
+		
+		<script>
+		$('#filter-btn').on('click', function () {
+		    const code = $('#code-filter').val(); 
+		    const name = $('#name-filter').val(); 
+		    const status = $('#status-filter').val(); 
+
+		    const table = $('#booking-table').DataTable();
+
+		    table.column(1).search(code); 
+		    table.column(3).search(name); 
+		    table.column(6).search(status);
+
+		    table.draw();
+		});
+		
+		 $('#remove-filter-btn').on('click', function () {
+		     $('#code-filter').val('');
+		     $('#name-filter').val('');
+		     $('#status-filter').val('');
+
+		     table.columns().search('').draw();
+		     table.rows().show(); 
+		 });
+
+		</script>
+		
+		<script>
+		 	$(document).ready(function() {
+		 		 $("td#totalPrice").each(function() {
+		            var price = parseInt($(this).data("price"));
+		            var formattedPrice = price.toLocaleString('vi-VN') + " VND";
+		            $(this).text(formattedPrice);
+		        });
+		    });
+		</script>
+	</div>
+	<!--  END CUSTOM SCRIPTS FILE  -->
+</body>
+
+</html>

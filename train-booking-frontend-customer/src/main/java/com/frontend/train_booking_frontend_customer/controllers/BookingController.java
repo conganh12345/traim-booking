@@ -29,6 +29,8 @@ import com.frontend.train_booking_frontend_customer.services.ITicketService;
 import com.frontend.train_booking_frontend_customer.services.IUserService;
 import com.frontend.train_booking_frontend_customer.services.impl.BookingService;
 
+import jakarta.servlet.http.HttpSession;
+
 
 @Controller
 @RequestMapping("/booking")
@@ -41,6 +43,9 @@ public class BookingController {
 	
 	@Autowired
 	private ITicketService ticketService;
+	
+	 @Autowired
+	    private HttpSession session;
 	
 	Booking booking = new Booking();
 	
@@ -77,6 +82,34 @@ public class BookingController {
 
 	    return "booking/show"; 
 	}
+	
+	@GetMapping("/showDetail/{code}")
+	public String showDetail(@PathVariable String code, 
+	                   Model model, RedirectAttributes redirectAttributes) {
+	    if (code == null || code.trim().isEmpty()) {
+	        redirectAttributes.addFlashAttribute("error", "Vui lòng nhập mã đặt vé.");
+	        return "redirect:/booking/index"; 
+	    }
+
+	    Booking booking = bookingService.findByCode(code);
+	    
+	    if (booking == null) {
+	        redirectAttributes.addFlashAttribute("error", "Không tìm thấy thông tin đặt vé.");
+	        return "redirect:/booking/index";
+	    }
+
+	    List<Ticket> tickets = ticketService.getTicketsByBookingId(booking.getId());
+	    String url = bookingService.getVNPayByBookingId(booking.getId());
+	    
+	    model.addAttribute("url", url);
+	    model.addAttribute("page", "booking")
+	         .addAttribute("booking", booking)
+	         .addAttribute("tickets", tickets)
+	         .addAttribute("success", "Tra cứu đơn đặt vé thành công!");
+
+	    return "booking/show"; 
+	}
+
 	
 	@GetMapping("/cart-info")
 	public String cartInfo(Model model) {
@@ -176,5 +209,20 @@ public class BookingController {
 	        return "redirect:/booking/index";
 	    }
 	}
+	
+	@GetMapping("/history")
+	public String getBookingHistory(Model model) {
+		User user = userService.userProfile();
+        if (user == null) {
+            return "auth/signIn"; 
+        }
+        
+		List<Booking> bookings = bookingService.getBookingsByUser(user.getId());
+
+		model.addAttribute("page", "booking").addAttribute("bookings", bookings);
+
+		return "booking/history";
+	}
+
 
 }

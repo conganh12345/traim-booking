@@ -22,7 +22,7 @@ import com.backend.train_booking_backend.services.IBookingService;
 public class BookingService implements IBookingService {
 	@Autowired
 	private BookingRepository bookingRepo;
-	
+
 	@Autowired
 	private TicketRepository ticketRepo;
 
@@ -41,7 +41,7 @@ public class BookingService implements IBookingService {
 		try {
 			return bookingRepo.save(booking);
 		} catch (Exception e) {
-			 e.printStackTrace();
+			e.printStackTrace();
 			throw new RuntimeException("Đã xảy ra lỗi khi thêm vé đặt.", e);
 		}
 	}
@@ -62,83 +62,87 @@ public class BookingService implements IBookingService {
 	@Override
 	@Transactional
 	public int deleteBooking(Integer id) {
-	    try {
-	        if (bookingRepo.existsById(id)) {
-	            int seatCount = ticketRepo.countByBookingId(id); 
+		try {
+			if (bookingRepo.existsById(id)) {
+				int seatCount = ticketRepo.countByBookingId(id);
 
-	            if (seatCount > 0) {
-	                System.out.println("Không thể xóa booking với ID " + id + " vì vẫn còn vé liên kết.");
-	                return 0; 
-	            }
+				if (seatCount > 0) {
+					System.out.println("Không thể xóa booking với ID " + id + " vì vẫn còn vé liên kết.");
+					return 0;
+				}
 
-	            bookingRepo.deleteById(id);
+				bookingRepo.deleteById(id);
 
-	            if (!bookingRepo.existsById(id)) {
-	                System.out.println("Đã xóa booking với ID " + id);
-	                return 1;  
-	            } else {
-	                System.out.println("Không thể xóa booking với ID " + id + " vì vẫn còn vé liên kết.");
-	                return 0; 
-	            }
-	        } else {
-	            System.out.println("Booking với ID " + id + " không tồn tại.");
-	            return 2;  
-	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return 0; 
-	    }
+				if (!bookingRepo.existsById(id)) {
+					System.out.println("Đã xóa booking với ID " + id);
+					return 1;
+				} else {
+					System.out.println("Không thể xóa booking với ID " + id + " vì vẫn còn vé liên kết.");
+					return 0;
+				}
+			} else {
+				System.out.println("Booking với ID " + id + " không tồn tại.");
+				return 2;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
 	}
-	
+
 	@Override
 	public Booking findByCode(String code) {
 		Booking booking = bookingRepo.findByCode(code);
 
-	    if (booking != null) {
-	        return booking;
-	    }
-	    return null; 
+		if (booking != null) {
+			return booking;
+		}
+		return null;
 	}
-	
+
 	@Override
 	public Booking findById(int bookingId) {
-	    Optional<Booking> booking = bookingRepo.findById(bookingId);
-	    if (booking.isPresent()) {
-	        return booking.get();
-	    }
-	    return null;
+		Optional<Booking> booking = bookingRepo.findById(bookingId);
+		if (booking.isPresent()) {
+			return booking.get();
+		}
+		return null;
 	}
 
-	  public Map<String, Integer> getBookingStatistics() {
-	        Map<String, Integer> bookingStatistics = new HashMap<>();
+	public Map<String, Integer> getBookingStatistics() {
+		Map<String, Integer> bookingStatistics = new HashMap<>();
 
-	        // Tính toán khoảng thời gian 15 ngày gần nhất
-	        LocalDate endDate = LocalDate.now(); // Ngày hiện tại
-	        LocalDate startDate = endDate.minusDays(14); // 15 ngày trước
+		// Tính toán khoảng thời gian 15 ngày gần nhất
+		LocalDate endDate = LocalDate.now(); // Ngày hiện tại
+		LocalDate startDate = endDate.minusDays(14); // 15 ngày trước
 
-	        // Chuyển đổi LocalDate thành LocalDateTime (ở đầu ngày)
-	        LocalDateTime startDateTime = startDate.atStartOfDay();
-	        LocalDateTime endDateTime = endDate.atTime(23, 59, 59); // Cuối ngày
+		// Chuyển đổi LocalDate thành LocalDateTime (ở đầu ngày)
+		LocalDateTime startDateTime = startDate.atStartOfDay();
+		LocalDateTime endDateTime = endDate.atTime(23, 59, 59); // Cuối ngày
 
-	        // Lấy thống kê booking từ cơ sở dữ liệu
-	        List<Object[]> stats = bookingRepo.getBookingStatistics(startDateTime, endDateTime);
+		// Lấy thống kê booking từ cơ sở dữ liệu
+		List<Object[]> stats = bookingRepo.getBookingStatistics(startDateTime, endDateTime);
 
-	        // Chuyển đổi dữ liệu thành định dạng {Date: Count}
-	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-	        for (Object[] stat : stats) {
-	            LocalDateTime dateTime = (LocalDateTime) stat[0];
-	            Long count = (Long) stat[1];
-	            bookingStatistics.put(dateTime.toLocalDate().format(formatter), count.intValue());
-	        }
+		// Chuyển đổi dữ liệu thành định dạng {Date: Count}
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		for (Object[] stat : stats) {
+			LocalDateTime dateTime = (LocalDateTime) stat[0];
+			Long count = (Long) stat[1];
+			bookingStatistics.put(dateTime.toLocalDate().format(formatter), count.intValue());
+		}
 
-	        return bookingStatistics;
-	    }
+		return bookingStatistics;
+	}
+
+	@Override
+	public List<Booking> findByUserId(int userId) {
+		List<Booking> booking = bookingRepo.findByUserId(userId);
+
+		if (booking.isEmpty()) {
+			return null;
+		}
+		return booking;
+	}
+	
+	
 }
-
-
-
-
-
-
-
-

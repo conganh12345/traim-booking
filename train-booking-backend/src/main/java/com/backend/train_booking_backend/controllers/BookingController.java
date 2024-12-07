@@ -104,4 +104,14 @@ public class BookingController {
     public Map<String, Integer> getBookingStatistics() {
         return bookingService.getBookingStatistics();
     }
+	 
+	 @GetMapping("/userid/{id}")
+	 @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')") 
+	public ResponseEntity<List<Booking>> getBookingByUser(@PathVariable int id) {
+		List<Booking> booking = bookingService.findByUserId(id);
+		if (booking.isEmpty()) {
+			booking = new ArrayList<>();
+		}
+		return new ResponseEntity<>(booking, HttpStatus.OK);
+	}
 }
