@@ -41,8 +41,9 @@
 									class="card-media-image me-3" alt="">
 								<div class="media-body">
 									<span class="media-heading mb-1" th:text="${schedule.route.departureLocation.displayName ?: 'Nơi đi'}">Nơi đi</span>
-									-> <span class="media-heading mb-1" th:text="${schedule.route.destinationLocation.displayName ?: 'Nơi đến'}">Nơi đến</span>
+									-> <span class="media-heading" th:text="${schedule.route.destinationLocation.displayName ?: 'Nơi đến'}">Nơi đến</span>
 									<p class="media-text">Khởi hành: <span th:text="${#temporals.format(schedule.departureDate, 'HH:mm, dd/MM/yyyy')}">Thời gian khởi hành</span></p>
+									Số hiệu tàu: <span class="media-heading mb-1" th:text="${schedule.route.train.trainName ?: 'Nơi đi'}"></span>
 								</div>
 							</div>
 						</div>
