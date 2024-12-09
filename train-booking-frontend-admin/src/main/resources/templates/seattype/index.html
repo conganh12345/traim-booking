@@ -188,13 +188,13 @@
 		</script>
 		
 		<script>
-		 	$(document).ready(function() {
-		        var priceElement = $("#totalPrice");
-		        var price = parseInt(priceElement.data("price"));
-		        
-		        var formattedPrice = price.toLocaleString('vi-VN') + " VNĐ";
-		        priceElement.text(formattedPrice);
-		    });
+		$(document).ready(function() {
+	 		 $("td#totalPrice").each(function() {
+	            var price = parseInt($(this).data("price"));
+	            var formattedPrice = price.toLocaleString('vi-VN') + " VND";
+	            $(this).text(formattedPrice);
+	        });
+	    });
 		</script>
 
 	</div>

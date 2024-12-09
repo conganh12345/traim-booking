@@ -78,7 +78,7 @@
 						th:text="${#temporals.format(booking.bookingTime, 'HH:mm, dd/MM/yyyy')}"></span></p>
 				</div>
 				<div>
-   					 <a th:if="${booking.status != 'COMPLETED'}" th:href="${url}" target="_blank" class="btn btn-success">Thanh toán</a>
+   					 <a id="sStatus" th:data-status ="${booking.status}" th:href="${url}" target="_blank" class="btn btn-success">Thanh toán</a>
 					<iframe id="pdfFrame" style="display: none;"></iframe>
 					<a onclick="window.history.back();" class="btn"> Quay lại</a>
 				</div>
@@ -336,7 +336,7 @@
 		</script>
 
 		<script>
-		 	$(document).ready(function() {
+		 	$(document).ready(function() {	 	
 		        var priceElement1 = $("#price1");
 		        var priceElement2 = $("#price2");
 		        var price = parseInt(priceElement1.data("price"));
@@ -351,6 +351,13 @@
 		            var formattedPrice = price.toLocaleString('vi-VN') + " VND";
 		            $(this).text(formattedPrice);
 		        });
+		        
+		        var status = $("#sStatus");
+		        
+		        var status1 = status.data("status");
+		        if(status1 === "COMPLETED"){
+		        	status.css("display", "none");
+		        }
 		    });
 		</script>
 	</div>

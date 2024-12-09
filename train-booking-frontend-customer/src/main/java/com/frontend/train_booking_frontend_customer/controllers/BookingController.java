@@ -24,6 +24,7 @@ import com.frontend.train_booking_frontend_customer.models.Seat;
 import com.frontend.train_booking_frontend_customer.models.Ticket;
 import com.frontend.train_booking_frontend_customer.models.User;
 import com.frontend.train_booking_frontend_customer.models.enums.BookingStatus;
+import com.frontend.train_booking_frontend_customer.models.enums.TicketStatus;
 import com.frontend.train_booking_frontend_customer.services.IBookingService;
 import com.frontend.train_booking_frontend_customer.services.ITicketService;
 import com.frontend.train_booking_frontend_customer.services.IUserService;
@@ -152,6 +153,7 @@ public class BookingController {
 	                Seat seat = new Seat();
 	                seat.setId(ticket.getSeatId());
 	                ticket.setSeat(seat);
+	                ticket.setStatus(TicketStatus.ENABLE);
 	            }
 	            ticket.setBooking(booking2);
 	        }
